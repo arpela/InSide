@@ -15,5 +15,8 @@
 		</web>
 	</module>
 	
+	<module>
+		<ejb>ejbs-inside.jar</ejb>
+	</module>
 	
 </application>

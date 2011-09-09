@@ -3,9 +3,7 @@
 	<property name="src" location="src" />
 	<property name="home" location="." />
 	<property name="bin" location="${home}/bin" />
-	
 	<property name="jboss_home" location="D:/Servers/jboss/jboss-6.1.0.Final" />
-
 	<property name="jboss_domain" location="${jboss_home}/server/default/deploy/apps" />
 
 	<tstamp>
@@ -21,11 +19,10 @@
 		<echo message="#############################################"/>
 		<delete file="${home}/ears/appinSide.ear" />
 		<delete file="${home}/webRoot/WEB-INF/lib/classesWebInSide.jar" />
-		<delete file="${home}/ears/package/web-inSide.war" />
+		<delete file="${home}/ears/package/web-inSide.war"/>
+		<delete file="${home}/ears/package/ejbs-inside.jar"/>
 	</target>
-	
-	
-	
+		
 	<!-- class jar -->
 	<target name="build-class">
 		<jar destfile="${home}/webRoot/WEB-INF/lib/classesWebInSide.jar">
@@ -38,8 +35,21 @@
 			</manifest>
 		</jar>
 	</target>
-
 	
+	<!-- Create EJBs -->
+	<target name="build-ejbs">
+		<jar destfile="${home}/ears/package/ejbs-inside.jar">
+			<fileset dir="${bin}">
+				<include name="uy/com/s4b/inside/core/**/*.class" />
+			</fileset>
+			<manifest>
+				<attribute name="Manifest-Version" value="1.0" />
+				<attribute name="Build-Version" value="${versionado}" />
+			</manifest>
+			<fileset dir="${home}/filesEjbs" />
+		</jar>
+	</target>
+
 	<target name="build-war" >
 		<jar destfile="${home}/ears/package/web-inSide.war">
 			<fileset dir="${home}/webRoot">
@@ -49,7 +59,7 @@
 		</jar>
 	</target>
 
-	<target name="build-ears" depends="init, build-class, build-war">
+	<target name="build-ears" depends="init, build-class, build-ejbs, build-war">
 		<jar destfile="${home}/ears/appinSide.ear">	
 			<fileset dir="${home}/ears/package" />
 		</jar>
@@ -62,6 +72,5 @@
 	<target name="undeploy">
 		<delete file="${jboss_domain}/appinSide.ear" />
 	</target>
-
 	
 </project>
