@@ -1,10 +1,18 @@
 package uy.com.s4b.inside.web.bakingbean;
 
 import java.io.Serializable;
+import java.util.Random;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
+import org.apache.commons.lang.math.RandomUtils;
+import org.apache.log4j.Logger;
+
+import uy.com.s4b.inside.core.ejbs.EJBManagerUserLocal;
 import uy.com.s4b.inside.core.entity.User;
+import uy.com.s4b.inside.core.exception.InSideException;
 
 /**
  * Title: LoginBakingBean.java <br>
@@ -16,8 +24,11 @@ import uy.com.s4b.inside.core.entity.User;
  *
  */
 @ManagedBean(name="login")
+@SessionScoped
 public class LoginBakingBean implements Serializable {
 
+	
+	
 	private User userBean;
 	
 	/**
@@ -29,21 +40,30 @@ public class LoginBakingBean implements Serializable {
 	 * 
 	 */
 	public LoginBakingBean() {
-		
+		userBean = new User();
 	}
-
+	
 	/**
 	 * @param userBean the userBean to set
 	 */
 	public void setUserBean(User userBean) {
 		this.userBean = userBean;
 	}
-
+	
+	
 	/**
 	 * @return the userBean
 	 */
 	public User getUserBean() {
 		return userBean;
 	}
-
+	
+	
+	/**
+	 * Informa si el usuario esta logueado
+	 * @return
+	 */
+	public boolean loginIn(){
+		return (userBean != null);
+	}
 }

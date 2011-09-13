@@ -3,6 +3,7 @@ package uy.com.s4b.inside.core.ejbs.impl;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 
 import org.apache.log4j.Logger;
@@ -29,9 +30,10 @@ public class EJBManagerUserBean implements ManagerUserService {
 
 	private static final Logger log = Logger.getLogger(EJBManagerUserBean.class);
 	
-	@PersistenceUnit
-	private EntityManager em;
+	@PersistenceContext
+	EntityManager em;
 	
+
 	/**
 	 * 
 	 */
@@ -44,6 +46,8 @@ public class EJBManagerUserBean implements ManagerUserService {
 	 */
 	@Override
 	public void saveUser(User u) throws InSideException {
+		log.info("Salvo el usuario: " + u.getName());
+		
 		throw new InSideException("Not yet implement!!");
 	}
 
@@ -54,8 +58,10 @@ public class EJBManagerUserBean implements ManagerUserService {
 	@Override
 	public User login(String name, String pass) throws InSideException {
 		log.info("Autenticate user: " + name);
-		em.find(User.class, name);
+//		em.find(User.class, name);
 		return null;
 	}
+	
+	
 	
 }

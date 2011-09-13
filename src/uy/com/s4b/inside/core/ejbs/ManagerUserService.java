@@ -18,4 +18,5 @@ public interface ManagerUserService {
 	User login(String name, String pass) throws InSideException;
 	
 	void saveUser(User u) throws InSideException;
+	
 }

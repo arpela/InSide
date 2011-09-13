@@ -1,14 +1,29 @@
 package uy.com.s4b.inside.core.entity;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.apache.commons.lang.WordUtils;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+import org.jacorb.notification.filter.etcl.GtOperator;
 
 /**
  * Title: UserEntity.java <br>
@@ -33,10 +48,21 @@ public class User implements Serializable {
 	private Integer id;
 	
 	@Column(nullable=false, insertable=true, unique=true)
+	private String nick;
+	
+	@Column(nullable=false, insertable=true, unique=false)
 	private String name;
+	
+	@Column(nullable=false, insertable=true, unique=false)
+	private String surname;
 	
 	@Column(name = "password", unique=false, nullable=false)
 	private String pass;
+	
+	@ManyToMany(cascade=CascadeType.DETACH)
+	@JoinTable(name="user_profile", 
+		joinColumns={@JoinColumn(name="id_user")}, inverseJoinColumns={@JoinColumn(name="id_profile")})
+	private Set<Profile> myProfiles;
 	
 	
 	/**
@@ -50,16 +76,25 @@ public class User implements Serializable {
 	 * @param id
 	 * @param name
 	 * @param pass
+	 * @param myProfiles
 	 */
-	public User(Integer id, String name, String pass) {
+	public User(Integer id, String name, String pass, Set<Profile> myProfiles) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.pass = pass;
+		this.myProfiles = myProfiles;
+	}
+
+	/**
+	 * Funcion encargada de correjir inperfecciones en los datos del entity
+	 */
+	@PrePersist()
+	public void capitaliz(){
+		this.name = WordUtils.capitalizeFully(this.name);
+		this.surname = WordUtils.capitalizeFully(this.surname);
 	}
 	
-
-
 	/**
 	 * @param id the id to set
 	 */
@@ -105,6 +140,75 @@ public class User implements Serializable {
 	 */
 	public String getPass() {
 		return pass;
+	}
+
+	/**
+	 * @return the myProfile
+	 */
+	public Set<Profile> getMyProfiles() {
+		return myProfiles;
+	}
+
+	/**
+	 * @param myProfile the myProfile to set
+	 */
+	public void setMyProfiles(Set<Profile> myProfile) {
+		this.myProfiles = myProfile;
+	}
+
+	/**
+	 * @return the surname
+	 */
+	public String getSurname() {
+		return surname;
+	}
+
+	/**
+	 * @param surname the surname to set
+	 */
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	/**
+	 * @return the nick
+	 */
+	public String getNick() {
+		return nick;
+	}
+
+	/**
+	 * @param nick the nick to set
+	 */
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		
+		return EqualsBuilder.reflectionEquals(this, obj);
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 }
