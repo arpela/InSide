@@ -1,36 +1,24 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core" 
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:a4j="http://richfaces.org/a4j" 
 	xmlns:rich="http://richfaces.org/rich" >
-
-	<f:view>
-		<h:head>
+    
+    <h:body>
+    
+		<ui:composition template="layout/template.xhtml">
+		  
+			<ui:define name="menu">
+				&nbsp;
+			</ui:define>
 		
-		</h:head>
-		<h:body>
+			
+		</ui:composition>
+    </h:body>
+ 
+</html>
 
-			<rich:panel header="Login">
-				<h:form>
-					<h:outputText value="name" />
-					<h:inputText id="name" value="#{login.userBean.name}">
-						<rich:validator />
-					</h:inputText>
-					<rich:message for="name" />
-					
-					<br />
-					
-					<h:outputText value="pass" />
-					<h:inputText id="pass" value="#{login.userBean.pass}">
-						<rich:validator />
-					</h:inputText>
-					<br /><br />
-					
-					<h:commandButton action="#{navegar.accionLogin}" value="Login" />
-				</h:form>
-			</rich:panel>
-
-		</h:body>
-	</f:view>
-</ui:composition>

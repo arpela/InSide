@@ -2,6 +2,8 @@ package uy.com.s4b.inside.core.ejbs.impl;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.faces.bean.ManagedBean;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
@@ -23,6 +25,8 @@ import uy.com.s4b.inside.core.exception.InSideException;
  * @author Alfredo
  *
  */
+//@ManagedBean(name="login")
+
 @Stateless
 @Local(EJBManagerUserLocal.class)
 @LocalBinding(jndiBinding="inSide/EJBManagerUser")

@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j" 
+	xmlns:rich="http://richfaces.org/rich">
+		
+<h:head>
+	<link href="#{request.contextPath}/resources/style.css" rel="stylesheet" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<link rel="shortcut icon" href="#{request.contextPath}/resources/img/favicon.ico" type="image/x-icon" />
+	<title>InSide</title>
+	<script src="#{request.contextPath}/resources/js/jquery-1.6.4.js"></script>
+</h:head>
+
+<h:body>
+  <div id="container">
+    <div id="header">
+      <div id="headerWrapper">
+        <div id="headerContent">
+          <div class="logo fleft"> <img src="#{request.contextPath}/resources/img/logo.png" alt="logo" /> </div>
+          <div class="logoText fleft"> <img src="#{request.contextPath}/resources/img/frase.png" width="223" height="14" /> </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+
+    <ui:insert name="menu">
+    <!-- Funciona bien!!! buena opcion para evaluar cuando se finalice con el login
+    
+    	<ui:include src="#{loginin?'/layout/menu.xhtml':''}" /> 
+    -->
+    	
+    	<ui:include src="/layout/menu.xhtml" /> 
+    </ui:insert>
+    
+	<ui:insert name="body">
+    	<ui:include src="/layout/bodyLogin.xhtml" />
+    </ui:insert>
+   
+    
+    <div id="footer">
+    </div>
+  </div>
+  
+</h:body>
+	
+</ui:composition>
