@@ -1,4 +1,4 @@
-package uy.com.s4b.inside.core.ejbs;
+package uy.com.s4b.inside.core.ejbs.manager;
 
 import uy.com.s4b.inside.core.entity.User;
 import uy.com.s4b.inside.core.exception.InSideException;

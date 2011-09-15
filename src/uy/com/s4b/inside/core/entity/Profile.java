@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -26,7 +27,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
  */
 @Table(name="profile")
 @Entity
-public class Profile implements Serializable {
+public class Profile implements Serializable, Comparable<Profile> {
 
 	@Transient
 	private static final long serialVersionUID = -6351142141392927322L;
@@ -125,6 +126,15 @@ public class Profile implements Serializable {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(Profile o) {
+		return CompareToBuilder.reflectionCompare(o, this);
 	}
 
 }

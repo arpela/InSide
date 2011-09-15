@@ -27,7 +27,8 @@
 	<target name="build-class">
 		<jar destfile="${home}/webRoot/WEB-INF/lib/classesWebInSide.jar">
 			<fileset dir="${bin}">
-				<include name="uy/com/s4b/inside/web/**/*.class" />
+				<include name="uy/com/s4b/inside/ui/**/*.class" />
+				<include name="uy/com/s4b/inside/ui/**/*.properties" />
 			</fileset>
 			<manifest>
 				<attribute name="Manifest-Version" value="1.0" />
