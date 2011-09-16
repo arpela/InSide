@@ -5,6 +5,7 @@ package uy.com.s4b.inside.core.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -110,7 +110,7 @@ public class Device implements Serializable {
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
-	private Date date_last_modified;
+	private Timestamp date_last_modified;
 	
 	
 	
@@ -396,7 +396,7 @@ public class Device implements Serializable {
 	/**
 	 * @return the date_last_modified
 	 */
-	public Date getDate_last_modified() {
+	public Timestamp getDate_last_modified() {
 		return date_last_modified;
 	}
 
@@ -405,7 +405,7 @@ public class Device implements Serializable {
 	/**
 	 * @param date_last_modified the date_last_modified to set
 	 */
-	public void setDate_last_modified(Date date_last_modified) {
+	public void setDate_last_modified(Timestamp date_last_modified) {
 		this.date_last_modified = date_last_modified;
 	}
 	

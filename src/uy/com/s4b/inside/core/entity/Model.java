@@ -12,9 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -49,6 +51,16 @@ public class Model implements Serializable {
 	
 	public Model() {
 		
+	}
+	
+	
+	/**
+	 * Funcion encargada de correjir imperfecciones 
+	 * en los datos del entity
+	 */
+	@PrePersist()
+	public void initEntity(){
+		this.name = WordUtils.capitalizeFully(this.name);
 	}
 
 

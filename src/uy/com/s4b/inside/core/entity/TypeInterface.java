@@ -4,19 +4,24 @@
 package uy.com.s4b.inside.core.entity;
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+
+import uy.com.s4b.inside.core.common.CriptPassword;
 
 /**
  * @author pablo
@@ -47,6 +52,16 @@ public class TypeInterface implements Serializable {
 	
 	}
 
+	
+	/**
+	 * Funcion encargada de correjir imperfecciones 
+	 * en los datos del entity
+	 */
+	@PrePersist()
+	public void initEntity(){
+		this.name = WordUtils.capitalizeFully(this.name);
+	}
+	
 
 	/**
 	 * @return the id
