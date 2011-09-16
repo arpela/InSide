@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j" 
+	xmlns:rich="http://richfaces.org/rich" >
+    
+    <h:body>
+    
+		<ui:composition template="/layout/template.xhtml">
+		  
+			<ui:define name="body">
+				<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource" var="bundle"/>
+		
+				<h:form id="formHome">
+					
+					<div id="content">
+						<div class="state">
+							<div class="page fleft">InSide </div>
+			
+							<div class="date fright">Wednesday, August 10, 2011 12:35:02 PM</div>
+							<div class="clear"></div>
+						</div>
+						
+						<div class="leftContent fleft">
+							<div class="label">
+								<h:messages id="txtMSG" showDetail="false" showSummary="true" globalOnly="true" errorClass="" infoClass="" warnClass=""/>
+							</div>
+						</div>
+						
+						<div class="rightContent fright">
+							<h:outputText value="#{bundle['login.text.msg']}" escape="false" />
+			      		</div>
+			      		
+			      		<div class="clear"></div>
+			    	</div>
+		    	</h:form>
+			</ui:define>
+		
+			
+		</ui:composition>
+    </h:body>
+ 
+</html>
+

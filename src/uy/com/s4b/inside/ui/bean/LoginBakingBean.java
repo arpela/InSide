@@ -1,4 +1,4 @@
-package uy.com.s4b.inside.web.bakingbean;
+package uy.com.s4b.inside.ui.bean;
 
 import java.io.Serializable;
 import java.util.Random;
@@ -10,14 +10,14 @@ import javax.faces.bean.SessionScoped;
 import org.apache.commons.lang.math.RandomUtils;
 import org.apache.log4j.Logger;
 
-import uy.com.s4b.inside.core.ejbs.EJBManagerUserLocal;
+import uy.com.s4b.inside.core.ejbs.manager.EJBManagerUserLocal;
 import uy.com.s4b.inside.core.entity.User;
 import uy.com.s4b.inside.core.exception.InSideException;
 
 /**
  * Title: LoginBakingBean.java <br>
  * Description: <br>
- * Fecha creación: 08/09/2011 <br>
+ * Fecha creaciï¿½n: 08/09/2011 <br>
  * Copyright: S4B <br>
  * Company: S4B - http://www.s4b.com.uy <br>
  * @author Alfredo
