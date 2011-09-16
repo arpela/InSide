@@ -1,7 +1,7 @@
 package uy.com.s4b.inside.core.entity;
 
 import java.io.Serializable;
-import java.util.List;
+import java.security.NoSuchAlgorithmException;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,7 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -23,12 +24,14 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.jacorb.notification.filter.etcl.GtOperator;
+import org.apache.log4j.Logger;
+
+import uy.com.s4b.inside.core.common.CriptPassword;
 
 /**
  * Title: UserEntity.java <br>
  * Description: <br>
- * Fecha creación: 08/09/2011 <br>
+ * Fecha creaciï¿½n: 08/09/2011 <br>
  * Copyright: S4B <br>
  * Company: S4B - http://www.s4b.com.uy <br>
  * @author Alfredo
@@ -37,7 +40,13 @@ import org.jacorb.notification.filter.etcl.GtOperator;
 
 @Table(name="user")
 @Entity
+@NamedQueries({
+	@NamedQuery(name="loginUser", query="from User u where u.nick = :pNick and u.pass = :pPass"),
+})
 public class User implements Serializable {
+	
+	@Transient
+	private transient static final Logger log = Logger.getLogger(User.class);
 	
 	@Transient
 	private static final long serialVersionUID = 6689611221434578413L;
@@ -59,7 +68,8 @@ public class User implements Serializable {
 	@Column(name = "password", unique=false, nullable=false)
 	private String pass;
 	
-	@ManyToMany(cascade=CascadeType.DETACH)
+	
+	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="user_profile", 
 		joinColumns={@JoinColumn(name="id_user")}, inverseJoinColumns={@JoinColumn(name="id_profile")})
 	private Set<Profile> myProfiles;
@@ -87,10 +97,16 @@ public class User implements Serializable {
 	}
 
 	/**
-	 * Funcion encargada de correjir inperfecciones en los datos del entity
+	 * Funcion encargada de correjir imperfecciones 
+	 * en los datos del entity y hacer el encriptado de la pass
 	 */
 	@PrePersist()
-	public void capitaliz(){
+	public void initEntity(){
+		try {
+			this.pass = new CriptPassword().getHashSH1(this.pass);
+		} catch (NoSuchAlgorithmException e) {
+			log.error(e.getMessage(), e);
+		}
 		this.name = WordUtils.capitalizeFully(this.name);
 		this.surname = WordUtils.capitalizeFully(this.surname);
 	}

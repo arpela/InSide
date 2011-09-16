@@ -5,7 +5,7 @@ import javax.ejb.ApplicationException;
 /**
  * Title: InSideException.java <br>
  * Description: <br>
- * Fecha creación: 08/09/2011 <br>
+ * Fecha creaciï¿½n: 08/09/2011 <br>
  * Copyright: S4B <br>
  * Company: S4B - http://www.s4b.com.uy <br>
  * @author Alfredo
@@ -18,7 +18,8 @@ public class InSideException extends Exception {
 	 * 
 	 */
 	private static final long serialVersionUID = -2911965558354124871L;
-
+	private String keyMSGError;
+	
 	/**
 	 * 
 	 */
@@ -49,6 +50,25 @@ public class InSideException extends Exception {
 	public InSideException(String message, Throwable cause) {
 		super(message, cause);
 		// TODO Auto-generated constructor stub
+	}
+	
+	public InSideException(String key, String message, Throwable cause) {
+		super(message, cause);
+		this.setKeyMSGError(key);
+	}
+
+	/**
+	 * @return the keyMSGError
+	 */
+	public String getKeyMSGError() {
+		return keyMSGError;
+	}
+
+	/**
+	 * @param keyMSGError the keyMSGError to set
+	 */
+	public void setKeyMSGError(String keyMSGError) {
+		this.keyMSGError = keyMSGError;
 	}
 
 }
