@@ -26,7 +26,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * @author pablo
  *
  */
-@Table(name="interface")
+@Table(name="interfacedevice")
 @Entity
 public class InterfaceDevice implements Serializable {
 
