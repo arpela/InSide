@@ -11,8 +11,8 @@ import javax.persistence.PersistenceUnit;
 import org.apache.log4j.Logger;
 import org.jboss.ejb3.annotation.LocalBinding;
 
-import uy.com.s4b.inside.core.ejbs.EJBManagerUserLocal;
-import uy.com.s4b.inside.core.ejbs.ManagerUserService;
+import uy.com.s4b.inside.core.ejbs.manager.EJBManagerUserLocal;
+import uy.com.s4b.inside.core.ejbs.manager.ManagerUserService;
 import uy.com.s4b.inside.core.entity.User;
 import uy.com.s4b.inside.core.exception.InSideException;
 
