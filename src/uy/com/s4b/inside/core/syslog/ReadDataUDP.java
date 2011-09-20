@@ -2,6 +2,9 @@ package uy.com.s4b.inside.core.syslog;
 
 import java.net.DatagramPacket;
 
+import org.apache.log4j.Logger;
+
+
 /**
  * Title: ConexionUdp.java <br>
  * Description: <br>
@@ -24,18 +27,27 @@ import java.net.DatagramPacket;
  */
 class ReadDataUDP extends Thread {
 	
+
+	private static final Logger log = Logger.getLogger(ReadDataUDP.class);
+	
 	DatagramPacket paquete;
 
 	ReadDataUDP(DatagramPacket paquete) {
-		System.out.println("Recibida una llamada UDP");
 		this.paquete = paquete;
 		setPriority(MAX_PRIORITY - 1);
 		start();
 	}
 
+	
 	public void run() {
-		System.out.println("Lanzado el hilo UDP...");
-		System.out.println("Dato recibido: ----> " + new String(paquete.getData()));
+		log.debug("Lanzado el hilo de lectura de UDP...");
+		String msgRecibido = new String(paquete.getData());
+		if (InfoRunServerUDP.MSG_BAJA_SERVER.equalsIgnoreCase(msgRecibido)){
+			log.warn("MSG de bajada de servidor!!!!");
+			log.warn("----> " + msgRecibido);
+		}else{
+			log.info("Msg recibido --> " + msgRecibido);
+		}
 	}
 	
 }

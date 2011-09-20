@@ -10,9 +10,9 @@
 <body>
 
 	<ui:composition>
-		<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource" var="bundle"/>
+		<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource_en" var="bundle"/>
 		
-		<h:form id="formLogin">
+		<h:form id="formLogin" >
 			
 			<div id="content">
 				<div class="state">
@@ -23,16 +23,19 @@
 				</div>
 				
 				<div class="leftContent fleft">
+					
 					<div class="label">
-						<h:messages id="txtMSG" showDetail="false" showSummary="true" globalOnly="true" errorClass="" infoClass="" warnClass=""/>
+						<h:messages id="txtMSG" showDetail="false" showSummary="true" globalOnly="true" errorClass="error" infoClass="info" warnClass="warn" layout="vertical"/>
 					</div>
+					
+					
 					<div class="label"><h:outputText value="#{bundle['login.text.user']}"/></div>
 					<h:inputText value="#{login.userBean.nick}" id="user" required="true" requiredMessage="#{bundle['login.error.requerido']}"/>
-					<br/><h:message for="user" id="txtErrorUser"/><br/>
+					<br/><h:message for="user" id="txtErrorUser" errorClass="error"/><br/>
 	
 					<div class="label"><h:outputText value="#{bundle['login.text.pass']}"/></div>
 					<h:inputSecret value="#{login.userBean.pass}" id="pass" required="true" requiredMessage="#{bundle['login.error.requerido']}"/>
-					<br/><h:message for="pass" id="txtErrorPass"/><br/>
+					<br/><h:message for="pass" id="txtErrorPass" errorClass="error"/><br/>
 					
 					<div class="options">
 						<div class="fright button"

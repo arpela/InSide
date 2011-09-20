@@ -27,6 +27,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import org.apache.log4j.Logger;
 
 import uy.com.s4b.inside.core.common.CriptPassword;
+import uy.com.s4b.inside.core.exception.InSideException;
 
 /**
  * Title: UserEntity.java <br>
@@ -104,9 +105,11 @@ public class User implements Serializable {
 	public void initEntity(){
 		try {
 			this.pass = new CriptPassword().getHashSH1(this.pass);
-		} catch (NoSuchAlgorithmException e) {
+		} catch (InSideException e) {
 			log.error(e.getMessage(), e);
+			this.pass = "";
 		}
+		
 		this.name = WordUtils.capitalizeFully(this.name);
 		this.surname = WordUtils.capitalizeFully(this.surname);
 	}

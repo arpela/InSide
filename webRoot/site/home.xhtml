@@ -1,48 +1,523 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html  xmlns="http://www.w3.org/1999/xhtml" 
+
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:a4j="http://richfaces.org/a4j" 
-	xmlns:rich="http://richfaces.org/rich" >
-    
-    <h:body>
-    
-		<ui:composition template="/layout/template.xhtml">
-		  
-			<ui:define name="body">
-				<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource" var="bundle"/>
-		
-				<h:form id="formHome">
-					
-					<div id="content">
-						<div class="state">
-							<div class="page fleft">InSide </div>
-			
-							<div class="date fright">Wednesday, August 10, 2011 12:35:02 PM</div>
-							<div class="clear"></div>
-						</div>
-						
-						<div class="leftContent fleft">
-							<div class="label">
-								<h:messages id="txtMSG" showDetail="false" showSummary="true" globalOnly="true" errorClass="" infoClass="" warnClass=""/>
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<h:body>
+
+	<ui:composition template="/layout/templateapp.xhtml">
+
+		<ui:define name="body">
+			<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource_en"
+				var="bundle" />
+			<h:form id="formHome">
+
+				<div id="content">
+					<div class="state">
+						<div class="page fleft">InSide</div>
+						<div class="date fright">Wednesday, August 10, 2011 12:35:02 PM</div>
+						<div class="clear"></div>
+					</div>
+
+					<div class="leftContent fleft">
+						<div class="subtitle">
+							<div class="options"
+								style="width: 180px; margin-top: 0; margin-bottom: 0px">
+								<div class="fright" style="font-size: 11px; color: #9C0">
+									<a id="contenido_link_2" href="#mostrar"
+										onclick="mostrar_contenido(2);">Tag 2 <span id="simbolo_2">[+]</span>
+									</a>
+								</div>
+								<div class="fright"
+									style="margin-right: 8px; font-size: 11px; color: #9C0">
+									<a id="contenido_link_1" href="#mostrar"
+										onclick="mostrar_contenido(1);">Tag 1 <span id="simbolo_1">[-]</span>
+									</a>
+								</div>
+								Esquema:
 							</div>
 						</div>
-						
-						<div class="rightContent fright">
-							<h:outputText value="#{bundle['login.text.msg']}" escape="false" />
-			      		</div>
-			      		
-			      		<div class="clear"></div>
-			    	</div>
-		    	</h:form>
-			</ui:define>
-		
-			
-		</ui:composition>
-    </h:body>
- 
+
+						<div id="contenido_1">
+							<table>
+								<tr style="height: 26px;">
+									<th width="201" style="border-bottom: 1px #bababa solid;">Network
+										/ Site / Zone / node</th>
+									<th width="83" style="border-bottom: 1px #bababa solid;">&nbsp;</th>
+									<th width="77" style="border-bottom: 1px #bababa solid;">&nbsp;</th>
+									<th width="106" style="border-bottom: 1px #bababa solid;">&nbsp;</th>
+								</tr>
+								<tr>
+									<td colspan="4" class="networks">
+										<ul class="network expand">
+											<li class="more"><span>Network-1</span>
+											</li>
+											<ul class="site expand" style="display: none">
+												<li class="more"><span>Site-1</span>
+												</li>
+												<ul class="zone expand" style="display: none">
+													<li class="more"><span>Zone-1</span>
+													</li>
+													<ul class="node expand" style="display: none">
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span>
+														</li>
+														<ul class="subnode expand" style="display: none">
+															<li style="background-image: url('#{request.contextPath}/resources/img/R.png')"><span>Lorem
+																	ipsum dolor</span>
+															</li>
+															<li style="background-image: url('#{request.contextPath}/resources/img/B.png')"><span>Proint
+																	sit aments</span>
+															</li>
+															<li style="background-image: url('#{request.contextPath}/resources/img/R.png')"><span>Lorem
+																	ipsum</span>
+															</li>
+														</ul>
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span>
+														</li>
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span>
+														</li>
+													</ul>
+												</ul>
+											</ul>
+										</ul></td>
+								</tr>
+								<tr>
+									<td colspan="4" class="networks">
+										<ul class="network expand">
+											<li class="more"><span>Network-1</span>
+											</li>
+											<ul class="site expand" style="display: none">
+												<li class="more"><span>Site-1</span>
+												</li>
+												<ul class="zone expand" style="display: none">
+													<li class="more"><span>Zone-1</span>
+													</li>
+													<ul class="node expand" style="display: none">
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span>
+														</li>
+														<ul class="subnode expand" style="display: none">
+															<li style="background-image: url('#{request.contextPath}/resources/img/R.png')"><span>Lorem
+																	ipsum dolor</span>
+															</li>
+															<li style="background-image: url('#{request.contextPath}/resources/img/B.png')"><span>Proint
+																	sit aments</span>
+															</li>
+															<li style="background-image: url('#{request.contextPath}/resources/img/R.png')"><span>Lorem
+																	ipsum</span>
+															</li>
+														</ul>
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span>
+														</li>
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span>
+														</li>
+													</ul>
+												</ul>
+											</ul>
+										</ul></td>
+								</tr>
+								<tr>
+									<td colspan="4" class="networks">
+										<ul class="network expand">
+											<li class="more"><span>Network-1</span>
+											</li>
+											<ul class="site expand" style="display: none">
+												<li class="more"><span>Site-1</span>
+												</li>
+												<ul class="zone expand" style="display: none">
+													<li class="more"><span>Zone-1</span>
+													</li>
+													<ul class="node expand" style="display: none">
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span>
+														</li>
+														<ul class="subnode expand" style="display: none">
+															<li style="background-image: url('#{request.contextPath}/resources/img/R.png')"><span>Lorem
+																	ipsum dolor</span>
+															</li>
+															<li style="background-image: url('#{request.contextPath}/resources/img/B.png')"><span>Proint
+																	sit aments</span>
+															</li>
+															<li style="background-image: url('#{request.contextPath}/resources/img/R.png')"><span>Lorem
+																	ipsum</span>
+															</li>
+														</ul>
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span>
+														</li>
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span>
+														</li>
+													</ul>
+												</ul>
+											</ul>
+										</ul></td>
+								</tr>
+							</table>
+						</div>
+
+
+						<div id="contenido_2" style="display: none">
+							<table>
+								<tr>
+									<th width="201">Network / Site / Zone / node</th>
+									<th width="83">&nbsp;</th>
+									<th width="77">&nbsp;</th>
+									<th width="106" style="text-align: left; padding-left: 30px">&nbsp;</th>
+								</tr>
+								<tr>
+
+									<td colspan="4" class="networks">
+										<ul class="network expand">
+											<li class="more"><span>Network-1</span>
+											</li>
+											<ul class="site expand" style="display: none">
+												<li class="more"><span>Site-1</span>
+												</li>
+												<ul class="zone expand" style="display: none">
+													<li class="more"><span>Zone-1</span>
+													</li>
+													<ul class="node expand" style="display: none">
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span>
+														</li>
+														<ul class="subnode expand" style="display: none">
+															<li style="background-image: url('#{request.contextPath}/resources/img/R.png')"><span>Lorem
+																	ipsum dolor</span>
+															</li>
+															<li style="background-image: url('#{request.contextPath}/resources/img/B.png')"><span>Proint
+																	sit aments</span>
+															</li>
+															<li style="background-image: url('#{request.contextPath}/resources/img/R.png')"><span>Lorem
+																	ipsum</span>
+															</li>
+														</ul>
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span>
+														</li>
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span>
+														</li>
+													</ul>
+												</ul>
+											</ul>
+										</ul></td>
+								</tr>
+								<tr>
+									<td colspan="4" class="networks">
+										<ul class="network expand">
+											<li class="more"><span>Network-1</span>
+											</li>
+											<ul class="site expand" style="display: none">
+												<li class="more"><span>Site-1</span>
+												</li>
+												<ul class="zone expand" style="display: none">
+													<li class="more"><span>Zone-1</span>
+													</li>
+													<ul class="node expand" style="display: none">
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span>
+														</li>
+														<ul class="subnode expand" style="display: none">
+															<li style="background-image: url('#{request.contextPath}/resources/img/R.png')"><span>Lorem
+																	ipsum dolor</span>
+															</li>
+															<li style="background-image: url('#{request.contextPath}/resources/img/B.png')"><span>Proint
+																	sit aments</span>
+															</li>
+															<li style="background-image: url('#{request.contextPath}/resources/img/R.png')"><span>Lorem
+																	ipsum</span>
+															</li>
+														</ul>
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span>
+														</li>
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span>
+														</li>
+													</ul>
+												</ul>
+											</ul>
+										</ul></td>
+								</tr>
+								<tr>
+									<td colspan="4" class="networks">
+										<ul class="network expand">
+											<li class="more"><span>Network-1</span>
+											</li>
+											<ul class="site expand" style="display: none">
+												<li class="more"><span>Site-1</span>
+												</li>
+												<ul class="zone expand" style="display: none">
+													<li class="more"><span>Zone-1</span>
+													</li>
+													<ul class="node expand" style="display: none">
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span>
+														</li>
+														<ul class="subnode expand" style="display: none">
+															<li style="background-image: url('#{request.contextPath}/resources/img/R.png')"><span>Lorem
+																	ipsum dolor</span>
+															</li>
+															<li style="background-image: url('#{request.contextPath}/resources/img/B.png')"><span>Proint
+																	sit aments</span>
+															</li>
+															<li style="background-image: url('#{request.contextPath}/resources/img/R.png')"><span>Lorem
+																	ipsum</span>
+															</li>
+														</ul>
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span>
+														</li>
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span>
+														</li>
+													</ul>
+												</ul>
+											</ul>
+										</ul></td>
+								</tr>
+								<tr>
+									<td colspan="4" class="networks">
+										<ul class="network expand">
+											<li class="more"><span>Network-1</span>
+											</li>
+											<ul class="site expand" style="display: none">
+												<li class="more"><span>Site-1</span>
+												</li>
+												<ul class="zone expand" style="display: none">
+													<li class="more"><span>Zone-1</span>
+													</li>
+													<ul class="node expand" style="display: none">
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span>
+														</li>
+														<ul class="subnode expand" style="display: none">
+															<li style="background-image: url('#{request.contextPath}/resources/img/R.png')"><span>Lorem
+																	ipsum dolor</span>
+															</li>
+															<li style="background-image: url('#{request.contextPath}/resources/img/B.png')"><span>Proint
+																	sit aments</span>
+															</li>
+															<li style="background-image: url('#{request.contextPath}/resources/img/R.png')"><span>Lorem
+																	ipsum</span>
+															</li>
+														</ul>
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span>
+														</li>
+														<li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span>
+														</li>
+													</ul>
+												</ul>
+											</ul>
+										</ul></td>
+								</tr>
+							</table>
+						</div>
+
+
+
+						<script type="text/javascript">
+            $('ul.expand li').click(function(){
+              next = $(this).next('ul.expand');
+              if ($(this).hasClass('less')){
+                $(next).slideUp();
+                $(this).removeClass('less');
+                $(this).addClass('more');
+              }else{
+                $(next).slideDown();
+                $(this).addClass('less');
+                $(this).removeClass('more');
+              }
+            })
+            </script>
+						<div class="options">
+							<div class="fright button">
+								<a href="#">Ayuda</a>
+							</div>
+							<div class="fright button" style="margin-right: 5px">
+								<a href="#">Editar</a>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="subtitle">Ultimos cambios:</div>
+						<table class="changes">
+							<tr>
+								<th width="140">Equipos</th>
+								<th width="145">Fecha / Hora</th>
+								<th width="101">Equipos</th>
+							</tr>
+							<tr>
+								<td class='dark'>Eliquam Veicua</td>
+								<td>11/27/2010 2:34:38 PM</td>
+								<td><a class="links_modal" href="#dd"
+									data-reveal-id="Modal_1">Ver reporte</a>
+								</td>
+							</tr>
+							<tr>
+								<td class='dark'>In egestas ultrices</td>
+								<td>11/27/2010 2:34:38 PM</td>
+								<td><a class="links_modal" href="#dd"
+									data-reveal-id="Modal_1">Ver reporte</a>
+								</td>
+							</tr>
+							<tr>
+								<td class='dark'>Proin sit amet tellus</td>
+								<td>11/27/2010 2:34:38 PM</td>
+								<td><a class="links_modal" href="#dd"
+									data-reveal-id="Modal_1">Ver reporte</a>
+								</td>
+							</tr>
+							<tr>
+								<td class='dark'>Lorem ipsum dolor</td>
+								<td>11/27/2010 2:34:38 PM</td>
+								<td><a class="links_modal" href="#dd"
+									data-reveal-id="Modal_1">Ver reporte</a>
+								</td>
+							</tr>
+						</table>
+						<div class="options">
+							<div class="fright button">
+								<a href="#">Ayuda</a>
+							</div>
+							<div class="fright button" style="margin-right: 5px">
+								<a href="#">Editar</a>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="rightContent fright">
+						<div class="subtitle">Panel de alarmas:</div>
+						<table width="420" class="events" style="border-collapse: inherit">
+							<tr>
+								<th class="event">Evento</th>
+								<th>Info</th>
+								<th>Cuidado</th>
+								<th>Crítico</th>
+							</tr>
+							<tr>
+								<td class="event links_modal"><a href="#q"
+									onclick="$('#bloque1, #bloque').toggle(); return false;">HIPAA
+										Security Report</a>
+								</td>
+								<td><img src="#{request.contextPath}/resources/img/green_event.png" alt="verde" />
+								</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td colspan="4" id="bloque1"
+									style="display: none; color: #999; text-align: left; padding: 5px 5px 5px 32px; border: 0">
+									Cisco Security Audit<br /> Lorem ipsum dolor sit amet,
+									consectetur Lorem ipsum dolor sit <br /> amet, consectetur
+									amet, consectetur amet, consectetur<br /> amet, consectetur
+									amet, consecteturamet, consecteturamet, consecte<br /> amet,
+									consecteturamet, consectetur <br /></td>
+							</tr>
+							<tr>
+								<td class="event"><a href="#q"
+									onclick="$('#bloque2, #bloque').toggle(); return false;">Cisco
+										Security Audit</a>
+								</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+								<td><img src="#{request.contextPath}/resources/img/red_event.png" alt="rojo" />
+								</td>
+							</tr>
+							<tr>
+								<td colspan="4" id="bloque2"
+									style="display: none; color: #999; text-align: left; padding: 5px 5px 5px 32px; border: 0">
+									Cisco Security Audit<br /> Lorem ipsum dolor sit amet,
+									consectetur Lorem ipsum dolor sit <br /> amet, consectetur
+									amet, consectetur amet, consectetur<br /> amet, consectetur
+									amet, consecteturamet, consecteturamet, consectetur<br />
+									amet, consecteturamet, consectetur <br /></td>
+							</tr>
+							<tr>
+								<td class="event"><a href="#q"
+									onclick="$('#bloque3, #bloque').toggle(); return false;">CISP
+										Reports</a>
+								</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+								<td><img src="#{request.contextPath}/resources/img/red_event.png" alt="rojo" />
+								</td>
+							</tr>
+							<tr>
+								<td colspan="4" id="bloque3"
+									style="display: none; color: #999; text-align: left; padding: 5px 5px 5px 32px; border: 0">
+									Cisco Security Audit<br /> Lorem ipsum dolor sit amet,
+									consectetur Lorem ipsum dolor sit <br /> amet, consectetur
+									amet, consectetur amet, consectetur<br /> amet, consectetur
+									amet, consecteturamet, consecteturamet, consectetur<br />
+									amet, consecteturamet, consectetur </td>
+							</tr>
+							<tr>
+								<td class="event"><a href="#q"
+									onclick="$('#bloque4, #bloque').toggle(); return false;">Cisco
+										Policy Report</a>
+								</td>
+								<td>&nbsp;</td>
+								<td><img src="#{request.contextPath}/resources/img/yellow_event.png" alt="amarillo" />
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td colspan="4" id="bloque4"
+									style="display: none; color: #999; text-align: left; padding: 5px 5px 5px 32px; border: 0">
+									Cisco Security Audit<br /> Lorem ipsum dolor sit amet,
+									consectetur Lorem ipsum dolor sit <br /> amet, consectetur
+									amet, consectetur amet, consectetur<br /> amet, consectetur
+									amet, consecteturamet, consecteturamet, consectetur<br />
+									amet, consecteturamet, consectetur </td>
+							</tr>
+							<tr>
+								<td class="event"><a href="#q"
+									onclick="$('#bloque5, #bloque').toggle(); return false;">HIPAA
+										Security Report</a>
+								</td>
+								<td>&nbsp;</td>
+								<td><img src="#{request.contextPath}/resources/img/yellow_event.png" alt="amarillo" />
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td colspan="4" id="bloque5"
+									style="display: none; color: #999; text-align: left; padding: 5px 5px 5px 32px; border: 0">
+									Cisco Security Audit<br /> Lorem ipsum dolor sit amet,
+									consectetur Lorem ipsum dolor sit <br /> amet, consectetur
+									amet, consectetur amet, consectetur<br /> amet, consectetur
+									amet, consecteturamet, consecteturamet, consectetur<br />
+									amet, consecteturamet, consectetur </td>
+							</tr>
+							<tr>
+								<td class="event" style="border-collapse: separate"><a
+									href="#q"
+									onclick="$('#bloque6, #bloque').toggle(); return false;">CISP
+										Reports</a>
+								</td>
+								<td>&nbsp;</td>
+								<td><img src="#{request.contextPath}/resources/img/yellow_event.png" alt="amarillo" />
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td colspan="4" id="bloque6" style="display: none; color: #999; text-align: left; padding: 5px 5px 5px 32px; border: 0; border-collapse: separate">
+									Cisco Security Audit<br /> Lorem ipsum dolor sit amet,
+									consectetur Lorem ipsum dolor sit <br /> amet, consectetur
+									amet, consectetur amet, consectetur<br /> amet, consectetur
+									amet, consecteturamet, consecteturamet, consectetur<br />
+									amet, consecteturamet, consectetur </td>
+							</tr>
+						</table>
+						<div class="options">
+							<div class="fright button">
+								<a href="#">Ayuda</a>
+							</div>
+							<div class="fright button" style="margin-right: 5px">
+								<a href="#">Editar</a>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
 </html>
 

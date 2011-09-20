@@ -64,6 +64,6 @@ public class LoginBakingBean implements Serializable {
 	 * @return
 	 */
 	public boolean loginIn(){
-		return (userBean != null);
+		return (userBean.getName() != null);
 	}
 }
