@@ -40,7 +40,7 @@ public class InterfaceDevice implements Serializable {
 	private Integer id;
 	
 	
-	@Column(insertable=true, nullable=false, unique=true)
+	@Column(insertable=true, nullable=false, unique=false)
 	private String name;
 	
 	
@@ -48,11 +48,11 @@ public class InterfaceDevice implements Serializable {
 	private String ip;
 	
 	
-	@Column(insertable=true, nullable=false, unique=false)
-	private Integer index;
+	@Column(insertable=true, unique=false)
+	private Integer indexInterface;
 	
 	
-	@Column(insertable=true, nullable=false, unique=false)
+	@Column(insertable=true, nullable=true, unique=false)
 	private String mac;
 	
 	
@@ -130,16 +130,16 @@ public class InterfaceDevice implements Serializable {
 	/**
 	 * @return the index
 	 */
-	public Integer getIndex() {
-		return index;
+	public Integer getIndexInterface() {
+		return indexInterface;
 	}
 
 
 	/**
 	 * @param index the index to set
 	 */
-	public void setIndex(Integer index) {
-		this.index = index;
+	public void setIndexInterface(Integer indexInterface) {
+		this.indexInterface = indexInterface;
 	}
 
 
