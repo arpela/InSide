@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -20,17 +18,22 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
- * @author pablo
- * 
+ * Title: Action.java <br>
+ * Description: <br>
+ * Fecha creaciÃ³n: 20/09/2011 <br>
+ * Copyright: S4B <br>
+ * Company: S4B - http://www.s4b.com.uy <br>
+ * @author Pablo
+ *
  */
-
-@Table(name="serie")
+@Table(name="action")
 @Entity
-public class Serial implements Serializable {
+public class Action implements Serializable {
 
 	@Transient
-	private static final long serialVersionUID = 6668829217481430973L;
+	private static final long serialVersionUID = 3462200538234669696L;
 
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column
@@ -41,20 +44,13 @@ public class Serial implements Serializable {
 	private String name;
 	
 	
-	@ManyToOne(optional=false)
-	@JoinColumn(name="typedevice_id") 
-	private TypeDevice typeDevice;
-	
-	
-	@ManyToOne(optional=false)
-	@JoinColumn(name="ios_id") 
-	private Ios ios;
-	
-	
-	public Serial() {
+	/**
+	 * 
+	 */
+	public Action() {
 		
 	}
-
+	
 	
 	/**
 	 * Funcion encargada de correjir imperfecciones 
@@ -64,7 +60,7 @@ public class Serial implements Serializable {
 	public void initEntity(){
 		this.name = WordUtils.capitalizeFully(this.name);
 	}
-	
+
 
 	/**
 	 * @return the id
@@ -96,40 +92,8 @@ public class Serial implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
-	/**
-	 * @return the typeDevice
-	 */
-	public TypeDevice getTypeDevice() {
-		return typeDevice;
-	}
-
-
-	/**
-	 * @param typeDevice the typeDevice to set
-	 */
-	public void setTypeDevice(TypeDevice typeDevice) {
-		this.typeDevice = typeDevice;
-	}
 	
 	
-	/**
-	 * @return the ios
-	 */
-	public Ios getIos() {
-		return ios;
-	}
-
-
-	/**
-	 * @param ios the ios to set
-	 */
-	public void setIos(Ios ios) {
-		this.ios = ios;
-	}
-
-
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
@@ -149,5 +113,4 @@ public class Serial implements Serializable {
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
-
 }

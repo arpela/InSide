@@ -1,14 +1,15 @@
 package uy.com.s4b.inside.core.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -20,17 +21,22 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
- * @author pablo
- * 
+ * Title: Network.java <br>
+ * Description: <br>
+ * Fecha creaciÃ³n: 20/09/2011 <br>
+ * Copyright: S4B <br>
+ * Company: S4B - http://www.s4b.com.uy <br>
+ * @author Pablo
+ *
  */
-
-@Table(name="serie")
+@Table(name="network")
 @Entity
-public class Serial implements Serializable {
+public class Network implements Serializable {
 
 	@Transient
-	private static final long serialVersionUID = 6668829217481430973L;
+	private static final long serialVersionUID = 2642699632506578950L;
 
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column
@@ -41,20 +47,16 @@ public class Serial implements Serializable {
 	private String name;
 	
 	
-	@ManyToOne(optional=false)
-	@JoinColumn(name="typedevice_id") 
-	private TypeDevice typeDevice;
+	@OneToMany(cascade=CascadeType.DETACH)
+	private Set<Site> colSite;
 	
-	
-	@ManyToOne(optional=false)
-	@JoinColumn(name="ios_id") 
-	private Ios ios;
-	
-	
-	public Serial() {
+		
+	/**
+	 * 
+	 */
+	public Network() {
 		
 	}
-
 	
 	/**
 	 * Funcion encargada de correjir imperfecciones 
@@ -64,7 +66,6 @@ public class Serial implements Serializable {
 	public void initEntity(){
 		this.name = WordUtils.capitalizeFully(this.name);
 	}
-	
 
 	/**
 	 * @return the id
@@ -73,14 +74,12 @@ public class Serial implements Serializable {
 		return id;
 	}
 
-
 	/**
 	 * @param id the id to set
 	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 
 	/**
 	 * @return the name
@@ -89,7 +88,6 @@ public class Serial implements Serializable {
 		return name;
 	}
 
-
 	/**
 	 * @param name the name to set
 	 */
@@ -97,39 +95,21 @@ public class Serial implements Serializable {
 		this.name = name;
 	}
 
-
 	/**
-	 * @return the typeDevice
+	 * @return the colSite
 	 */
-	public TypeDevice getTypeDevice() {
-		return typeDevice;
+	public Set<Site> getColSite() {
+		return colSite;
 	}
 
-
 	/**
-	 * @param typeDevice the typeDevice to set
+	 * @param colSite the colSite to set
 	 */
-	public void setTypeDevice(TypeDevice typeDevice) {
-		this.typeDevice = typeDevice;
+	public void setColSite(Set<Site> colSite) {
+		this.colSite = colSite;
 	}
 	
 	
-	/**
-	 * @return the ios
-	 */
-	public Ios getIos() {
-		return ios;
-	}
-
-
-	/**
-	 * @param ios the ios to set
-	 */
-	public void setIos(Ios ios) {
-		this.ios = ios;
-	}
-
-
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);

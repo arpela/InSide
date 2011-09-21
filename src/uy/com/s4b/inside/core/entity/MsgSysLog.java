@@ -9,62 +9,57 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
- * @author pablo
- * 
+ * Title: MsgSysLog.java <br>
+ * Description: <br>
+ * Fecha creaciÃ³n: 20/09/2011 <br>
+ * Copyright: S4B <br>
+ * Company: S4B - http://www.s4b.com.uy <br>
+ * @author Pablo
+ *
  */
-
-@Table(name="serie")
+@Table(name="msgsyslog")
 @Entity
-public class Serial implements Serializable {
+public class MsgSysLog implements Serializable {
 
 	@Transient
-	private static final long serialVersionUID = 6668829217481430973L;
+	private static final long serialVersionUID = -3618912731812624132L;
 
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column
 	private Integer id;
 	
 	
-	@Column(insertable=true, nullable=false, unique=true)
-	private String name;
+	@Column(insertable=true, nullable=true, unique=false)
+	private Integer idSysLog;
+	
+	
+	@Column(insertable=true, nullable=false, unique=false)
+	private String message;
 	
 	
 	@ManyToOne(optional=false)
-	@JoinColumn(name="typedevice_id") 
-	private TypeDevice typeDevice;
+	@JoinColumn(name="actionId") 
+	private Action action;
 	
-	
-	@ManyToOne(optional=false)
-	@JoinColumn(name="ios_id") 
-	private Ios ios;
-	
-	
-	public Serial() {
+		
+	/**
+	 * 
+	 */
+	public MsgSysLog() {
 		
 	}
 
-	
-	/**
-	 * Funcion encargada de correjir imperfecciones 
-	 * en los datos del entity
-	 */
-	@PrePersist()
-	public void initEntity(){
-		this.name = WordUtils.capitalizeFully(this.name);
-	}
-	
 
 	/**
 	 * @return the id
@@ -83,53 +78,53 @@ public class Serial implements Serializable {
 
 
 	/**
-	 * @return the name
+	 * @return the idSysLog
 	 */
-	public String getName() {
-		return name;
+	public Integer getIdSysLog() {
+		return idSysLog;
 	}
 
 
 	/**
-	 * @param name the name to set
+	 * @param idSysLog the idSysLog to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setIdSysLog(Integer idSysLog) {
+		this.idSysLog = idSysLog;
 	}
 
 
 	/**
-	 * @return the typeDevice
+	 * @return the message
 	 */
-	public TypeDevice getTypeDevice() {
-		return typeDevice;
+	public String getMessage() {
+		return message;
 	}
 
 
 	/**
-	 * @param typeDevice the typeDevice to set
+	 * @param message the message to set
 	 */
-	public void setTypeDevice(TypeDevice typeDevice) {
-		this.typeDevice = typeDevice;
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+
+	/**
+	 * @return the action
+	 */
+	public Action getAction() {
+		return action;
+	}
+
+
+	/**
+	 * @param action the action to set
+	 */
+	public void setAction(Action action) {
+		this.action = action;
 	}
 	
 	
-	/**
-	 * @return the ios
-	 */
-	public Ios getIos() {
-		return ios;
-	}
-
-
-	/**
-	 * @param ios the ios to set
-	 */
-	public void setIos(Ios ios) {
-		this.ios = ios;
-	}
-
-
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
