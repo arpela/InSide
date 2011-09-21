@@ -1,7 +1,10 @@
 package uy.com.s4b.inside.ui.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Locale;
 
 import javax.ejb.EJB;
@@ -11,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
@@ -31,7 +35,7 @@ import uy.com.s4b.inside.ui.bundle.BundleUtil;
  */
 @ManagedBean(name="navegate")
 @RequestScoped
-public class Navega implements Serializable {
+public class SurfLogin implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -47,55 +51,62 @@ public class Navega implements Serializable {
 	/**
 	 * 
 	 */
-	public Navega() {
+	public SurfLogin() {
 
 	}
 	
 	
 	public String accionLogin(){
+		// setear el id de session para que luego se escriba en el log.
+		
 		log.info("Ingreso hacer login del usuario!!! ");
-		String retorno = "login";
+		String retorno = null;
 		try {
 			String pass = new CriptPassword().getHashSH1(loginBaking.getUserBean().getPass());
 			User u = mangerUser.login(loginBaking.getUserBean().getNick(), pass);
+			loginBaking.setUserBean(u);
 			retorno = "site/home";
-			
 		} catch (InSideException ex) {
 			log.error(ex.getKeyMSGError());
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage (FacesMessage.SEVERITY_ERROR, 
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage (FacesMessage.SEVERITY_ERROR, 
 						BundleUtil.getMessageResource(ex.getKeyMSGError()), 
 						BundleUtil.getMessageResource(ex.getKeyMSGError())));
-		} catch (NoSuchAlgorithmException ex) {
-			// TODO cambia la exception y agregar key !!!
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage (FacesMessage.SEVERITY_ERROR, 
-						BundleUtil.getMessageResource("generalError"), 
-						BundleUtil.getMessageResource("generalError")));
 		}
-		
 		log.debug("Pagina de redireccion --->> " + retorno);
 		log.info("fin de Login!!!");
 		return retorno;
 	}
 
-
+	
+	public void accionLogout() {
+		try {
+			FacesContext faces = FacesContext.getCurrentInstance();
+			HttpServletRequest req = (HttpServletRequest)faces.getExternalContext().getRequest();
+			Enumeration<String> en =  req.getSession().getAttributeNames();
+			for (; en.hasMoreElements();) {
+				String key = en.nextElement();
+				req.removeAttribute(key);
+			}
+			req.getSession().invalidate();
+			log.info("Log out");
+			faces.getExternalContext().redirect(req.getContextPath());
+		} catch (IOException ex) {
+			log.error(ex.getMessage(), ex);
+		}
+	}
 	
 	/**
 	 * hace el cambio de idima
 	 * @return
 	 */
 	public String changeLeguage(){
-		FacesContext miContexto = FacesContext.getCurrentInstance();
+		FacesContext context = FacesContext.getCurrentInstance();
 		Locale miLocale = new Locale("en","US");
-		miContexto.getViewRoot().setLocale(miLocale);
+		context.getViewRoot().setLocale(miLocale);
 		return "login";
 	}
 
 	
-//	Since there are no explicit navigation rules in faces-config.xml,
-//	these return values correspond to page1.xhtml, page2.xhtml, and
-//	page3.xhtml (in same folder as page that has the form).
 	/**
 	 * @param loginBaking the loginBaking to set
 	 */

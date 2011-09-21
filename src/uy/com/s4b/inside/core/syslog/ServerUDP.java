@@ -19,7 +19,6 @@ import org.apache.commons.logging.LogFactory;
  * @author arpela
  *
  */
-
 public class ServerUDP extends Thread {
 	
 	private static final Log log = LogFactory.getLog(ServerUDP.class);
@@ -35,7 +34,7 @@ public class ServerUDP extends Thread {
 	
 	public void run() {
 		try {
-			InetAddress host = InetAddress.getLocalHost();
+			InetAddress host = InetAddress.getByName(InfoRunServerUDP.IP_SERVIDOR);
 			DatagramSocket socketDgrama = new DatagramSocket(puerto, host);
 			
 			String ip = new String (host.getHostAddress());
@@ -50,8 +49,8 @@ public class ServerUDP extends Thread {
 				
 				socketDgrama.receive(paquete);
 				new ReadDataUDP(paquete);
-			}
-			
+			}			
+			log.warn("Servidor SysLog Bajando!!! ");
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
 		}

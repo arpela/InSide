@@ -7,6 +7,11 @@
 
 	<display-name>rich</display-name>
 
+
+	<listener>
+		<listener-class>uy.com.s4b.inside.ui.listener.Listener</listener-class>
+	</listener>
+
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

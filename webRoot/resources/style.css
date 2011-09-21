@@ -138,3 +138,8 @@ table {	border-collapse: collapse;	border-spacing: 0;}
 .table_info{font-size:11px;	padding-top:3px;}
 .table_strong{font-weight:bold;}
 .menu_activo_menu_colapsable{ color:#666}
+
+
+.error{margin-top:-14px; margin-left:20px; background: url("img/red_event.png") no-repeat scroll left bottom transparent; color:#c81f24; font-weight:bold; margin-bottom:10px; }
+.warn{margin-top:-14px; margin-left:20px; background: url("img/yellow_event.png") no-repeat scroll left bottom transparent;  color:#ffc81f; font-weight:bold; margin-bottom:10px; }
+.info{margin-top:-14px; margin-left:20px; background: url("img/green_event.png") no-repeat scroll left bottom transparent; color:#88b119; font-weight:bold; margin-bottom:10px; }
