@@ -29,6 +29,11 @@
 	</context-param>
 
 
+	<error-page>
+		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
+		<location>/login.jsf</location>
+	</error-page>
+
 
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>

@@ -18,6 +18,8 @@ public interface InfoRunServerUDP {
 	 */
 	String IP_SERVIDOR = System.getProperty("jboss.bind.address");
 	
+//	String IP_SERVIDOR = "10.1.1.2";
+	
 	/*
 	 * Puerto en el cual nos quedamos escuchando los syslog
 	 */
