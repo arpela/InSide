@@ -61,6 +61,10 @@ public class InterfaceDevice implements Serializable {
 	private TypeInterface typeInterface;
 	
 	
+	@Column(insertable=true, nullable=false, unique=false)
+	private Boolean isManager;
+	
+	
 	/**
 	 * 
 	 */
@@ -78,7 +82,7 @@ public class InterfaceDevice implements Serializable {
 		this.name = WordUtils.capitalizeFully(this.name);
 	}
 	
-
+	
 	/**
 	 * @return the id
 	 */
@@ -128,15 +132,15 @@ public class InterfaceDevice implements Serializable {
 
 
 	/**
-	 * @return the index
+	 * @return the indexInterface
 	 */
-	public Integer getIndex() {
+	public Integer getIndexInterface() {
 		return indexInterface;
 	}
 
 
 	/**
-	 * @param index the index to set
+	 * @param indexInterface the indexInterface to set
 	 */
 	public void setIndexInterface(Integer indexInterface) {
 		this.indexInterface = indexInterface;
@@ -173,8 +177,24 @@ public class InterfaceDevice implements Serializable {
 	public void setTypeInterface(TypeInterface typeInterface) {
 		this.typeInterface = typeInterface;
 	}
-	
-	
+
+
+	/**
+	 * @return the isManager
+	 */
+	public Boolean getIsManager() {
+		return isManager;
+	}
+
+
+	/**
+	 * @param isManager the isManager to set
+	 */
+	public void setIsManager(Boolean isManager) {
+		this.isManager = isManager;
+	}
+
+
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);

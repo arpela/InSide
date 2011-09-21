@@ -1,70 +1,65 @@
 package uy.com.s4b.inside.core.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
- * @author pablo
- * 
+ * Title: SysLog.java <br>
+ * Description: <br>
+ * Fecha creaciÃ³n: 20/09/2011 <br>
+ * Copyright: S4B <br>
+ * Company: S4B - http://www.s4b.com.uy <br>
+ * @author Pablo
+ *
  */
-
-@Table(name="serie")
+@Table(name="syslog")
 @Entity
-public class Serial implements Serializable {
+public class SysLog implements Serializable {
 
 	@Transient
-	private static final long serialVersionUID = 6668829217481430973L;
+	private static final long serialVersionUID = 8124313013614504959L;
 
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column
 	private Integer id;
 	
 	
-	@Column(insertable=true, nullable=false, unique=true)
-	private String name;
+	@Column(insertable=true, nullable=false, unique=false)
+	@Lob
+	private String message;
 	
 	
-	@ManyToOne(optional=false)
-	@JoinColumn(name="typedevice_id") 
-	private TypeDevice typeDevice;
+	@Column(insertable=true, nullable=true, unique=false)
+	private String dateMessage;
 	
 	
-	@ManyToOne(optional=false)
-	@JoinColumn(name="ios_id") 
-	private Ios ios;
+	@Column(insertable=true, nullable=true, unique=false)
+	private Timestamp dateReceive;
 	
 	
-	public Serial() {
+	/**
+	 * 
+	 */
+	public SysLog() {
 		
 	}
 
-	
-	/**
-	 * Funcion encargada de correjir imperfecciones 
-	 * en los datos del entity
-	 */
-	@PrePersist()
-	public void initEntity(){
-		this.name = WordUtils.capitalizeFully(this.name);
-	}
-	
 
 	/**
 	 * @return the id
@@ -83,53 +78,53 @@ public class Serial implements Serializable {
 
 
 	/**
-	 * @return the name
+	 * @return the message
 	 */
-	public String getName() {
-		return name;
+	public String getMessage() {
+		return message;
 	}
 
 
 	/**
-	 * @param name the name to set
+	 * @param message the message to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 
 	/**
-	 * @return the typeDevice
+	 * @return the dateMessage
 	 */
-	public TypeDevice getTypeDevice() {
-		return typeDevice;
+	public String getDateMessage() {
+		return dateMessage;
 	}
 
 
 	/**
-	 * @param typeDevice the typeDevice to set
+	 * @param dateMessage the dateMessage to set
 	 */
-	public void setTypeDevice(TypeDevice typeDevice) {
-		this.typeDevice = typeDevice;
+	public void setDateMessage(String dateMessage) {
+		this.dateMessage = dateMessage;
+	}
+
+
+	/**
+	 * @return the dateReceive
+	 */
+	public Timestamp getDateReceive() {
+		return dateReceive;
+	}
+
+
+	/**
+	 * @param dateReceive the dateReceive to set
+	 */
+	public void setDateReceive(Timestamp dateReceive) {
+		this.dateReceive = dateReceive;
 	}
 	
 	
-	/**
-	 * @return the ios
-	 */
-	public Ios getIos() {
-		return ios;
-	}
-
-
-	/**
-	 * @param ios the ios to set
-	 */
-	public void setIos(Ios ios) {
-		this.ios = ios;
-	}
-
-
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);

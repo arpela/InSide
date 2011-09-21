@@ -1,70 +1,61 @@
 package uy.com.s4b.inside.core.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
- * @author pablo
- * 
+ * Title: Version.java <br>
+ * Description: <br>
+ * Fecha creaciÃ³n: 20/09/2011 <br>
+ * Copyright: S4B <br>
+ * Company: S4B - http://www.s4b.com.uy <br>
+ * @author Pablo
+ *
  */
-
-@Table(name="serie")
+@Table(name="version")
 @Entity
-public class Serial implements Serializable {
+public class Version implements Serializable {
 
 	@Transient
-	private static final long serialVersionUID = 6668829217481430973L;
+	private static final long serialVersionUID = -3388648274104951488L;
 
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column
 	private Integer id;
 	
 	
-	@Column(insertable=true, nullable=false, unique=true)
-	private String name;
+	@Column(insertable=true, nullable=false, unique=false)
+	private Timestamp date;
 	
 	
-	@ManyToOne(optional=false)
-	@JoinColumn(name="typedevice_id") 
-	private TypeDevice typeDevice;
+	@Column(insertable=true, nullable=true, unique=false)
+	@Lob
+	private String config;
 	
 	
-	@ManyToOne(optional=false)
-	@JoinColumn(name="ios_id") 
-	private Ios ios;
-	
-	
-	public Serial() {
+	/**
+	 * 
+	 */
+	public Version() {
 		
 	}
 
-	
-	/**
-	 * Funcion encargada de correjir imperfecciones 
-	 * en los datos del entity
-	 */
-	@PrePersist()
-	public void initEntity(){
-		this.name = WordUtils.capitalizeFully(this.name);
-	}
-	
 
 	/**
 	 * @return the id
@@ -83,53 +74,37 @@ public class Serial implements Serializable {
 
 
 	/**
-	 * @return the name
+	 * @return the date
 	 */
-	public String getName() {
-		return name;
+	public Timestamp getDate() {
+		return date;
 	}
 
 
 	/**
-	 * @param name the name to set
+	 * @param date the date to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setDate(Timestamp date) {
+		this.date = date;
 	}
 
 
 	/**
-	 * @return the typeDevice
+	 * @return the config
 	 */
-	public TypeDevice getTypeDevice() {
-		return typeDevice;
+	public String getConfig() {
+		return config;
 	}
 
 
 	/**
-	 * @param typeDevice the typeDevice to set
+	 * @param config the config to set
 	 */
-	public void setTypeDevice(TypeDevice typeDevice) {
-		this.typeDevice = typeDevice;
+	public void setConfig(String config) {
+		this.config = config;
 	}
 	
 	
-	/**
-	 * @return the ios
-	 */
-	public Ios getIos() {
-		return ios;
-	}
-
-
-	/**
-	 * @param ios the ios to set
-	 */
-	public void setIos(Ios ios) {
-		this.ios = ios;
-	}
-
-
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);

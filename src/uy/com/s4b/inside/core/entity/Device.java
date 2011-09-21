@@ -16,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -60,16 +59,16 @@ public class Device implements Serializable {
 	
 	
 	@ManyToOne(optional=false)
-	@JoinColumn(name="model_id") 
+	@JoinColumn(name="modelId") 
 	private Model model;
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
-	private String serial_number;
+	private String serialNumber;
 	
 
 	@ManyToOne(optional=false)
-	@JoinColumn(name="ios_id") 
+	@JoinColumn(name="iosId") 
 	private Ios ios;
 	
 	
@@ -82,23 +81,27 @@ public class Device implements Serializable {
 	
 	
 	@OneToMany(cascade=CascadeType.DETACH)
-	private Set<InterfaceDevice> interfaceDevice;
+	private Set<InterfaceDevice> colInterfaceDevice;
+	
+	
+	@OneToMany(cascade=CascadeType.DETACH)
+	private Set<Version> colVersion;
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
-	private String snmp_id;
+	private String snmpId;
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
-	private String snmp_comunidadR;
+	private String snmpComunidadR;
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
-	private String snmp_version;
+	private String snmpVersion;
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
-	private String snmp_password;
+	private String snmpPassword;
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
@@ -107,12 +110,15 @@ public class Device implements Serializable {
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
-	private Date date_create;
+	private Date dateCreate;
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
-	private Timestamp date_last_modified;
-	
+	private Timestamp dateModified;
+
+		
+	@OneToMany(cascade=CascadeType.DETACH)
+	private Set<DeviceModule> colDeviceModule;
 	
 	
 	/**
@@ -122,15 +128,13 @@ public class Device implements Serializable {
 		
 	}
 
-
-
+	
 	/**
 	 * @return the id
 	 */
 	public Integer getId() {
 		return id;
 	}
-
 
 
 	/**
@@ -141,14 +145,12 @@ public class Device implements Serializable {
 	}
 
 
-
 	/**
 	 * @return the hostname
 	 */
 	public String getHostname() {
 		return hostname;
 	}
-
 
 
 	/**
@@ -159,14 +161,12 @@ public class Device implements Serializable {
 	}
 
 
-
 	/**
 	 * @return the ip
 	 */
 	public String getIp() {
 		return ip;
 	}
-
 
 
 	/**
@@ -177,14 +177,12 @@ public class Device implements Serializable {
 	}
 
 
-
 	/**
 	 * @return the model
 	 */
 	public Model getModel() {
 		return model;
 	}
-
 
 
 	/**
@@ -195,23 +193,20 @@ public class Device implements Serializable {
 	}
 
 
-
 	/**
-	 * @return the serial_number
+	 * @return the serialNumber
 	 */
-	public String getSerial_number() {
-		return serial_number;
+	public String getSerialNumber() {
+		return serialNumber;
 	}
 
 
-
 	/**
-	 * @param serial_number the serial_number to set
+	 * @param serialNumber the serialNumber to set
 	 */
-	public void setSerial_number(String serial_number) {
-		this.serial_number = serial_number;
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
 	}
-
 
 
 	/**
@@ -222,14 +217,12 @@ public class Device implements Serializable {
 	}
 
 
-
 	/**
 	 * @param ios the ios to set
 	 */
 	public void setIos(Ios ios) {
 		this.ios = ios;
 	}
-
 
 
 	/**
@@ -240,14 +233,12 @@ public class Device implements Serializable {
 	}
 
 
-
 	/**
 	 * @param user the user to set
 	 */
 	public void setUser(String user) {
 		this.user = user;
 	}
-
 
 
 	/**
@@ -258,7 +249,6 @@ public class Device implements Serializable {
 	}
 
 
-
 	/**
 	 * @param password the password to set
 	 */
@@ -267,95 +257,100 @@ public class Device implements Serializable {
 	}
 
 
-
 	/**
 	 * @return the interfaceDevice
 	 */
-	public Set<InterfaceDevice> getInterfaceDevice() {
-		return interfaceDevice;
+	public Set<InterfaceDevice> getColInterfaceDevice() {
+		return colInterfaceDevice;
 	}
-
 
 
 	/**
 	 * @param interfaceDevice the interfaceDevice to set
 	 */
-	public void setInterfaceDevice(Set<InterfaceDevice> interfaceDevice) {
-		this.interfaceDevice = interfaceDevice;
+	public void setColInterfaceDevice(Set<InterfaceDevice> colInterfaceDevice) {
+		this.colInterfaceDevice = colInterfaceDevice;
 	}
-
 
 
 	/**
-	 * @return the snmp_id
+	 * @return the colVersion
 	 */
-	public String getSnmp_id() {
-		return snmp_id;
+	public Set<Version> getColVersion() {
+		return colVersion;
 	}
-
 
 
 	/**
-	 * @param snmp_id the snmp_id to set
+	 * @param colVersion the colVersion to set
 	 */
-	public void setSnmp_id(String snmp_id) {
-		this.snmp_id = snmp_id;
+	public void setColVersion(Set<Version> colVersion) {
+		this.colVersion = colVersion;
 	}
-
 
 
 	/**
-	 * @return the snmp_comunidadR
+	 * @return the snmpId
 	 */
-	public String getSnmp_comunidadR() {
-		return snmp_comunidadR;
+	public String getSnmpId() {
+		return snmpId;
 	}
-
 
 
 	/**
-	 * @param snmp_comunidadR the snmp_comunidadR to set
+	 * @param snmpId the snmpId to set
 	 */
-	public void setSnmp_comunidadR(String snmp_comunidadR) {
-		this.snmp_comunidadR = snmp_comunidadR;
+	public void setSnmpId(String snmpId) {
+		this.snmpId = snmpId;
 	}
-
 
 
 	/**
-	 * @return the snmp_version
+	 * @return the snmpComunidadR
 	 */
-	public String getSnmp_version() {
-		return snmp_version;
+	public String getSnmpComunidadR() {
+		return snmpComunidadR;
 	}
-
 
 
 	/**
-	 * @param snmp_version the snmp_version to set
+	 * @param snmpComunidadR the snmpComunidadR to set
 	 */
-	public void setSnmp_version(String snmp_version) {
-		this.snmp_version = snmp_version;
+	public void setSnmpComunidadR(String snmpComunidadR) {
+		this.snmpComunidadR = snmpComunidadR;
 	}
-
 
 
 	/**
-	 * @return the snmp_password
+	 * @return the snmpVersion
 	 */
-	public String getSnmp_password() {
-		return snmp_password;
+	public String getSnmpVersion() {
+		return snmpVersion;
 	}
-
 
 
 	/**
-	 * @param snmp_password the snmp_password to set
+	 * @param snmpVersion the snmpVersion to set
 	 */
-	public void setSnmp_password(String snmp_password) {
-		this.snmp_password = snmp_password;
+	public void setSnmpVersion(String snmpVersion) {
+		this.snmpVersion = snmpVersion;
 	}
 
+
+	/**
+	 * @return the snmpPassword
+	 */
+	public String getSnmpPassword() {
+		return snmpPassword;
+	}
+
+
+	/**
+	 * @param snmpPassword the snmpPassword to set
+	 */
+	public void setSnmpPassword(String snmpPassword) {
+		this.snmpPassword = snmpPassword;
+	}
 
 
 	/**
@@ -366,7 +361,6 @@ public class Device implements Serializable {
 	}
 
 
-
 	/**
 	 * @param notes the notes to set
 	 */
@@ -375,42 +369,54 @@ public class Device implements Serializable {
 	}
 
 
-
 	/**
-	 * @return the date_create
+	 * @return the dateCreate
 	 */
-	public Date getDate_create() {
-		return date_create;
+	public Date getDateCreate() {
+		return dateCreate;
 	}
 
 
-
 	/**
-	 * @param date_create the date_create to set
+	 * @param dateCreate the dateCreate to set
 	 */
-	public void setDate_create(Date date_create) {
-		this.date_create = date_create;
+	public void setDateCreate(Date dateCreate) {
+		this.dateCreate = dateCreate;
 	}
 
 
-
 	/**
-	 * @return the date_last_modified
+	 * @return the dateModified
 	 */
-	public Timestamp getDate_last_modified() {
-		return date_last_modified;
+	public Timestamp getDateModified() {
+		return dateModified;
 	}
 
 
+	/**
+	 * @param dateModified the dateModified to set
+	 */
+	public void setDateModified(Timestamp dateModified) {
+		this.dateModified = dateModified;
+	}
+
 
 	/**
-	 * @param date_last_modified the date_last_modified to set
+	 * @return the colDeviceModule
 	 */
-	public void setDate_last_modified(Timestamp date_last_modified) {
-		this.date_last_modified = date_last_modified;
+	public Set<DeviceModule> getColDeviceModule() {
+		return colDeviceModule;
 	}
-	
-	
+
+
+	/**
+	 * @param colDeviceModule the colDeviceModule to set
+	 */
+	public void setColDeviceModule(Set<DeviceModule> colDeviceModule) {
+		this.colDeviceModule = colDeviceModule;
+	}
+
+
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);

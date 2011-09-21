@@ -1,14 +1,17 @@
 package uy.com.s4b.inside.core.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -20,17 +23,22 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
- * @author pablo
- * 
+ * Title: Command.java <br>
+ * Description: <br>
+ * Fecha creaciÃ³n: 20/09/2011 <br>
+ * Copyright: S4B <br>
+ * Company: S4B - http://www.s4b.com.uy <br>
+ * @author Pablo
+ *
  */
-
-@Table(name="serie")
+@Table(name="command")
 @Entity
-public class Serial implements Serializable {
+public class Command implements Serializable {
 
 	@Transient
-	private static final long serialVersionUID = 6668829217481430973L;
+	private static final long serialVersionUID = -1613251536960951229L;
 
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column
@@ -38,23 +46,22 @@ public class Serial implements Serializable {
 	
 	
 	@Column(insertable=true, nullable=false, unique=true)
-	private String name;
+	private String description;
 	
 	
-	@ManyToOne(optional=false)
-	@JoinColumn(name="typedevice_id") 
-	private TypeDevice typeDevice;
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="command_parameter", 
+		joinColumns={@JoinColumn(name="id_command")}, inverseJoinColumns={@JoinColumn(name="id_parameter")})
+	private Set<Parameter> colParameters;
 	
 	
-	@ManyToOne(optional=false)
-	@JoinColumn(name="ios_id") 
-	private Ios ios;
-	
-	
-	public Serial() {
+	/**
+	 * 
+	 */
+	public Command() {
 		
 	}
-
+	
 	
 	/**
 	 * Funcion encargada de correjir imperfecciones 
@@ -62,9 +69,9 @@ public class Serial implements Serializable {
 	 */
 	@PrePersist()
 	public void initEntity(){
-		this.name = WordUtils.capitalizeFully(this.name);
+		this.description = WordUtils.capitalizeFully(this.description);
 	}
-	
+
 
 	/**
 	 * @return the id
@@ -83,53 +90,37 @@ public class Serial implements Serializable {
 
 
 	/**
-	 * @return the name
+	 * @return the description
 	 */
-	public String getName() {
-		return name;
+	public String getDescription() {
+		return description;
 	}
 
 
 	/**
-	 * @param name the name to set
+	 * @param description the description to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 
 	/**
-	 * @return the typeDevice
+	 * @return the colParameters
 	 */
-	public TypeDevice getTypeDevice() {
-		return typeDevice;
+	public Set<Parameter> getColParameters() {
+		return colParameters;
 	}
 
 
 	/**
-	 * @param typeDevice the typeDevice to set
+	 * @param colParameters the colParameters to set
 	 */
-	public void setTypeDevice(TypeDevice typeDevice) {
-		this.typeDevice = typeDevice;
+	public void setColParameters(Set<Parameter> colParameters) {
+		this.colParameters = colParameters;
 	}
 	
 	
-	/**
-	 * @return the ios
-	 */
-	public Ios getIos() {
-		return ios;
-	}
-
-
-	/**
-	 * @param ios the ios to set
-	 */
-	public void setIos(Ios ios) {
-		this.ios = ios;
-	}
-
-
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);

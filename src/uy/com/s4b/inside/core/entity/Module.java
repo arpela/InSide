@@ -7,8 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Lob;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -20,41 +19,52 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
- * @author pablo
- * 
+ * Title: Modul.java <br>
+ * Description: <br>
+ * Fecha creaciÃ³n: 20/09/2011 <br>
+ * Copyright: S4B <br>
+ * Company: S4B - http://www.s4b.com.uy <br>
+ * @author Pablo
+ *
  */
-
-@Table(name="serie")
+@Table(name="module")
 @Entity
-public class Serial implements Serializable {
+public class Module implements Serializable {
 
 	@Transient
-	private static final long serialVersionUID = 6668829217481430973L;
+	private static final long serialVersionUID = -4233869718439494598L;
 
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column
 	private Integer id;
 	
 	
-	@Column(insertable=true, nullable=false, unique=true)
+	@Column(insertable=true, nullable=false, unique=false)
 	private String name;
 	
 	
-	@ManyToOne(optional=false)
-	@JoinColumn(name="typedevice_id") 
-	private TypeDevice typeDevice;
+	@Column(insertable=true, nullable=true, unique=false)
+	private String serial;
 	
 	
-	@ManyToOne(optional=false)
-	@JoinColumn(name="ios_id") 
-	private Ios ios;
+	@Column(insertable=true, nullable=true, unique=false)
+	private String model;
 	
 	
-	public Serial() {
+	@Column(insertable=true, nullable=true, unique=false)
+	@Lob
+	private String notes;
+	
+	
+	/**
+	 * 
+	 */
+	public Module() {
 		
 	}
-
+	
 	
 	/**
 	 * Funcion encargada de correjir imperfecciones 
@@ -64,7 +74,7 @@ public class Serial implements Serializable {
 	public void initEntity(){
 		this.name = WordUtils.capitalizeFully(this.name);
 	}
-	
+
 
 	/**
 	 * @return the id
@@ -99,37 +109,53 @@ public class Serial implements Serializable {
 
 
 	/**
-	 * @return the typeDevice
+	 * @return the serial
 	 */
-	public TypeDevice getTypeDevice() {
-		return typeDevice;
+	public String getSerial() {
+		return serial;
 	}
 
 
 	/**
-	 * @param typeDevice the typeDevice to set
+	 * @param serial the serial to set
 	 */
-	public void setTypeDevice(TypeDevice typeDevice) {
-		this.typeDevice = typeDevice;
+	public void setSerial(String serial) {
+		this.serial = serial;
+	}
+
+
+	/**
+	 * @return the model
+	 */
+	public String getModel() {
+		return model;
+	}
+
+
+	/**
+	 * @param model the model to set
+	 */
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+
+	/**
+	 * @return the notes
+	 */
+	public String getNotes() {
+		return notes;
+	}
+
+
+	/**
+	 * @param notes the notes to set
+	 */
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 	
 	
-	/**
-	 * @return the ios
-	 */
-	public Ios getIos() {
-		return ios;
-	}
-
-
-	/**
-	 * @param ios the ios to set
-	 */
-	public void setIos(Ios ios) {
-		this.ios = ios;
-	}
-
-
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
