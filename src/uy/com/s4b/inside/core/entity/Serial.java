@@ -42,12 +42,12 @@ public class Serial implements Serializable {
 	
 	
 	@ManyToOne(optional=false)
-	@JoinColumn(name="typedevice_id") 
+	@JoinColumn(name="typedeviceId") 
 	private TypeDevice typeDevice;
 	
 	
 	@ManyToOne(optional=false)
-	@JoinColumn(name="ios_id") 
+	@JoinColumn(name="iosId") 
 	private Ios ios;
 	
 	

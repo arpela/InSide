@@ -81,10 +81,12 @@ public class Device implements Serializable {
 	
 	
 	@OneToMany(cascade=CascadeType.DETACH)
+	@JoinColumn(name="deviceId")
 	private Set<InterfaceDevice> colInterfaceDevice;
 	
 	
 	@OneToMany(cascade=CascadeType.DETACH)
+	@JoinColumn(name="deviceId")
 	private Set<Version> colVersion;
 	
 	
@@ -118,6 +120,7 @@ public class Device implements Serializable {
 
 		
 	@OneToMany(cascade=CascadeType.DETACH)
+	@JoinColumn(name="deviceId")
 	private Set<DeviceModule> colDeviceModule;
 	
 	

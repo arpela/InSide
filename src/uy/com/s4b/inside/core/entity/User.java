@@ -1,7 +1,6 @@
 package uy.com.s4b.inside.core.entity;
 
 import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
 import java.util.Set;
 
 import javax.persistence.CascadeType;

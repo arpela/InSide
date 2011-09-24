@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -50,6 +51,7 @@ public class GenericCommand implements Serializable {
 	
 	
 	@OneToMany(cascade=CascadeType.DETACH)
+	@JoinColumn(name="genericCommandId")
 	private Set<Command> colCommand;
 	
 	
