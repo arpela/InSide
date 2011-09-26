@@ -12,7 +12,7 @@
 <h:body>
 
 	<ui:composition template="/layout/templateapp.xhtml">
-
+		
 		<ui:define name="body">
 			<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource_en"
 				var="bundle" />
@@ -35,52 +35,12 @@
 						
 						<div id="contenido_1">
 							<table>
-							
+								
 								<tr style="height: 26px;">
 									<th width="201" style="border-bottom: 1px #bababa solid;">Network / Site / Zone / Node</th>
 									<th width="83" style="border-bottom: 1px #bababa solid;">&nbsp;</th>
 									<th width="77" style="border-bottom: 1px #bababa solid;">&nbsp;</th>
 									<th width="106" style="border-bottom: 1px #bababa solid;">&nbsp;</th>
-								</tr>
-								
-								
-								<tr>
-									<td colspan="4" class="networks">
-										
-		    							<!-- rich:tree style="width:300px" id="tree" var="node" value="#{listaNetwork}"
-		    								 selectionType="ajax" 
-		    								 iconLeaf="#{request.contextPath}/resources/img/bg.png" 
-		    								 icon="#{request.contextPath}/resources/img/bg.png" nodeFace="#{node.type}">
-							                
-							                <rich:treeNode type="network"
-							               	 iconLeaf="#{request.contextPath}/resources/img/bg.png" 
-		    								 icon="#{request.contextPath}/resources/img/bg.png">
-							                	<h:outputText value="#{node.name}"/> - <h:outputText value="#{node.type}"/>
-							                </rich:treeNode>
-							                
-							                 <rich:treeNode type="site" 
-							                 	iconLeaf="#{request.contextPath}/resources/img/bg.png" 
-		    								 	icon="#{request.contextPath}/resources/img/bg.png">
-							                		<h:outputText value="#{node.name}"/> - <h:outputText value="#{node.type}"/>
-							                </rich:treeNode>
-							                
-							            </rich:tree -->
-							            
-							            <rich:tree toggleType="ajax" vafr="item">
-								            <rich:treeModelRecursiveAdaptor roots="#{listaNetwork}" nodes="#{item}" >
-								            	<rich:treeNode 
-								            		iconCollapsed="#{request.contextPath}/resources/img/more.png" 
-								            		iconExpanded="#{request.contextPath}/resources/img/less.png">
-								            		<h:outputText value="#{item.name}"/> 
-								            	</rich:treeNode>
-								            	
-								            	<rich:treeModelAdaptor nodes="#{item.colSite}">
-								            		<rich:treeNode >#{item.name}</rich:treeNode>
-								            	</rich:treeModelAdaptor>
-								            	
-								            </rich:treeModelRecursiveAdaptor>
-							            </rich:tree>	
-	    							</td>
 								</tr>
 								
 								<tr>
@@ -91,8 +51,9 @@
 												<ul class="zone expand" style="display: none">
 													<li class="more"><span>Zone-1</span></li>
 													<ul class="node expand" style="display: none">
+														
 														<li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')">
-															<span><input type="radio" name="SWPOC-st-1" id="SWPOC-st-1"/>SWPOC-st</span>
+															<span><input type="radio" name="SWPOC-st-2" id="SWPOC-st-2"/>SWPOC-st</span>
 														</li>
 														<li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')">
 														<span><input type="radio" name="SWPOC-st-2" id="SWPOC-st-2"/>SWPOC-st</span>
@@ -107,24 +68,23 @@
 										</ul>
 									</td>
 								</tr>
-								
 							</table>
 						</div>
 
 
 						<script type="text/javascript">
-					            $('ul.expand li').click(function(){
-					              next = $(this).next('ul.expand');
-					              if ($(this).hasClass('less')){
-					                $(next).slideUp();
-					                $(this).removeClass('less');
-					                $(this).addClass('more');
-					              }else{
-					                $(next).slideDown();
-					                $(this).addClass('less');
-					                $(this).removeClass('more');
-					              }
-					            })
+							$('ul.expand li').click(function(){
+				              next = $(this).next('ul.expand');
+				              if ($(this).hasClass('less')){
+				                $(next).slideUp();
+				                $(this).removeClass('less');
+				                $(this).addClass('more');
+				              }else{
+				                $(next).slideDown();
+				                $(this).addClass('less');
+				                $(this).removeClass('more');
+				              }
+				            })
            				</script>
            				
 						<div class="options">
@@ -136,6 +96,7 @@
 							</div>
 							<div class="clear"></div>
 						</div>
+						
 						<div class="subtitle">Ultimos cambios:</div>
 						<table class="changes">
 							<tr>
@@ -182,138 +143,32 @@
 							<div class="clear"></div>
 						</div>
 					</div>
+					
+					
 					<div class="rightContent fright">
 						<div class="subtitle">Panel de alarmas:</div>
-						<table width="420" class="events" style="border-collapse: inherit">
-							<tr>
-								<th class="event">Evento</th>
-								<th>Info</th>
-								<th>Cuidado</th>
-								<th>Crítico</th>
-							</tr>
-							<tr>
-								<td class="event links_modal"><a href="#q"
-									onclick="$('#bloque1, #bloque').toggle(); return false;">HIPAA
-										Security Report</a>
-								</td>
-								<td><img src="#{request.contextPath}/resources/img/green_event.png" alt="verde" />
-								</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-							</tr>
-							<tr>
-								<td colspan="4" id="bloque1"
-									style="display: none; color: #999; text-align: left; padding: 5px 5px 5px 32px; border: 0">
-									Cisco Security Audit<br /> Lorem ipsum dolor sit amet,
-									consectetur Lorem ipsum dolor sit <br /> amet, consectetur
-									amet, consectetur amet, consectetur<br /> amet, consectetur
-									amet, consecteturamet, consecteturamet, consecte<br /> amet,
-									consecteturamet, consectetur <br /></td>
-							</tr>
-							<tr>
-								<td class="event"><a href="#q"
-									onclick="$('#bloque2, #bloque').toggle(); return false;">Cisco Security Audit</a>
-								</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td><img src="#{request.contextPath}/resources/img/red_event.png" alt="rojo" />
-								</td>
-							</tr>
-							<tr>
-								<td colspan="4" id="bloque2"
-									style="display: none; color: #999; text-align: left; padding: 5px 5px 5px 32px; border: 0">
-									Cisco Security Audit<br /> Lorem ipsum dolor sit amet,
-									consectetur Lorem ipsum dolor sit <br /> amet, consectetur
-									amet, consectetur amet, consectetur<br /> amet, consectetur
-									amet, consecteturamet, consecteturamet, consectetur<br />
-									amet, consecteturamet, consectetur <br /></td>
-							</tr>
-							<tr>
-								<td class="event"><a href="#q"
-									onclick="$('#bloque3, #bloque').toggle(); return false;">CISP
-										Reports</a>
-								</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td><img src="#{request.contextPath}/resources/img/red_event.png" alt="rojo" />
-								</td>
-							</tr>
-							<tr>
-								<td colspan="4" id="bloque3"
-									style="display: none; color: #999; text-align: left; padding: 5px 5px 5px 32px; border: 0">
-									Cisco Security Audit<br /> Lorem ipsum dolor sit amet,
-									consectetur Lorem ipsum dolor sit <br /> amet, consectetur
-									amet, consectetur amet, consectetur<br /> amet, consectetur
-									amet, consecteturamet, consecteturamet, consectetur<br />
-									amet, consecteturamet, consectetur </td>
-							</tr>
-							<tr>
-								<td class="event"><a href="#q"
-									onclick="$('#bloque4, #bloque').toggle(); return false;">Cisco
-										Policy Report</a>
-								</td>
-								<td>&nbsp;</td>
-								<td><img src="#{request.contextPath}/resources/img/yellow_event.png" alt="amarillo" />
-								</td>
-								<td>&nbsp;</td>
-							</tr>
-							<tr>
-								<td colspan="4" id="bloque4"
-									style="display: none; color: #999; text-align: left; padding: 5px 5px 5px 32px; border: 0">
-									Cisco Security Audit<br /> Lorem ipsum dolor sit amet,
-									consectetur Lorem ipsum dolor sit <br /> amet, consectetur
-									amet, consectetur amet, consectetur<br /> amet, consectetur
-									amet, consecteturamet, consecteturamet, consectetur<br />
-									amet, consecteturamet, consectetur </td>
-							</tr>
-							<tr>
-								<td class="event"><a href="#q"
-									onclick="$('#bloque5, #bloque').toggle(); return false;">HIPAA
-										Security Report</a>
-								</td>
-								<td>&nbsp;</td>
-								<td><img src="#{request.contextPath}/resources/img/yellow_event.png" alt="amarillo" />
-								</td>
-								<td>&nbsp;</td>
-							</tr>
-							<tr>
-								<td colspan="4" id="bloque5"
-									style="display: none; color: #999; text-align: left; padding: 5px 5px 5px 32px; border: 0">
-									Cisco Security Audit<br /> Lorem ipsum dolor sit amet,
-									consectetur Lorem ipsum dolor sit <br /> amet, consectetur
-									amet, consectetur amet, consectetur<br /> amet, consectetur
-									amet, consecteturamet, consecteturamet, consectetur<br />
-									amet, consecteturamet, consectetur </td>
-							</tr>
-							<tr>
-								<td class="event" style="border-collapse: separate"><a
-									href="#q"
-									onclick="$('#bloque6, #bloque').toggle(); return false;">CISP
-										Reports</a>
-								</td>
-								<td>&nbsp;</td>
-								<td><img src="#{request.contextPath}/resources/img/yellow_event.png" alt="amarillo" />
-								</td>
-								<td>&nbsp;</td>
-							</tr>
-							<tr>
-								<td colspan="4" id="bloque6" style="display: none; color: #999; text-align: left; padding: 5px 5px 5px 32px; border: 0; border-collapse: separate">
-									Cisco Security Audit<br /> Lorem ipsum dolor sit amet,
-									consectetur Lorem ipsum dolor sit <br /> amet, consectetur
-									amet, consectetur amet, consectetur<br /> amet, consectetur
-									amet, consecteturamet, consecteturamet, consectetur<br />
-									amet, consecteturamet, consectetur </td>
-							</tr>
-						</table>
-						<div class="options">
-							<div class="fright button">
-								<a href="#">Ayuda</a>
-							</div>
-							<div class="fright button" style="margin-right: 5px">
-								<a href="#">Editar</a>
-							</div>
-							<div class="clear"></div>
-						</div>
+						
+						<rich:dataTable width="420 px" styleClass="events"  value="#{events.listaEventos}" var="even"
+				            id="listaEventos" rows="6"  style="border-collapse: inherit">
+				            
+				            <rich:column accept="#{carsFiteringBean.acceptVendor}">
+				                <f:facet name="header">
+				                    <h:outputText value="Evento" />
+				                </f:facet>
+				                <h:outputText value="#{even.value}" />
+				            </rich:column>
+				            
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="#" />
+				                </f:facet>
+				                
+								<h:graphicImage value="#{request.contextPath}/resources/img/red_event.png"  rendered="#{even.type == 'ERROR'}" />
+								<h:graphicImage value="#{request.contextPath}/resources/img/yellow_event.png"  rendered="#{even.type == 'WARN'}" />
+								<h:graphicImage value="#{request.contextPath}/resources/img/green_event.png"  rendered="#{even.type == 'INFO'}" />
+							</rich:column>
+				            
+				        </rich:dataTable>
 					</div>
 					<div class="clear"></div>
 				</div>

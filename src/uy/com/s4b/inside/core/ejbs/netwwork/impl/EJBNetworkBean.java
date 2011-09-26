@@ -1,6 +1,5 @@
 package uy.com.s4b.inside.core.ejbs.netwwork.impl;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -39,7 +38,7 @@ public class EJBNetworkBean implements NetworkService {
 	 * 
 	 */
 	public EJBNetworkBean() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 
@@ -51,9 +50,7 @@ public class EJBNetworkBean implements NetworkService {
 	public List<Network> listNetwork() throws InSideException {
 		Query query = em.createNamedQuery("findAll");
 		List<Network> resultado = query.getResultList();
-		
-		if ((resultado != null) && (resultado.size() > 0)){			
-//			Collections.sort(resultado, new Network.SortName());
+		if ((resultado != null) && (resultado.size() > 0)){
 			for (Network network : resultado) {
 				Hibernate.initialize(network.getColSite());
 			}

@@ -73,9 +73,12 @@ public class SurfLogin implements Serializable {
 			String pass = new CriptPassword().getHashSH1(loginBaking.getUserBean().getPass());
 			User u = ejbMangerUser.login(loginBaking.getUserBean().getNick(), pass);
 			loginBaking.setUserBean(u);
+			
+			
 			List<Network> listNetwork = ejbNetwork.listNetwork();
 			HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 			session.setAttribute("listaNetwork", listNetwork);
+			
 			retorno = "site/home";
 		} catch (InSideException ex) {
 			log.error(ex.getKeyMSGError());
