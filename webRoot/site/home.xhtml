@@ -7,15 +7,17 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+   	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:rich="http://richfaces.org/rich">
 
 <h:body>
-
+	
 	<ui:composition template="/layout/templateapp.xhtml">
 		
 		<ui:define name="body">
-			<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource_en"
-				var="bundle" />
+			<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource" var="bundle" />
+			
 			<h:form id="formHome">
 
 				<div id="content">
@@ -149,7 +151,7 @@
 						<div class="subtitle">Panel de alarmas:</div>
 						
 						<rich:dataTable border="0" styleClass="events"  value="#{events.listaEventos}" var="even"
-				            id="listaEventos" rows="6" style="width: 420; border-collapse: inherit;" rendered="#{events.listaEventos.size != 0}">
+				            id="listaEventos" rows="6" style="width: 420; border-collapse: inherit;">
 				            
 				            <rich:column accept="#{carsFiteringBean.acceptVendor}">
 				                <f:facet name="header">
@@ -170,11 +172,13 @@
 				            
 				        </rich:dataTable>
 				        
-				        <h:outputText value="No hay Eventos!" rendered="#{events.listaEventos.size > 0}" />
 					</div>
 					<div class="clear"></div>
 				</div>
 			</h:form>
+			
+			
+			
 		</ui:define>
 	</ui:composition>
 </h:body>

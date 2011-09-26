@@ -30,9 +30,10 @@
 					
 					
 					<div class="label"><h:outputText value="#{bundle['login.text.user']}"/></div>
+					
 					<h:inputText value="#{login.userBean.nick}" id="user" required="true" requiredMessage="#{bundle['login.error.requerido']}"/>
 					
-					<br/><rich:message for="user" ajaxRendered="true"/> <!-- h:message for="user" id="txtErrorUser" errorClass="error"/ --><br/>
+					<br/><h:message for="user" id="txtErrorUser" errorClass="error"/><br/>
 	
 					<div class="label"><h:outputText value="#{bundle['login.text.pass']}"/></div>
 					<h:inputSecret value="#{login.userBean.pass}" id="pass" required="true" requiredMessage="#{bundle['login.error.requerido']}"/>

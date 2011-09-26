@@ -1,6 +1,5 @@
 package uy.com.s4b.inside.test;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -9,8 +8,6 @@ import javax.naming.InitialContext;
 import javax.rmi.PortableRemoteObject;
 
 import uy.com.s4b.inside.core.common.DiffLine;
-import uy.com.s4b.inside.core.ejbs.manager.EJBManagerUserRemote;
-import uy.com.s4b.inside.core.ejbs.report.EJBReportDiffLocal;
 import uy.com.s4b.inside.core.ejbs.report.EJBReportDiffRemote;
 import uy.com.s4b.inside.core.exception.InSideException;
 
@@ -26,7 +23,7 @@ import uy.com.s4b.inside.core.exception.InSideException;
  * 
  */
 
-public class Diff {
+public class TestDiff {
 
 	
 	/**
@@ -37,12 +34,14 @@ public class Diff {
 	 * @throws InSideException
 	 */
 	public static void main(String argstrings[]) {
+		String serverip = "10.1.1.2:1099"; 
+	
+		
 		String multiLine1 = "L1\nL2\nL3\nL4\nL5";
 		String multiLine2 = "L1\nL2\nL3\nL4\nL5";
 		
 		try {
 			Properties retorno = System.getProperties();
-			String serverip = "10.1.1.2:1099"; 
 			retorno.setProperty(Context.PROVIDER_URL, "jnp://" + serverip);
 			retorno.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 			retorno.setProperty(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");
