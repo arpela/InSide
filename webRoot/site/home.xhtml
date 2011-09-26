@@ -149,7 +149,7 @@
 						<div class="subtitle">Panel de alarmas:</div>
 						
 						<rich:dataTable border="0" styleClass="events"  value="#{events.listaEventos}" var="even"
-				            id="listaEventos" rows="6" style="width: 420; border-collapse: inherit;">
+				            id="listaEventos" rows="6" style="width: 420; border-collapse: inherit;" rendered="#{events.listaEventos.size != 0}">
 				            
 				            <rich:column accept="#{carsFiteringBean.acceptVendor}">
 				                <f:facet name="header">
@@ -169,6 +169,8 @@
 							</rich:column>
 				            
 				        </rich:dataTable>
+				        
+				        <h:outputText value="No hay Eventos!" rendered="#{events.listaEventos.size > 0}" />
 					</div>
 					<div class="clear"></div>
 				</div>
