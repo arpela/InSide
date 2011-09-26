@@ -145,11 +145,11 @@
 					</div>
 					
 					
-					<div class="rightContent fright">
+					<div class="rightContent fright" >
 						<div class="subtitle">Panel de alarmas:</div>
 						
-						<rich:dataTable width="420 px" styleClass="events"  value="#{events.listaEventos}" var="even"
-				            id="listaEventos" rows="6"  style="border-collapse: inherit">
+						<rich:dataTable border="0" styleClass="events"  value="#{events.listaEventos}" var="even"
+				            id="listaEventos" rows="6" style="width: 420; border-collapse: inherit;">
 				            
 				            <rich:column accept="#{carsFiteringBean.acceptVendor}">
 				                <f:facet name="header">
@@ -163,9 +163,9 @@
 				                    <h:outputText value="#" />
 				                </f:facet>
 				                
-								<h:graphicImage value="#{request.contextPath}/resources/img/red_event.png"  rendered="#{even.type == 'ERROR'}" />
-								<h:graphicImage value="#{request.contextPath}/resources/img/yellow_event.png"  rendered="#{even.type == 'WARN'}" />
-								<h:graphicImage value="#{request.contextPath}/resources/img/green_event.png"  rendered="#{even.type == 'INFO'}" />
+								<h:graphicImage value="/resources/img/red_event.png"  rendered="#{even.type == 'ERROR'}" />
+								<h:graphicImage value="/resources/img/yellow_event.png"  rendered="#{even.type == 'WARN'}" />
+								<h:graphicImage value="/resources/img/green_event.png"  rendered="#{even.type == 'INFO'}" />
 							</rich:column>
 				            
 				        </rich:dataTable>

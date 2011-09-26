@@ -30,7 +30,7 @@ import uy.com.s4b.inside.core.common.TypeEvent;
 @Entity
 @NamedQueries(
 		{
-			@NamedQuery(name="findAllActiv", query="from EventInSide e where e.deadline < :pFechaFin")
+			@NamedQuery(name="findAllActiv", query="from EventInSide e where e.deadline > :pFechaFin")
 		})
 public class EventInSide {
 
