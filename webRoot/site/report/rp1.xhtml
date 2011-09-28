@@ -46,22 +46,12 @@
 			        
 			      </div>
 			      
-			      <a4j:outputPanel id="out" ajaxRendered="#{!empty report.nameDivice}" >
-        			
-        			<h:outputText value="Dibuja el arbol con el valor ---->  #{report.nameDivice} !" rendered="#{!empty report.nameDivice}"/>
+			      <a4j:outputPanel id="out" ajaxRendered="#{!empty report.nameDivice}"  >
+			      	
+        				<h:outputText value="Dibuja el arbol con el valor ---->  #{report.nameDivice} !" rendered="#{!empty report.nameDivice}"/>
     				   
 			      <div class="rightContentReports fright">
-			        <div class="subtitle"> 
-			        <div class="options"  style="width:170px; margin-top:0; margin-bottom:0px">   
-			          <div class="fright" style="font-size:11px; color:#9C0"> 
-			          <a id="contenido_link_2" href="#mostrar" onclick="mostrar_contenido(2);">Tag 2 <span id="simbolo_2">[+]</span></a>
-			          </div>
-			          <div class="fright" style="margin-right: 8px; font-size:11px; color:#9C0"> 
-			          <a id="contenido_link_1" href="#mostrar" onclick="mostrar_contenido(1);">Tag 1 <span id="simbolo_1">[-]</span></a>
-			          </div> Esquema:</div>
-			          
-			          <div class="clear"></div>
-			      </div>
+			        
 			        
 			      <div id="contenido_1">
 			        <table>
@@ -232,7 +222,6 @@
 			              }
 			            })
 			            </script>
-			                 
 			        <div class="options">
 			          <div class="fright button">
 			            <a href="#">Limpiar</a>            
