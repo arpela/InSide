@@ -45,7 +45,7 @@ public class Command implements Serializable {
 	private Integer id;
 	
 	
-	@Column(insertable=true, nullable=false, unique=true)
+	@Column(insertable=true, nullable=false, unique=false)
 	private String description;
 	
 	

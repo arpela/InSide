@@ -63,7 +63,7 @@ public class LoginBakingBean implements Serializable {
 	 * Informa si el usuario esta logueado
 	 * @return
 	 */
-	public boolean loginIn(){
-		return (userBean.getName() != null);
+	public boolean isLoginIn(){
+		return ((userBean.getName() != null));
 	}
 }

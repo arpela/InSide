@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -32,12 +34,14 @@ import org.apache.commons.lang.builder.ToStringStyle;
  */
 @Table(name="network")
 @Entity
-public class Network implements Serializable {
+@NamedQueries({
+	@NamedQuery(name="findAll", query="from Network")
+})
+public class Network implements Serializable{
 
 	@Transient
 	private static final long serialVersionUID = 2642699632506578950L;
 
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column
@@ -52,7 +56,7 @@ public class Network implements Serializable {
 	@JoinColumn(name="networkId")
 	private Set<Site> colSite;
 	
-		
+	
 	/**
 	 * 
 	 */

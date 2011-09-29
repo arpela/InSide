@@ -122,7 +122,7 @@ table {	border-collapse: collapse;	border-spacing: 0;}
 #content table.events td{height: 23px; vertical-align: middle; font-size:11px; color: #88b119; text-align: center; border-top: 1px solid #bababa;}
 
 #content .label {color: #404040; font-weight: normal; font-size:12px; margin-bottom: 10px;}
-#content input[type=text]{width: 350px; border: #BABABA thin solid; height: 16px; margin-bottom: 10px; color: #404040; font-size: 12px; padding-bottom:4px;}
+#content input[type=text]{width: 350px; border: #BABABA thin solid; height: 20px; margin-bottom: 10px; color: #404040; font-size: 12px; padding-bottom:4px;}
 #content input[type=password]{width: 350px; border: #BABABA thin solid; height: 20px; margin-bottom: 10px;}
 
 #content .splitColumns{margin:0; padding:0;}

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+   	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:rich="http://richfaces.org/rich">
+
+<h:body>
+	
+
+	<ui:composition template="/layout/templateapp.xhtml">
+		
+		<ui:define name="body">
+			<h:form id="formFilter" rendered="#{login.loginIn}">
+			
+			<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource" var="bundle" />
+			    
+			    <div id="content">
+			      <div class="state">
+			        <div class="page fleft">Reportes / Paso 1 - Selecci&oacute;n de equipos</div>
+			        <div class="date fright">Wednesday, August 10, 2011 12:35:02 PM</div>
+			        <div class="clear"></div>
+			      </div>
+			    
+			        <div class="leftContentReports fleft">
+			        <div class="subtitle">Filtros:</div>
+			        <div class="label">Name:</div>
+			        
+					<h:inputText value="#{report.nameDivice}" id="nameDivice" required="true" requiredMessage="#{bundle['reporteDiff.error.requerido']}"/>
+					<br/><h:message for="nameDivice" id="txtNameDivice" errorClass="error"/><br/>
+			        	
+			        <div class="options">
+			          <div class="fright button" style="margin-right: 5px; padding-right: 60px;">
+			          	<a4j:commandLink value="#{bundle['reporteDiff.text.button.find']}" render="out" execute="@form" />
+			          </div>
+			          
+			          <div class="clear"></div>
+			        </div>
+			        
+			        
+			      </div>
+			      
+			      <a4j:outputPanel id="out" ajaxRendered="#{!empty report.nameDivice}"  >
+			      	
+        				<h:outputText value="Dibuja el arbol con el valor ---->  #{report.nameDivice} !" rendered="#{!empty report.nameDivice}"/>
+    				   
+			      <div class="rightContentReports fright">
+			        
+			        
+			      <div id="contenido_1">
+			        <table>
+			          <tr>
+			            <th width="201">Network / Site / Zone / node</th>
+			            <th width="83">&nbsp;</th>
+			            <th width="77">&nbsp;</th>
+			            <th width="106" style="text-align: left; padding-left: 30px">&nbsp;</th>
+			          </tr>
+			           <tr>            
+			            <td colspan="4" class="networks">
+			             <ul class="network expand">
+			                <li class="more"><span>Network-1</span></li>
+			                <ul class="site expand" style="display:none">
+			                  <li class="more"><span>Site-1</span></li>
+			                  <ul class="zone expand" style="display:none">
+			                    <li class="more"><span>Zone-1</span></li>
+			                    <ul class="node expand" style="display:none">
+			                     <li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span></li>
+				                 <li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span></li>
+			                     <li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span></li>
+			                    </ul>
+			                  </ul>
+			                </ul>                
+			              </ul>              
+			            </td>                   
+			          </tr>
+			          <tr>            
+			            <td colspan="4" class="networks">
+			              <ul class="network expand">
+			                <li class="more"><span>Network-1</span></li>
+			                <ul class="site expand" style="display:none">
+			                  <li class="more"><span>Site-1</span></li>
+			                  <ul class="zone expand" style="display:none">
+			                    <li class="more"><span>Zone-1</span></li>
+			                    <ul class="node expand" style="display:none">
+			                    <li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span></li>
+			                     
+			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span></li>
+			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span></li>
+			                    </ul>
+			                  </ul>
+			                </ul>                
+			              </ul>              
+			            </td>          
+			          </tr>
+			          <tr>            
+			            <td colspan="4" class="networks">
+			              <ul class="network expand">
+			                <li class="more"><span>Network-1</span></li>
+			                <ul class="site expand" style="display:none">
+			                  <li class="more"><span>Site-1</span></li>
+			                  <ul class="zone expand" style="display:none">
+			                    <li class="more"><span>Zone-1</span></li>
+			                    <ul class="node expand" style="display:none">
+								<li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span></li>
+			                      
+			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span></li>
+			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span></li>
+			                    </ul>
+			                  </ul>
+			                </ul>                
+			              </ul>                
+			            </td>              
+			          </tr>          
+			        </table></div>
+			      
+			      
+			      <div id="contenido_2" style="display:none">
+			        <table>
+			          <tr>
+			            <th width="201">Network / Site / Zone / node</th>
+			            <th width="83">&nbsp;</th>
+			            <th width="77">&nbsp;</th>
+			            <th width="106" style="text-align: left; padding-left: 30px">&nbsp;</th>
+			          </tr>
+			          <tr>
+			            
+			            <td colspan="4" class="networks">
+			              <ul class="network expand">
+			                <li class="more"><span>Network-1</span></li>
+			                <ul class="site expand" style="display:none">
+			                  <li class="more"><span>Site-1</span></li>
+			                  <ul class="zone expand" style="display:none">
+			                    <li class="more"><span>Zone-1</span></li>
+			                    <ul class="node expand" style="display:none">
+			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span></li>
+			                      
+			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span></li>
+			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span></li>
+			                    </ul>
+			                  </ul>
+			                </ul>                
+			              </ul>                
+			            </td>                
+			          </tr>
+
+			          <tr>
+			            <td colspan="4" class="networks">
+			             <ul class="network expand">
+			                <li class="more"><span>Network-1</span></li>
+			                <ul class="site expand" style="display:none">
+			                  <li class="more"><span>Site-1</span></li>
+			                  <ul class="zone expand" style="display:none">
+			                    <li class="more"><span>Zone-1</span></li>
+			                    <ul class="node expand" style="display:none">
+			                     <li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span></li>
+			                      
+			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span></li>
+			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span></li>
+			                    </ul>
+			                  </ul>
+			                </ul>                
+			              </ul>              
+			            </td>                   
+			          </tr>
+			          <tr>            
+			            <td colspan="4" class="networks">
+			              <ul class="network expand">
+			                <li class="more"><span>Network-1</span></li>
+			                <ul class="site expand" style="display:none">
+			                  <li class="more"><span>Site-1</span></li>
+			                  <ul class="zone expand" style="display:none">
+			                    <li class="more"><span>Zone-1</span></li>
+			                    <ul class="node expand" style="display:none">
+			                    <li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span></li>
+			                      
+			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span></li>
+			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span></li>
+			                    </ul>
+			                  </ul>
+			                </ul>                
+			              </ul>       
+			            </td>          
+			          </tr>
+			          <tr>            
+			            <td colspan="4" class="networks">
+			              <ul class="network expand">
+			                <li class="more"><span>Network-1</span></li>
+			                <ul class="site expand" style="display:none">
+			                  <li class="more"><span>Site-1</span></li>
+			                  <ul class="zone expand" style="display:none">
+			                    <li class="more"><span>Zone-1</span></li>
+			                    <ul class="node expand" style="display:none">
+								<li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span></li>
+			                    
+			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span></li>
+			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span></li>
+			                    </ul>
+			                  </ul>
+			                </ul>                
+			              </ul>                
+			            </td>              
+			          </tr>          
+			        </table>
+			        </div>
+			        
+					<script type="text/javascript">
+			            $('ul.expand li').click(function(){
+			              next = $(this).next('ul.expand');
+			              if ($(this).hasClass('less')){
+			                $(next).slideUp();
+			                $(this).removeClass('less');
+			                $(this).addClass('more');
+			              }else{
+			                $(next).slideDown();
+			                $(this).addClass('less');
+			                $(this).removeClass('more');
+			              }
+			            })
+			            </script>
+			        <div class="options">
+			          <div class="fright button">
+			            <a href="#">Limpiar</a> 
+			          </div>
+			          <div class="fright button" style="margin-right: 5px">
+			          	<h:commandLink value="Siguiente" action="#{versionBakingBean.page2Report}"/>
+			          </div>
+			          <div class="clear"></div>
+			        </div>
+			    </div>
+			    
+			    </a4j:outputPanel>
+			    
+			      <div class="clear"></div>
+			    </div>
+    
+ 
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>
+ 

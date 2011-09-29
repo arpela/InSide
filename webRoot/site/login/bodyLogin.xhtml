@@ -10,7 +10,7 @@
 <body>
 
 	<ui:composition>
-		<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource_en" var="bundle"/>
+		<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource" var="bundle"/>
 		
 		<h:form id="formLogin" >
 			
@@ -30,7 +30,9 @@
 					
 					
 					<div class="label"><h:outputText value="#{bundle['login.text.user']}"/></div>
+					
 					<h:inputText value="#{login.userBean.nick}" id="user" required="true" requiredMessage="#{bundle['login.error.requerido']}"/>
+					
 					<br/><h:message for="user" id="txtErrorUser" errorClass="error"/><br/>
 	
 					<div class="label"><h:outputText value="#{bundle['login.text.pass']}"/></div>

@@ -3,6 +3,11 @@
  */
 package uy.com.s4b.inside.test;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Calendar;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -12,21 +17,23 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.rmi.PortableRemoteObject;
 
-import uy.com.s4b.inside.core.ejbs.manager.EJBManagerUserRemote;
+import uy.com.s4b.inside.core.ejbs.version.EJBVersionRemote;
+import uy.com.s4b.inside.core.entity.Device;
 import uy.com.s4b.inside.core.entity.Profile;
 import uy.com.s4b.inside.core.entity.User;
+import uy.com.s4b.inside.core.entity.Version;
 import uy.com.s4b.inside.core.exception.InSideException;
 
 /**
  * @author pablo
  *
  */
-public class TestProvisorio {
+public class TestVersion {
 
 	/**
 	 * 
 	 */
-	public TestProvisorio() {
+	public TestVersion() {
 		
 	}
 
@@ -44,11 +51,10 @@ public class TestProvisorio {
 			retorno.setProperty(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");
 			Context ctx = new InitialContext(retorno);
 			
-			EJBManagerUserRemote service =  (EJBManagerUserRemote)
-						PortableRemoteObject.narrow(ctx.lookup("inSide/EJBManagerUser/remote"), EJBManagerUserRemote.class);
+			EJBVersionRemote service =  (EJBVersionRemote)
+						PortableRemoteObject.narrow(ctx.lookup("inSide/EJBVersion/remote"), EJBVersionRemote.class);
 			
-			service.saveUser(getUser(0));
-			
+			service.save(getVersion());
 		} catch (NamingException e) {
 			e.printStackTrace();
 		} catch (InSideException ex) {
@@ -56,6 +62,44 @@ public class TestProvisorio {
 		}
 	}
 	
+
+	/**
+	 * @return
+	 */
+	private static Version getVersion() {
+		Version retorno = new Version();
+		Device oneDevice = new Device();
+		oneDevice.setId(1);
+
+		
+		retorno.setConfig(getFile());
+		retorno.setDate(Calendar.getInstance());
+		retorno.setOneDevice(oneDevice);
+		
+		
+		return retorno;
+	}
+
+	/**
+	 * @return
+	 */
+	private static String getFile() {
+		StringBuffer retorno = new StringBuffer();
+		try {
+			BufferedReader r = new BufferedReader(new FileReader(new File("D:/DevelopNews/ICOS-S4B/configuracionesEjemplo/fw-contingencia-261009-preppp")));
+			String linea = r.readLine();
+			while (linea != null){
+				retorno.append(linea);
+				retorno.append("\n");
+				linea = r.readLine();
+			}
+			r.close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		
+		return retorno.toString();
+	}
 
 	private static User getUser(Integer idNick){
 		User retorno = new User();
