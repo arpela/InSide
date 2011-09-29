@@ -1,11 +1,24 @@
 package uy.com.s4b.inside.test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import uy.com.s4b.inside.core.common.DiffLine;
 import uy.com.s4b.inside.core.exception.InSideException;
+
+class ResponseDiff {    
+	  
+	DiffLine diffLine = null;
+	List<String> colLines = new ArrayList<String>();
+		  
+	ResponseDiff(DiffLine df, List<String> lines){
+		this.diffLine = df;
+		this.colLines = lines;	  
+	}
+};
 
 
 /** This is the info kept per-string.     */
@@ -49,7 +62,9 @@ public class Diff {
   stringInfo oldinfo, newinfo;
   
   /** Keeps track of information about diff between string1 and string2 */
-  Map<Integer,DiffLine> diffLine = new HashMap<Integer,DiffLine>();
+  Map<Integer,ResponseDiff> diffLine = new HashMap<Integer,ResponseDiff>();
+  
+
 
   /** blocklen is the info about found blocks. It will be set to 0, except
    * at the line#s where blocks start in the old file. At these places it
@@ -72,20 +87,22 @@ public class Diff {
    */
   public static void main(String argstrings[]) 
   {
-    String multiLine1 = "L1\nL2\nL3\nL4\nL5";
-    String multiLine2 = "L1\nL2\nL3";
+    String multiLine1 = "L1\nL2\nL3\nL4";
+    String multiLine2 = "L1\nL2\nL3\nL5\nL44";
     
          
     Diff d = new Diff();
     try {
-    	  Map<Integer,DiffLine> resDiffLine = d.doDiff(multiLine1, multiLine2);
+    	  Map<Integer,ResponseDiff> resDiffLine = d.doDiff(multiLine1, multiLine2);
     	  
     	  
-    	  switch (resDiffLine.get(4)) {
+    	  switch (resDiffLine.get(4).diffLine) {
 			case CHANGE: System.out.println("CHANGE");
+						 
 					     break;
 					
 			case DELETE: System.out.println("DELETE");
+						
 					     break;
 					     
 			case NEW: System.out.println("NEW");
@@ -97,7 +114,10 @@ public class Diff {
 			default:	 System.out.println("ERROR");
 					     break;
     	  }
-    	 
+    	  Iterator<String> it = resDiffLine.get(4).colLines.iterator();
+		 while (it.hasNext()){
+			 System.out.println(it.next());
+		 }
     	  
     	 
 	} catch (InSideException e) {
@@ -112,7 +132,7 @@ public class Diff {
   }
 
   /** Do one file comparison. Called with both filenames. */
-  public Map<Integer,DiffLine> doDiff(String oldString, String newString) throws InSideException {
+  public Map<Integer,ResponseDiff> doDiff(String oldString, String newString) throws InSideException {
     oldinfo = new stringInfo(oldString);
     newinfo = new stringInfo(newString);
       
@@ -382,7 +402,10 @@ public class Diff {
   void showdelete() {
     if ( printstatus != delete ){
       //println( ">>>> ELIMINADA LINEA " + printoldline);
-      diffLine.put(Integer.valueOf(printoldline), DiffLine.DELETE); 
+      List<String> l = new ArrayList<String>();
+      l.add("-");
+      ResponseDiff rd = new ResponseDiff(DiffLine.DELETE, l);
+      diffLine.put(Integer.valueOf(printoldline), rd); 
     }
     printstatus = delete;
     //oldinfo.symbol[ printoldline ].showSymbol();
@@ -397,15 +420,26 @@ public class Diff {
   void showinsert() {
 	   DiffLine dl=null; 
        if ( printstatus == change ) {
-    	   //println( ">>>>     MODIFICADO A" );
-    	   dl=DiffLine.CHANGE;
+    	   println( ">>>>     MODIFICADO A" );
+    	   
        } else if ( printstatus != insert ) {
-    	   //println( ">>>> NUEVA LINEA " + printoldline );
+    	   println( ">>>> NUEVA LINEA " + printoldline );
     	   dl=DiffLine.NEW;
+    	   ResponseDiff rd = new ResponseDiff(dl, new ArrayList<String>());
+    	   diffLine.put(Integer.valueOf(printoldline), rd); 
        }
-       //printstatus = insert;
-       //newinfo.symbol[ printnewline ].showSymbol();
-       diffLine.put(Integer.valueOf(printnewline), dl); 
+       printstatus = insert;
+       println( "LINEA NUEVA: " + printnewline + " LINEA VIEJA: " + printoldline );
+       newinfo.symbol[ printnewline ].showSymbol();
+       
+       diffLine.get(printnewline).colLines.add(newinfo.symbol[ printnewline ].line);
+       
+       //List<String> l = new ArrayList<String>();
+       //l.add(newinfo.symbol[ printnewline ].line);
+       //ResponseDiff rd = new ResponseDiff(dl, l);
+       //diffLine.put(Integer.valueOf(printnewline), rd); 
+       
+      // diffLine.put(Integer.valueOf(printnewline), dl); 
        anyprinted = true;
        printnewline++;
   }
@@ -417,7 +451,11 @@ public class Diff {
    */
   void showchange() {
        if ( printstatus != change ) {
-    	   //println( ">>>> " + printoldline + " MODIFICADA DE");
+    	   println( ">>>> " + printoldline + " MODIFICADA DE");
+    	   
+    	   DiffLine dl=DiffLine.CHANGE;
+    	   ResponseDiff rd = new ResponseDiff(dl, new ArrayList<String>());
+    	   diffLine.put(Integer.valueOf(printoldline), rd); 
     	   
        }
        printstatus = change;
@@ -473,7 +511,7 @@ public class Diff {
        int count;
        printstatus = idle;
        if ( newinfo.other[ printnewline ] != printoldline ) {
-    	   diffLine.put(Integer.valueOf(printoldline), DiffLine.ERROR);
+    	   //diffLine.put(Integer.valueOf(printoldline), DiffLine.ERROR);
        }
        count = blocklen[ printoldline ];
        printoldline += count;
@@ -497,7 +535,7 @@ public class Diff {
     	   
     	   for( ; newblock > 0; newblock--, printnewline++ ){
     		   //newinfo.symbol[ printnewline ].showSymbol();
-    		   diffLine.put(Integer.valueOf(printnewline), DiffLine.MOVE); 
+    		   //diffLine.put(Integer.valueOf(printnewline), DiffLine.MOVE); 
     	   }
     	   anyprinted = true;
     	   printstatus = idle;
