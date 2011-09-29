@@ -52,6 +52,13 @@ public class EJBEventInSideBean implements EventInSideService {
 		return q.getResultList();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see uy.com.s4b.inside.core.ejbs.event.EventInSideService#saveEvent(uy.com.s4b.inside.core.entity.EventInSide)
+	 */
+	public void saveEvent(EventInSide event) throws InSideException {
+		em.persist(event);
+	}
 	
 
 }

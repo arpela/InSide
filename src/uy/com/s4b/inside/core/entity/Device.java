@@ -1,11 +1,9 @@
-/**
- * 
- */
 package uy.com.s4b.inside.core.entity;
 
+
+
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,9 +14,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -58,19 +57,19 @@ public class Device implements Serializable {
 	private String ip;
 	
 	
-	@ManyToOne(optional=false)
-	@JoinColumn(name="modelId") 
-	private Model model;
+//	@ManyToOne(optional=false)
+//	@JoinColumn(name="modelId") 
+//	private Model model;
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
 	private String serialNumber;
 	
 
-	@ManyToOne(optional=false)
-	@JoinColumn(name="iosId") 
-	private Ios ios;
-	
+//	@ManyToOne(optional=false)
+//	@JoinColumn(name="iosId") 
+//	private Ios ios;
+//	
 	
 	@Column(insertable=true, nullable=true, unique=false)
 	private String user;
@@ -85,8 +84,11 @@ public class Device implements Serializable {
 	private Set<InterfaceDevice> colInterfaceDevice;
 	
 	
-	@OneToMany(cascade=CascadeType.DETACH)
-	@JoinColumn(name="deviceId")
+//	@OneToMany(cascade=CascadeType.DETACH)
+//	@JoinColumn(name="deviceId")
+//	private Set<Version> colVersion;
+	
+	@OneToMany(cascade=CascadeType.MERGE, mappedBy="oneDevice")
 	private Set<Version> colVersion;
 	
 	
@@ -112,16 +114,18 @@ public class Device implements Serializable {
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
-	private Date dateCreate;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar dateCreate;
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
-	private Timestamp dateModified;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar dateModified;
 
 		
-	@OneToMany(cascade=CascadeType.DETACH)
-	@JoinColumn(name="deviceId")
-	private Set<DeviceModule> colDeviceModule;
+//	@OneToMany(cascade=CascadeType.DETACH)
+//	@JoinColumn(name="deviceId")
+//	private Set<DeviceModule> colDeviceModule;
 	
 	
 	/**
@@ -132,293 +136,6 @@ public class Device implements Serializable {
 	}
 
 	
-	/**
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
-	}
-
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-
-	/**
-	 * @return the hostname
-	 */
-	public String getHostname() {
-		return hostname;
-	}
-
-
-	/**
-	 * @param hostname the hostname to set
-	 */
-	public void setHostname(String hostname) {
-		this.hostname = hostname;
-	}
-
-
-	/**
-	 * @return the ip
-	 */
-	public String getIp() {
-		return ip;
-	}
-
-
-	/**
-	 * @param ip the ip to set
-	 */
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
-
-	/**
-	 * @return the model
-	 */
-	public Model getModel() {
-		return model;
-	}
-
-
-	/**
-	 * @param model the model to set
-	 */
-	public void setModel(Model model) {
-		this.model = model;
-	}
-
-
-	/**
-	 * @return the serialNumber
-	 */
-	public String getSerialNumber() {
-		return serialNumber;
-	}
-
-
-	/**
-	 * @param serialNumber the serialNumber to set
-	 */
-	public void setSerialNumber(String serialNumber) {
-		this.serialNumber = serialNumber;
-	}
-
-
-	/**
-	 * @return the ios
-	 */
-	public Ios getIos() {
-		return ios;
-	}
-
-
-	/**
-	 * @param ios the ios to set
-	 */
-	public void setIos(Ios ios) {
-		this.ios = ios;
-	}
-
-
-	/**
-	 * @return the user
-	 */
-	public String getUser() {
-		return user;
-	}
-
-
-	/**
-	 * @param user the user to set
-	 */
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-
-	/**
-	 * @return the interfaceDevice
-	 */
-	public Set<InterfaceDevice> getColInterfaceDevice() {
-		return colInterfaceDevice;
-	}
-
-
-	/**
-	 * @param interfaceDevice the interfaceDevice to set
-	 */
-	public void setColInterfaceDevice(Set<InterfaceDevice> colInterfaceDevice) {
-		this.colInterfaceDevice = colInterfaceDevice;
-	}
-
-
-	/**
-	 * @return the colVersion
-	 */
-	public Set<Version> getColVersion() {
-		return colVersion;
-	}
-
-
-	/**
-	 * @param colVersion the colVersion to set
-	 */
-	public void setColVersion(Set<Version> colVersion) {
-		this.colVersion = colVersion;
-	}
-
-
-	/**
-	 * @return the snmpId
-	 */
-	public String getSnmpId() {
-		return snmpId;
-	}
-
-
-	/**
-	 * @param snmpId the snmpId to set
-	 */
-	public void setSnmpId(String snmpId) {
-		this.snmpId = snmpId;
-	}
-
-
-	/**
-	 * @return the snmpComunidadR
-	 */
-	public String getSnmpComunidadR() {
-		return snmpComunidadR;
-	}
-
-
-	/**
-	 * @param snmpComunidadR the snmpComunidadR to set
-	 */
-	public void setSnmpComunidadR(String snmpComunidadR) {
-		this.snmpComunidadR = snmpComunidadR;
-	}
-
-
-	/**
-	 * @return the snmpVersion
-	 */
-	public String getSnmpVersion() {
-		return snmpVersion;
-	}
-
-
-	/**
-	 * @param snmpVersion the snmpVersion to set
-	 */
-	public void setSnmpVersion(String snmpVersion) {
-		this.snmpVersion = snmpVersion;
-	}
-
-
-	/**
-	 * @return the snmpPassword
-	 */
-	public String getSnmpPassword() {
-		return snmpPassword;
-	}
-
-
-	/**
-	 * @param snmpPassword the snmpPassword to set
-	 */
-	public void setSnmpPassword(String snmpPassword) {
-		this.snmpPassword = snmpPassword;
-	}
-
-
-	/**
-	 * @return the notes
-	 */
-	public String getNotes() {
-		return notes;
-	}
-
-
-	/**
-	 * @param notes the notes to set
-	 */
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
-
-
-	/**
-	 * @return the dateCreate
-	 */
-	public Date getDateCreate() {
-		return dateCreate;
-	}
-
-
-	/**
-	 * @param dateCreate the dateCreate to set
-	 */
-	public void setDateCreate(Date dateCreate) {
-		this.dateCreate = dateCreate;
-	}
-
-
-	/**
-	 * @return the dateModified
-	 */
-	public Timestamp getDateModified() {
-		return dateModified;
-	}
-
-
-	/**
-	 * @param dateModified the dateModified to set
-	 */
-	public void setDateModified(Timestamp dateModified) {
-		this.dateModified = dateModified;
-	}
-
-
-	/**
-	 * @return the colDeviceModule
-	 */
-	public Set<DeviceModule> getColDeviceModule() {
-		return colDeviceModule;
-	}
-
-
-	/**
-	 * @param colDeviceModule the colDeviceModule to set
-	 */
-	public void setColDeviceModule(Set<DeviceModule> colDeviceModule) {
-		this.colDeviceModule = colDeviceModule;
-	}
-
 
 	@Override
 	public int hashCode() {
@@ -440,4 +157,272 @@ public class Device implements Serializable {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
+
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+
+
+
+	/**
+	 * @return the hostname
+	 */
+	public String getHostname() {
+		return hostname;
+	}
+
+
+
+	/**
+	 * @return the ip
+	 */
+	public String getIp() {
+		return ip;
+	}
+
+
+
+
+
+	/**
+	 * @return the serialNumber
+	 */
+	public String getSerialNumber() {
+		return serialNumber;
+	}
+
+
+
+
+	/**
+	 * @return the user
+	 */
+	public String getUser() {
+		return user;
+	}
+
+
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+
+
+	/**
+	 * @return the colInterfaceDevice
+	 */
+	public Set<InterfaceDevice> getColInterfaceDevice() {
+		return colInterfaceDevice;
+	}
+
+
+
+	/**
+	 * @return the colVersion
+	 */
+	public Set<Version> getColVersion() {
+		return colVersion;
+	}
+
+
+
+	/**
+	 * @return the snmpId
+	 */
+	public String getSnmpId() {
+		return snmpId;
+	}
+
+
+
+	/**
+	 * @return the snmpComunidadR
+	 */
+	public String getSnmpComunidadR() {
+		return snmpComunidadR;
+	}
+
+
+
+	/**
+	 * @return the snmpVersion
+	 */
+	public String getSnmpVersion() {
+		return snmpVersion;
+	}
+
+
+
+	/**
+	 * @return the snmpPassword
+	 */
+	public String getSnmpPassword() {
+		return snmpPassword;
+	}
+
+
+
+	/**
+	 * @return the notes
+	 */
+	public String getNotes() {
+		return notes;
+	}
+
+
+
+	/**
+	 * @return the dateCreate
+	 */
+	public Calendar getDateCreate() {
+		return dateCreate;
+	}
+
+
+
+	/**
+	 * @return the dateModified
+	 */
+	public Calendar getDateModified() {
+		return dateModified;
+	}
+
+
+
+
+
+
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
+
+	/**
+	 * @param hostname the hostname to set
+	 */
+	public void setHostname(String hostname) {
+		this.hostname = hostname;
+	}
+
+
+
+	/**
+	 * @param ip the ip to set
+	 */
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+
+
+
+	/**
+	 * @param serialNumber the serialNumber to set
+	 */
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
+	}
+
+
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+
+	/**
+	 * @param colInterfaceDevice the colInterfaceDevice to set
+	 */
+	public void setColInterfaceDevice(Set<InterfaceDevice> colInterfaceDevice) {
+		this.colInterfaceDevice = colInterfaceDevice;
+	}
+
+
+
+	/**
+	 * @param colVersion the colVersion to set
+	 */
+	public void setColVersion(Set<Version> colVersion) {
+		this.colVersion = colVersion;
+	}
+
+
+
+	/**
+	 * @param snmpId the snmpId to set
+	 */
+	public void setSnmpId(String snmpId) {
+		this.snmpId = snmpId;
+	}
+
+
+
+	/**
+	 * @param snmpComunidadR the snmpComunidadR to set
+	 */
+	public void setSnmpComunidadR(String snmpComunidadR) {
+		this.snmpComunidadR = snmpComunidadR;
+	}
+
+	/**
+	 * @param snmpVersion the snmpVersion to set
+	 */
+	public void setSnmpVersion(String snmpVersion) {
+		this.snmpVersion = snmpVersion;
+	}
+
+	/**
+	 * @param snmpPassword the snmpPassword to set
+	 */
+	public void setSnmpPassword(String snmpPassword) {
+		this.snmpPassword = snmpPassword;
+	}
+
+	/**
+	 * @param notes the notes to set
+	 */
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+
+	/**
+	 * @param dateCreate the dateCreate to set
+	 */
+	public void setDateCreate(Calendar dateCreate) {
+		this.dateCreate = dateCreate;
+	}
+
+	/**
+	 * @param dateModified the dateModified to set
+	 */
+	public void setDateModified(Calendar dateModified) {
+		this.dateModified = dateModified;
+	}
 }

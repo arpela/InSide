@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+   	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:rich="http://richfaces.org/rich">
+
+<h:body>
+	
+
+	<ui:composition template="/layout/templateapp.xhtml">
+		
+		<ui:define name="body">
+			<h:form id="formversion" rendered="#{login.loginIn}">
+			
+			<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource" var="bundle" />
+			   
+			   
+			   <div id="content">
+			      <div class="state">
+			        <div class="page fleft">Logs</div>
+			        <div class="date fright">Wednesday, August 10, 2011 12:35:02 PM</div>
+			        <div class="clear"></div>
+			      </div>
+			      <table width="50%" border="0" cellpadding="0" cellspacing="0" style="margin-left:71px; border-color: #FFF">
+			        <tr>
+			          <td width="20" bgcolor="#88B119">&nbsp;</td>
+			          <td> &nbsp;referencia 1</td>
+			          <td width="20" bgcolor="#C81F24">&nbsp;</td>
+			          <td> &nbsp;referencia 2</td>
+			          <td width="20" bgcolor="#FFC81F">&nbsp;</td>
+			          <td> &nbsp;referencia 3</td>
+			        </tr>
+			      </table>
+			      <p>&nbsp;</p>
+			      <div class="leftContent fleft">
+			        <div>
+			          <table width="470" cellpadding="0" cellspacing="0" style="border:none;">
+			            <tr>
+			              <td width="23%" height="20" style="border-bottom:#999 1px solid;" class="table_info table_strong">Coding type</td>
+			              <td width="77%" height="20" style="border-bottom:#999 1px solid;" class="table_info">running</td>
+			            </tr>
+			            <tr>
+			              <td height="20" style="border-bottom:#999 1px solid;" class="table_info table_strong">Downloaded</td>
+			              <td height="20" style="border-bottom:#999 1px solid;" class="table_info">8/8/2011 6:47:28 PM</td>
+			            </tr>
+			            <tr>
+			              <td height="20" style="border-bottom:#999 1px solid;" class="table_info table_strong">Modified</td>
+			              <td height="20" style="border-bottom:#999 1px solid;" class="table_info">never modified</td>
+			            </tr>
+			            <tr>
+			              <td height="20" class="table_info table_strong">Comments</td>
+			              <td height="20">&nbsp;</td>
+			            </tr>
+			          </table>
+			        </div>
+			        
+			        
+			        <div class="subtitle">
+			          <table width="470" border="0" cellpadding="0" cellspacing="0">
+			          	<h:outputText value="#{page1}" escape="false"/>
+			          	
+			            <!-- tr>
+			              <td class="table" bgcolor="#CCCCCC"><span>01:&nbsp;two weeks ago 14/5/20011 - 2:00 am</span></td>
+			            </tr>
+			            <tr>
+			              <td class="table">02:&nbsp;no changes</td>
+			            </tr>
+			            <tr>
+			              <td class="table" bgcolor="#CCCCCC"><span>03:&nbsp;two weeks ago 14/5/20011 - 2:00 am</span></td>
+			            </tr>
+			            <tr>
+			              <td class="table">04:&nbsp;no changes</td>
+			            </tr>
+			            <tr>
+			              <td class="table" bgcolor="#CCCCCC"><span>05:&nbsp;two weeks ago 14/5/20011 - 2:00 am</span></td>
+			            </tr>
+			            <tr>
+			              <td class="table">06:&nbsp;no changes</td>
+			            </tr>
+			            <tr>
+			              <td class="table">07:&nbsp;!</td>
+			            </tr>
+			            <tr>
+			              <td class="table">08:&nbsp;!</td>
+			            </tr>
+			            <tr>
+			              <td class="table">09:&nbsp;!</td>
+			            </tr>
+			            <tr>
+			              <td bgcolor="#88b119" class="table">10:&nbsp;ip flow export</td>
+			            </tr>
+			            <tr>
+			              <td class="table">11:&nbsp;ip flow export</td>
+			            </tr>
+			            <tr>
+			              <td bgcolor="#c81f24" class="table">12:&nbsp;ip flow export</td>
+			            </tr>
+			            <tr>
+			              <td class="table">13:&nbsp;ip flow export</td>
+			            </tr>
+			            <tr>
+			              <td bgcolor="#ffc81f" class="table">14:&nbsp;ip flow export</td>
+			            </tr>
+			            <tr>
+			              <td class="table">15:&nbsp;ip flow export</td>
+			            </tr -->
+			          </table>
+			        </div>
+			        
+			      </div>
+			      
+			      
+			      <div class="rightContent fright">
+			        <div>
+			          <table width="420" cellpadding="0" cellspacing="0" style="border:none;">
+			            <tr>
+			              <td width="23%" height="20" style="border-bottom:#999 1px solid;" class="table_info table_strong">Coding type</td>
+			              <td width="77%" height="20" style="border-bottom:#999 1px solid; font-weight: normal;" class="table_info">running</td>
+			            </tr>
+			            <tr>
+			              <td height="20" style="border-bottom:#999 1px solid;" class="table_info table_strong">Downloaded</td>
+			              <td height="20" style="border-bottom:#999 1px solid; font-weight: normal;" class="table_info">8/8/2011 6:47:28 PM</td>
+			            </tr>
+			            <tr>
+			              <td height="20" style="border-bottom:#999 1px solid;" class="table_info table_strong">Modified</td>
+			              <td height="20" style="border-bottom:#999 1px solid; font-weight: normal;" class="table_info">never modified</td>
+			            </tr>
+			            <tr>
+			              <td height="20" class="table_info table_strong">Comments</td>
+			              <td height="20">&nbsp;</td>
+			            </tr>
+			          </table>
+			        </div>
+			        
+			        <table width="420" border="0" cellpadding="0" cellspacing="0">
+			        	<h:outputText value="#{page2}" escape="false"/>
+			        	
+			          <!--  tr>
+			            <td class="table" bgcolor="#CCCCCC"><span>01:&nbsp;two weeks ago 14/5/20011 - 2:00 am</span></td>
+			          </tr>
+			          <tr>
+			            <td class="table">02:&nbsp;no changes</td>
+			          </tr>
+			          <tr>
+			            <td class="table" bgcolor="#CCCCCC"><span>03:&nbsp;two weeks ago 14/5/20011 - 2:00 am</span></td>
+			          </tr>
+			          <tr>
+			            <td class="table">04:&nbsp;no changes</td>
+			          </tr>
+			          <tr>
+			            <td class="table" bgcolor="#CCCCCC"><span>05:&nbsp;two weeks ago 14/5/20011 - 2:00 am</span></td>
+			          </tr>
+			          <tr>
+			            <td class="table">06:&nbsp;no changes</td>
+			          </tr>
+			          <tr>
+			            <td class="table">07:&nbsp;!</td>
+			          </tr>
+			          <tr>
+			            <td class="table">08:&nbsp;!</td>
+			          </tr>
+			          <tr>
+			            <td class="table">09:&nbsp;!</td>
+			          </tr>
+			          <tr>
+			            <td bgcolor="#88b119" class="table">10:&nbsp;ip flow export</td>
+			          </tr>
+			          <tr>
+			            <td class="table">11:&nbsp;ip flow export</td>
+			          </tr>
+			          <tr>
+			            <td bgcolor="#c81f24" class="table">12:&nbsp;ip flow export</td>
+			          </tr>
+			          <tr>
+			            <td class="table">13:&nbsp;ip flow export</td>
+			          </tr>
+			          <tr>
+			            <td bgcolor="#ffc81f" class="table">14:&nbsp;ip flow export</td>
+			          </tr>
+			          <tr>
+			            <td class="table">15:&nbsp;ip flow export</td>
+			          </tr -->
+			        </table>
+			      </div>
+			      <div class="clear"></div>
+			    </div>  
+			    
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>
+ 

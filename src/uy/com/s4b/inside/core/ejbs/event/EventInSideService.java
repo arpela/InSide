@@ -25,4 +25,12 @@ public interface EventInSideService {
 	 */
 	public List<EventInSide> listEventEnable() throws InSideException;
 
+	
+	/**
+	 * Metodo encargado de salvar los eventos recibido.
+	 * @param event
+	 * @throws InSideException
+	 */
+	public void saveEvent(EventInSide event) throws InSideException;
+
 }

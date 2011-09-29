@@ -1,15 +1,23 @@
 package uy.com.s4b.inside.core.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Calendar;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -28,6 +36,9 @@ import org.apache.commons.lang.builder.ToStringStyle;
  */
 @Table(name="version")
 @Entity
+@NamedQueries({
+	@NamedQuery(name="findVersionDevice", query="from Version v where v.oneDevice.id = :pid order by v.date desc")
+})
 public class Version implements Serializable {
 
 	@Transient
@@ -41,12 +52,18 @@ public class Version implements Serializable {
 	
 	
 	@Column(insertable=true, nullable=false, unique=false)
-	private Timestamp date;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar date;
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
 	@Lob
 	private String config;
+	
+	
+	@ManyToOne (fetch=FetchType.LAZY,cascade=CascadeType.DETACH)
+    @JoinColumn(name="deviceId", nullable=false)
+    private Device oneDevice;
 	
 	
 	/**
@@ -76,7 +93,7 @@ public class Version implements Serializable {
 	/**
 	 * @return the date
 	 */
-	public Timestamp getDate() {
+	public Calendar getDate() {
 		return date;
 	}
 
@@ -84,7 +101,7 @@ public class Version implements Serializable {
 	/**
 	 * @param date the date to set
 	 */
-	public void setDate(Timestamp date) {
+	public void setDate(Calendar date) {
 		this.date = date;
 	}
 
@@ -123,6 +140,22 @@ public class Version implements Serializable {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
+
+
+	/**
+	 * @return the oneDevice
+	 */
+	public Device getOneDevice() {
+		return oneDevice;
+	}
+
+
+	/**
+	 * @param oneDevice the oneDevice to set
+	 */
+	public void setOneDevice(Device oneDevice) {
+		this.oneDevice = oneDevice;
 	}
 
 }

@@ -12,6 +12,16 @@
 		<managed-bean-scope>request</managed-bean-scope> </managed-bean> <lifecycle> 
 		<phase-listener>org.richfaces.demo.PhaseTracker</phase-listener> </lifecycle> -->
 
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>verReporeteHome</from-outcome>
+			<to-view-id>/site/version/versionH.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
 	<application>
 		<locale-config>
 			<default-locale>es</default-locale>

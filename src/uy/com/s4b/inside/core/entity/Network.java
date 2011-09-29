@@ -37,7 +37,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 @NamedQueries({
 	@NamedQuery(name="findAll", query="from Network")
 })
-public class Network implements Serializable {
+public class Network implements Serializable{
 
 	@Transient
 	private static final long serialVersionUID = 2642699632506578950L;

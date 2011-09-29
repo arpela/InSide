@@ -38,7 +38,7 @@ public class TestDiff {
 	
 		
 		String multiLine1 = "L1\nL2\nL3\nL4\nL5";
-		String multiLine2 = "L1\nL2\nL3\nL4\nL5";
+		String multiLine2 = "L1\nL2\nL3\nL4";
 		
 		try {
 			Properties retorno = System.getProperties();
@@ -52,7 +52,7 @@ public class TestDiff {
 		
 			Map<Integer, DiffLine> resDiffLine = service.doDiff(multiLine1, multiLine2);
 
-			switch (resDiffLine.get(4)) {
+			switch (resDiffLine.get(5)) {
 				case CHANGE:
 					System.out.println("CHANGE");
 					break;
