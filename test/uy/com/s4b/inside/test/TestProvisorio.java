@@ -38,7 +38,7 @@ public class TestProvisorio {
 //		
 		try {
 			Properties retorno = System.getProperties();
-			String serverip = "10.1.1.2:1099"; 
+			String serverip = "localhost:1099"; 
 			retorno.setProperty(Context.PROVIDER_URL, "jnp://" + serverip);
 			retorno.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 			retorno.setProperty(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");
