@@ -62,4 +62,6 @@ public class EJBDeviceBean implements DeviceService {
 		log.info("Se ingresa a recuperar el dispocitivo: " + id);
 		return (Device)em.find(Device.class, id);
 	}
+	
+	
 }

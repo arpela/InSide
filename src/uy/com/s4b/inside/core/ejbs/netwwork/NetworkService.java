@@ -25,4 +25,31 @@ public interface NetworkService {
 	 */
 	public List<Network> listNetwork() throws InSideException;
 
+	
+	/**
+	 * @param nameDivice
+	 * @return
+	 */
+	List<Network> listNetworkByNameDevice(String nameDivice) throws InSideException;
+	
+	/**
+	 * @param nameDivice
+	 * @return
+	 * @throws InSideException
+	 */
+	List<Network> listNetworkByNetwork(String nameDivice) throws InSideException;
+
+	/**
+	 * @param nameSite
+	 * @return
+	 * @throws InSideException
+	 */
+	List<Network> listNetworkBySite(String nameSite) throws InSideException;
+
+	
+	/**
+	 * @param nameZone
+	 * @return
+	 */
+	List<Network> listNetworkByZone(String nameZone)throws InSideException;
 }

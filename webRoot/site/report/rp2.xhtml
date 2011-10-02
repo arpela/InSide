@@ -7,8 +7,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
-   	xmlns:c="http://java.sun.com/jsp/jstl/core"
+   	xmlns:c="http://java.sun.com/jstl/core"
 	xmlns:rich="http://richfaces.org/rich">
 
 <h:body>
@@ -30,7 +29,7 @@
 			      <div class="leftContent fleft">
 			       
 			        <div>
-			          <p class="subtitle">Equipo 1<br />
+			          <p class="subtitle"><h:outputLabel value="#{equipo1}" /><br />
 			            <br />
 			            <br />
 			          </p>         
@@ -44,6 +43,10 @@
 			            	<div style="margin-bottom:10px;">Desde:</div>
 			                <div class="leftSplitContent">
 			                
+			                
+								<rich:calendar datePattern="dd/MM/yyyy HH:mm:ss"></rich:calendar>
+								
+								
 			                	<input type="text" name="date" value="30/12/2010" />
 			                    <img src="#{request.contextPath}/resources/img/calendar.png" height="31" width="31" alt="Calendar" style="margin:0 0 0px 10px; vertical-align:middle; cursor:pointer;" />
 			                	<label>
@@ -59,12 +62,8 @@
 			                    <br />
 			                  Seleccione la configuración:</p>
 			                    <ul>
-			               	    <li style="background:url(#{request.contextPath}/resources/img/B.png) left no-repeat;">Lorem ipsum dolor&nbsp;&nbsp; <input id="radio" type="radio" name="radio" checked="checked" /></li>
-			                        <li style="background:url(#{request.contextPath}/resources/img/R.png) left no-repeat;">Lorem ipsum dolor&nbsp;&nbsp; <input type="radio" name="radio" /></li>
-			                        <li style="background:url(#{request.contextPath}/resources/img/B.png) left no-repeat;">Lorem ipsum dolor&nbsp;&nbsp; <input type="radio" name="radio" /></li>
-			                        <li style="background:url(#{request.contextPath}/resources/img/R.png) left no-repeat;">Lorem ipsum dolor&nbsp;&nbsp; <input type="radio" name="radio" /></li>
+			                        <h:outputLabel value="#{paginaLista1}" escape="false" />
 			                    </ul>
-			                    
 			                </div>
 			                <div class="clear"></div>
 			            </div>
@@ -96,7 +95,7 @@
 			      <div class="rightContentReports fright">
 			     
 			        <div>
-			          <p class="subtitle">Equipo 1<br />
+			          <p class="subtitle"><h:outputLabel value="#{equipo2}" /><br />
 			            <br />
 			            <br />
 			          </p>         
@@ -118,11 +117,14 @@
 			       	            <option>10:30</option>
 			   	              </select>
 			   	            </label>
-			       	        <p> <br />
+			       	        <p><br/>
 			       	          <br />
-			       	          <br />
-			       	          Seleccione la configuración:</p>
+			       	          <br />Seleccione la configuración:</p>
 			       	        <ul>
+			       	        	<h:outputLabel value="#{paginaLista2}" escape="false"/>
+			       	        </ul>
+			       	        
+			       	        <!--  ul>
 			       	          <li style="background:url(#{request.contextPath}/resources/img/B.png) left no-repeat;">Lorem ipsum dolor&nbsp;&nbsp;
 			       	            <input id="radio2" type="radio" name="radio" checked="checked" />
 			   	              </li>
@@ -135,7 +137,8 @@
 			       	          <li style="background:url(#{request.contextPath}/resources/img/R.png) left no-repeat;">Lorem ipsum dolor&nbsp;&nbsp;
 			       	            <input type="radio" name="radio" />
 			   	              </li>
-			   	            </ul>
+			   	            </ul -->
+			   	            
 			   	          </div>
 			       	      <div class="clear"></div>
 			   	        </div>
@@ -168,7 +171,7 @@
 			           
 			         <div class="options">
 			          <div class="fright button">
-			            <a href="#">Ver</a>            
+			            <h:commandLink value="Ver" action="#{versionBakingBean.verReporte}"/>    
 			          </div>
 			          <div class="fright button" style="margin-right: 5px">
 			            <a href="#">Volver</a>            

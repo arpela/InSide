@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -35,8 +37,22 @@ import org.apache.commons.lang.builder.ToStringStyle;
 @Table(name="network")
 @Entity
 @NamedQueries({
-	@NamedQuery(name="findAll", query="from Network")
+	@NamedQuery(name="findAll", query="from Network"),
+	
+	@NamedQuery(name="findByNameNetwork", query="from Network n where n.name = :pName"),
 })
+
+@NamedNativeQueries({
+	@NamedNativeQuery(name="findNetworkByNameDevide", query="select n.* from network n, device d, site s, zone z where " +
+			"n.id = s.networkid and s.id = z.siteid and z.id = d.zoneid and d.hostname = :pName", resultClass=Network.class),
+			
+	@NamedNativeQuery(name="findByNameSite", query="select n.* from network n, site s where n.id = s.networkid " +
+			"and s.name = :pName", resultClass=Network.class),
+			
+	@NamedNativeQuery(name="findByNameZone", query="select n.* from network n, site s, zone z where n.id = s.networkid " +
+			"and s.id = z.siteid and z.name = :pName", resultClass=Network.class)
+})
+
 public class Network implements Serializable{
 
 	@Transient
@@ -53,7 +69,7 @@ public class Network implements Serializable{
 	
 	
 	@OneToMany(cascade=CascadeType.DETACH)
-	@JoinColumn(name="networkId")
+	@JoinColumn(name="networkId", nullable= false)
 	private Set<Site> colSite;
 	
 	

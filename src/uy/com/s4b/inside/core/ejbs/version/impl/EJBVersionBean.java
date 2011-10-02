@@ -74,7 +74,7 @@ public class EJBVersionBean implements VersionService {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Version[] getVersionDevice(Integer idDevices) throws InSideException {
+	public Version[] getVersionDosDevice(Integer idDevices) throws InSideException {
 		Version retorno [] = new Version[2];
 		Query q = em.createNamedQuery("findVersionDevice");
 		List<Version> lista = q.setParameter("pid", idDevices).getResultList();
@@ -84,6 +84,17 @@ public class EJBVersionBean implements VersionService {
 			
 		}
 		return retorno;
+	}
+
+	/* (non-Javadoc)
+	 * @see uy.com.s4b.inside.core.ejbs.version.VersionService#getAllVersionDevice(java.lang.Integer)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Version> getAllVersionDevice(Integer idDevices) throws InSideException {
+		Query q = em.createNamedQuery("findVersionDevice");
+		List<Version> lista = q.setParameter("pid", idDevices).getResultList();		
+		return lista;
 	}
 
 

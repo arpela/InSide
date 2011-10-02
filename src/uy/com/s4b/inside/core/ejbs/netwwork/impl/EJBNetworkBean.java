@@ -41,6 +41,24 @@ public class EJBNetworkBean implements NetworkService {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see uy.com.s4b.inside.core.ejbs.netwwork.
+	 * NetworkService#listNetworkByNameDevice(java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Network> listNetworkByNetwork(String nameNetwokr) {
+		Query query = em.createNamedQuery("findByNameNetwork");
+		query.setParameter("pName", nameNetwokr);
+		
+		List<Network> resultado = query.getResultList();
+		if ((resultado != null) && (resultado.size() > 0)){
+			for (Network network : resultado) {
+				Hibernate.initialize(network.getColSite());
+			}
+		}
+		return resultado;
+	}
 
 	/* (non-Javadoc)
 	 * @see uy.com.s4b.inside.core.ejbs.netwwork.NetworkService#listNetwork()
@@ -58,7 +76,67 @@ public class EJBNetworkBean implements NetworkService {
 		
 		return resultado;
 	}
+
+
+	/* (non-Javadoc)
+	 * @see uy.com.s4b.inside.core.ejbs.netwwork.
+	 * NetworkService#listNetworkByNameDevice(java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Network> listNetworkByNameDevice(String nameDivice) {
+		
+		Query query = em.createNativeQuery("select n.* from network n, device d, site s, zone z where " +
+			"n.id = s.networkid and s.id = z.siteid and z.id = d.zoneid and d.hostname = :pName", Network.class);
+		
+		query.setParameter("pName", nameDivice);
+		
+		List<Network> resultado = query.getResultList();
+		if ((resultado != null) && (resultado.size() > 0)){
+			for (Network network : resultado) {
+				Hibernate.initialize(network.getColSite());
+			}
+		}
+		return resultado;
+	}
 	
 	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Network> listNetworkBySite(String nameSite) {
+		Query query = em.createNativeQuery("select n.* from network n, site s where n.id = s.networkid " +
+			"and s.name = :pName", Network.class);
+		query.setParameter("pName", nameSite);
+		
+		List<Network> resultado = query.getResultList();
+		if ((resultado != null) && (resultado.size() > 0)){
+			for (Network network : resultado) {
+				Hibernate.initialize(network.getColSite());
+			}
+		}
+		return resultado;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see uy.com.s4b.inside.core.ejbs.netwwork.NetworkService#listNetworkByZone(java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Network> listNetworkByZone(String nameZone)
+			throws InSideException {
+		Query query = em.createNativeQuery("select n.* from network n, site s, zone z where n.id = s.networkid " +
+			"and s.id = z.siteid and z.name = :pName", Network.class);
+		query.setParameter("pName", nameZone);
+		
+		List<Network> resultado = query.getResultList();
+		if ((resultado != null) && (resultado.size() > 0)){
+			for (Network network : resultado) {
+				Hibernate.initialize(network.getColSite());
+			}
+		}
+		return resultado;
+	}
 	
 }

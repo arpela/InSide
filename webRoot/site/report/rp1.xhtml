@@ -17,6 +17,7 @@
 	<ui:composition template="/layout/templateapp.xhtml">
 		
 		<ui:define name="body">
+			
 			<h:form id="formFilter" rendered="#{login.loginIn}">
 			
 			<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource" var="bundle" />
@@ -27,205 +28,76 @@
 			        <div class="date fright">Wednesday, August 10, 2011 12:35:02 PM</div>
 			        <div class="clear"></div>
 			      </div>
-			    
+			    	<div class="label">
+						<h:messages id="txtMSG" showDetail="false" showSummary="true" globalOnly="true" errorClass="error" infoClass="info" warnClass="warn" layout="vertical"/>
+					</div>
+					
 			        <div class="leftContentReports fleft">
-			        <div class="subtitle">Filtros:</div>
-			        <div class="label">Name:</div>
-			        
-					<h:inputText value="#{report.nameDivice}" id="nameDivice" required="true" requiredMessage="#{bundle['reporteDiff.error.requerido']}"/>
-					<br/><h:message for="nameDivice" id="txtNameDivice" errorClass="error"/><br/>
-			        	
-			        <div class="options">
-			          <div class="fright button" style="margin-right: 5px; padding-right: 60px;">
-			          	<a4j:commandLink value="#{bundle['reporteDiff.text.button.find']}" render="out" execute="@form" />
-			          </div>
-			          
-			          <div class="clear"></div>
-			        </div>
-			        
-			        
+				        <div class="subtitle">Filtros:</div>
+				        <div class="label">Name:</div>
+				        
+						<h:inputText value="#{fileterReport.nameDivice}" id="nameDivice" required="false" />
+						<br/><h:message for="nameDivice" id="txtNameDivice" errorClass="error"/><br/>
+				        
+						<div class="label">Network:</div>
+						<h:inputText value="#{fileterReport.nameNetwork}" id="nameNetwork" required="false"/>
+						
+						<div class="label">Site:</div>
+						<h:inputText value="#{fileterReport.nameSite}" id="nameSite" required="false"/>
+	        
+				        <div class="label">Zone:</div>
+						<h:inputText value="#{fileterReport.nameZone}" id="nameZone" required="false"/>
+						
+				        <div class="options">
+				          <div class="fright button" style="margin-right: 5px; padding-right: 60px;">
+				          	<a4j:commandLink value="#{bundle['reporteDiff.text.button.find']}"  execute="@region"  render="out" action="#{fileterReport.find}"/>
+					       	
+				          </div>
+				          <div class="clear">
+					          <a4j:status id="wait" startText="Process..">
+							     	<!--- f:facet name="start">                   
+							    		<  -h:graphicImage value="/resources/img/wait.gif" alt="wait"/>
+				                	< /f:facet -->
+							   	</a4j:status>
+				          </div>
+				        </div>
 			      </div>
 			      
-			      <a4j:outputPanel id="out" ajaxRendered="#{!empty report.nameDivice}"  >
-			      	
-        				<h:outputText value="Dibuja el arbol con el valor ---->  #{report.nameDivice} !" rendered="#{!empty report.nameDivice}"/>
-    				   
+			    
+			    
+			     <a4j:outputPanel id="out" >
+				   
 			      <div class="rightContentReports fright">
-			        
-			        
+			      
 			      <div id="contenido_1">
-			        <table>
-			          <tr>
-			            <th width="201">Network / Site / Zone / node</th>
-			            <th width="83">&nbsp;</th>
-			            <th width="77">&nbsp;</th>
-			            <th width="106" style="text-align: left; padding-left: 30px">&nbsp;</th>
-			          </tr>
-			           <tr>            
-			            <td colspan="4" class="networks">
-			             <ul class="network expand">
-			                <li class="more"><span>Network-1</span></li>
-			                <ul class="site expand" style="display:none">
-			                  <li class="more"><span>Site-1</span></li>
-			                  <ul class="zone expand" style="display:none">
-			                    <li class="more"><span>Zone-1</span></li>
-			                    <ul class="node expand" style="display:none">
-			                     <li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span></li>
-				                 <li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span></li>
-			                     <li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span></li>
-			                    </ul>
-			                  </ul>
-			                </ul>                
-			              </ul>              
-			            </td>                   
-			          </tr>
-			          <tr>            
-			            <td colspan="4" class="networks">
-			              <ul class="network expand">
-			                <li class="more"><span>Network-1</span></li>
-			                <ul class="site expand" style="display:none">
-			                  <li class="more"><span>Site-1</span></li>
-			                  <ul class="zone expand" style="display:none">
-			                    <li class="more"><span>Zone-1</span></li>
-			                    <ul class="node expand" style="display:none">
-			                    <li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span></li>
-			                     
-			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span></li>
-			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span></li>
-			                    </ul>
-			                  </ul>
-			                </ul>                
-			              </ul>              
-			            </td>          
-			          </tr>
-			          <tr>            
-			            <td colspan="4" class="networks">
-			              <ul class="network expand">
-			                <li class="more"><span>Network-1</span></li>
-			                <ul class="site expand" style="display:none">
-			                  <li class="more"><span>Site-1</span></li>
-			                  <ul class="zone expand" style="display:none">
-			                    <li class="more"><span>Zone-1</span></li>
-			                    <ul class="node expand" style="display:none">
-								<li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span></li>
-			                      
-			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span></li>
-			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span></li>
-			                    </ul>
-			                  </ul>
-			                </ul>                
-			              </ul>                
-			            </td>              
-			          </tr>          
-			        </table></div>
+				        <table>
+				          <tr>
+				            <th width="201">Network / Site / Zone / Node</th>
+				            <th width="83">&nbsp;</th>
+				            <th width="77"></th>
+				            <th width="106" style="text-align: left; padding-left: 30px">&nbsp;</th>
+				          </tr>
+				          <h:outputText value="#{versionBakingBean.treeNetwork}" escape="false" /> 
+				        </table>
+			     </div>
 			      
-			      
-			      <div id="contenido_2" style="display:none">
-			        <table>
-			          <tr>
-			            <th width="201">Network / Site / Zone / node</th>
-			            <th width="83">&nbsp;</th>
-			            <th width="77">&nbsp;</th>
-			            <th width="106" style="text-align: left; padding-left: 30px">&nbsp;</th>
-			          </tr>
-			          <tr>
-			            
-			            <td colspan="4" class="networks">
-			              <ul class="network expand">
-			                <li class="more"><span>Network-1</span></li>
-			                <ul class="site expand" style="display:none">
-			                  <li class="more"><span>Site-1</span></li>
-			                  <ul class="zone expand" style="display:none">
-			                    <li class="more"><span>Zone-1</span></li>
-			                    <ul class="node expand" style="display:none">
-			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span></li>
-			                      
-			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span></li>
-			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span></li>
-			                    </ul>
-			                  </ul>
-			                </ul>                
-			              </ul>                
-			            </td>                
-			          </tr>
-
-			          <tr>
-			            <td colspan="4" class="networks">
-			             <ul class="network expand">
-			                <li class="more"><span>Network-1</span></li>
-			                <ul class="site expand" style="display:none">
-			                  <li class="more"><span>Site-1</span></li>
-			                  <ul class="zone expand" style="display:none">
-			                    <li class="more"><span>Zone-1</span></li>
-			                    <ul class="node expand" style="display:none">
-			                     <li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span></li>
-			                      
-			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span></li>
-			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span></li>
-			                    </ul>
-			                  </ul>
-			                </ul>                
-			              </ul>              
-			            </td>                   
-			          </tr>
-			          <tr>            
-			            <td colspan="4" class="networks">
-			              <ul class="network expand">
-			                <li class="more"><span>Network-1</span></li>
-			                <ul class="site expand" style="display:none">
-			                  <li class="more"><span>Site-1</span></li>
-			                  <ul class="zone expand" style="display:none">
-			                    <li class="more"><span>Zone-1</span></li>
-			                    <ul class="node expand" style="display:none">
-			                    <li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span></li>
-			                      
-			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span></li>
-			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span></li>
-			                    </ul>
-			                  </ul>
-			                </ul>                
-			              </ul>       
-			            </td>          
-			          </tr>
-			          <tr>            
-			            <td colspan="4" class="networks">
-			              <ul class="network expand">
-			                <li class="more"><span>Network-1</span></li>
-			                <ul class="site expand" style="display:none">
-			                  <li class="more"><span>Site-1</span></li>
-			                  <ul class="zone expand" style="display:none">
-			                    <li class="more"><span>Zone-1</span></li>
-			                    <ul class="node expand" style="display:none">
-								<li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')"><span>SWPOC-st</span></li>
-			                    
-			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')"><span>SWPOC-st</span></li>
-			                      <li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')"><span>SWPOC-st</span></li>
-			                    </ul>
-			                  </ul>
-			                </ul>                
-			              </ul>                
-			            </td>              
-			          </tr>          
-			        </table>
-			        </div>
-			        
-					<script type="text/javascript">
-			            $('ul.expand li').click(function(){
-			              next = $(this).next('ul.expand');
-			              if ($(this).hasClass('less')){
-			                $(next).slideUp();
-			                $(this).removeClass('less');
-			                $(this).addClass('more');
-			              }else{
-			                $(next).slideDown();
-			                $(this).addClass('less');
-			                $(this).removeClass('more');
-			              }
-			            })
-			            </script>
+				<script type="text/javascript">
+		            $('ul.expand li').click(function(){
+		              next = $(this).next('ul.expand');
+		              if ($(this).hasClass('less')){
+		                $(next).slideUp();
+		                $(this).removeClass('less');
+		                $(this).addClass('more');
+		              }else{
+		                $(next).slideDown();
+		                $(this).addClass('less');
+		                $(this).removeClass('more');
+		              }
+		            })
+		         </script>
 			        <div class="options">
 			          <div class="fright button">
-			            <a href="#">Limpiar</a> 
+			            <a4j:commandLink value="#{bundle['reporteDiff.text.button.clear']}" render="@form" action="#{fileterReport.clear}" />
 			          </div>
 			          <div class="fright button" style="margin-right: 5px">
 			          	<h:commandLink value="Siguiente" action="#{versionBakingBean.page2Report}"/>
@@ -235,11 +107,8 @@
 			    </div>
 			    
 			    </a4j:outputPanel>
-			    
-			      <div class="clear"></div>
+			    <div class="clear"></div>
 			    </div>
-    
- 
 			</h:form>
 		</ui:define>
 	</ui:composition>

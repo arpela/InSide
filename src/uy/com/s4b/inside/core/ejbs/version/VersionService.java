@@ -1,5 +1,7 @@
 package uy.com.s4b.inside.core.ejbs.version;
 
+import java.util.List;
+
 import uy.com.s4b.inside.core.entity.Version;
 import uy.com.s4b.inside.core.exception.InSideException;
 
@@ -30,7 +32,14 @@ public interface VersionService {
 	 * @return
 	 * @throws InSideException
 	 */
-	Version [] getVersionDevice(Integer idDevices) throws InSideException;
+	Version [] getVersionDosDevice(Integer idDevices) throws InSideException;
+
+	/**
+	 * @param idDevices
+	 * @return
+	 * @throws InSideException
+	 */
+	List<Version> getAllVersionDevice(Integer idDevices) throws InSideException;
 	
 	
 	/**

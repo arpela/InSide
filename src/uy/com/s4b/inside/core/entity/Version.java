@@ -61,7 +61,7 @@ public class Version implements Serializable {
 	private String config;
 	
 	
-	@ManyToOne (fetch=FetchType.LAZY,cascade=CascadeType.DETACH)
+	@ManyToOne (fetch=FetchType.EAGER,cascade=CascadeType.DETACH)
     @JoinColumn(name="deviceId", nullable=false)
     private Device oneDevice;
 	

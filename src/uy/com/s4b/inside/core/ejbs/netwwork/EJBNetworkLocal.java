@@ -1,5 +1,7 @@
 package uy.com.s4b.inside.core.ejbs.netwwork;
 
+
+
 /**
  * 
  * Title: EJBNetworkLocal.java <br>
@@ -11,6 +13,5 @@ package uy.com.s4b.inside.core.ejbs.netwwork;
  *
  */
 public interface EJBNetworkLocal extends NetworkService {
-
-
+	
 }

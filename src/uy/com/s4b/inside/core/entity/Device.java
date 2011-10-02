@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -79,7 +80,7 @@ public class Device implements Serializable {
 	private String password;
 	
 	
-	@OneToMany(cascade=CascadeType.DETACH)
+	@OneToMany(cascade=CascadeType.DETACH,fetch=FetchType.EAGER)
 	@JoinColumn(name="deviceId")
 	private Set<InterfaceDevice> colInterfaceDevice;
 	
@@ -88,7 +89,7 @@ public class Device implements Serializable {
 //	@JoinColumn(name="deviceId")
 //	private Set<Version> colVersion;
 	
-	@OneToMany(cascade=CascadeType.MERGE, mappedBy="oneDevice")
+	@OneToMany(cascade=CascadeType.MERGE, mappedBy="oneDevice" ,fetch=FetchType.EAGER)
 	private Set<Version> colVersion;
 	
 	
@@ -135,7 +136,6 @@ public class Device implements Serializable {
 		
 	}
 
-	
 
 	@Override
 	public int hashCode() {

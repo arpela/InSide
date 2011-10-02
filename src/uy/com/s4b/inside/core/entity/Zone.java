@@ -49,7 +49,7 @@ public class Zone implements Serializable {
 	
 	
 	@OneToMany(cascade=CascadeType.DETACH)
-	@JoinColumn(name="ZoneId")
+	@JoinColumn(name="ZoneId", nullable=false)
 	private Set<Device> colDevice;
 	
 	

@@ -49,7 +49,7 @@ public class Site implements Serializable {
 	
 	
 	@OneToMany(cascade=CascadeType.DETACH)
-	@JoinColumn(name="siteId")
+	@JoinColumn(name="siteId", nullable = false)
 	private Set<Zone> colZone;
 	
 	

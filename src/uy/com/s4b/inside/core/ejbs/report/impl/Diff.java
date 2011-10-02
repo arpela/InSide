@@ -82,7 +82,6 @@ public class Diff implements ReportDiff {
 
 	/**
 	 * blocklen is the info about found blocks. It will be set to 0, except
-	 * 
 	 * at the line#s where blocks start in the old file. At these places it
 	 * 
 	 * will be set to the # of lines in the block. During printout ,
@@ -103,18 +102,20 @@ public class Diff implements ReportDiff {
 	int blocklen[];
 
 	public Diff() {
-
+		
 	}
 
 	/** Do one file comparison. Called with both filenames. */
 
-	public Map<Integer, DiffLine> doDiff(String oldString, String newString)
-			throws InSideException {
+	public Map<Integer, DiffLine> doDiff(String oldString, String newString) throws InSideException {
 		diffLine = new HashMap<Integer, DiffLine>();
+		
 		oldinfo = new stringInfo(oldString);
 		newinfo = new stringInfo(newString);
+		
 		inputscan(oldinfo, oldString);
 		inputscan(newinfo, newString);
+		
 		/* Now that we've read all the lines, allocate some arrays. */
 		blocklen = new int[(oldinfo.maxLine > newinfo.maxLine ? oldinfo.maxLine
 				: newinfo.maxLine) + 2];

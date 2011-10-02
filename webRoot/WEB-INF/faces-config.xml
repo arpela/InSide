@@ -15,11 +15,20 @@
 
 	<navigation-rule>
 		<navigation-case>
+			<from-outcome>paso2reporte</from-outcome>
+			<to-view-id>/site/report/rp2.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
 			<from-outcome>verReporeteHome</from-outcome>
 			<to-view-id>/site/version/versionH.jsf</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+
 	
 	
 	<application>

@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,7 +57,7 @@ public class InterfaceDevice implements Serializable {
 	private String mac;
 	
 	
-	@ManyToOne(optional=false)
+	@ManyToOne(optional=false, fetch=FetchType.EAGER)
 	@JoinColumn(name="typeinterface_id") 
 	private TypeInterface typeInterface;
 	
