@@ -2,7 +2,7 @@ package uy.com.s4b.inside.core.ejbs.report;
 
 import java.util.Map;
 
-import uy.com.s4b.inside.core.common.DiffLine;
+import uy.com.s4b.inside.core.ejbs.report.impl.difflib.Delta;
 import uy.com.s4b.inside.core.exception.InSideException;
 
 /**
@@ -24,6 +24,6 @@ public interface ReportDiff {
 	 * @return
 	 * @throws InSideException
 	 */
-	Map<Integer, DiffLine> doDiff(String oldString, String newString) throws InSideException;
+	Map<Integer, Delta> doDiff(String oldString, String newString) throws InSideException;
 
 }

@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.jboss.ejb3.annotation.LocalBinding;
 import org.jboss.ejb3.annotation.RemoteBinding;
 
@@ -55,6 +56,11 @@ public class EJBVersionBean implements VersionService {
 	 */
 	@Override
 	public Version getVersion(Integer id) throws InSideException {
+//		Version retorno = em.find(Version.class, id);
+//		Hibernate.initialize(retorno.getOneDevice().getColInterfaceDevice());
+//		Hibernate.initialize(retorno.getOneDevice().getColVersion());
+//		Hibernate.initialize(retorno.getOneDevice().getColVersion());
+		
 		return em.find(Version.class, id);
 	}
 	

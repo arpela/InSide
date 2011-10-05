@@ -1,4 +1,4 @@
-package difflib;
+package uy.com.s4b.inside.core.ejbs.report.impl.difflib;
 
 import java.io.Serializable;
 import java.util.Comparator;

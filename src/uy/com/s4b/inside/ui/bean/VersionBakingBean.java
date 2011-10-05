@@ -3,6 +3,7 @@ package uy.com.s4b.inside.ui.bean;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,12 +13,16 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.StyledEditorKit.BoldAction;
 
 import org.apache.log4j.Logger;
 
 import uy.com.s4b.inside.core.common.DiffLine;
+import uy.com.s4b.inside.core.ejbs.device.EJBDeviceLocal;
 import uy.com.s4b.inside.core.ejbs.netwwork.EJBNetworkLocal;
 import uy.com.s4b.inside.core.ejbs.report.EJBReportDiffLocal;
+import uy.com.s4b.inside.core.ejbs.report.impl.difflib.Delta;
+import uy.com.s4b.inside.core.ejbs.report.impl.difflib.Patch;
 import uy.com.s4b.inside.core.ejbs.version.EJBVersionLocal;
 import uy.com.s4b.inside.core.entity.Network;
 import uy.com.s4b.inside.core.entity.Version;
@@ -46,6 +51,9 @@ public class VersionBakingBean implements Serializable {
 	
 	@EJB
 	EJBVersionLocal ejbVersion;
+	
+	@EJB
+	EJBDeviceLocal ejbDevice;
 	
 	@EJB
 	EJBNetworkLocal ejbNetwork;
@@ -83,70 +91,47 @@ public class VersionBakingBean implements Serializable {
 			HttpSession session = (HttpSession)context.getExternalContext().getSession(false);
 			Version dosVersiones [] =  ejbVersion.getVersionDosDevice(Integer.valueOf(idDevice));
 			
-			Map<Integer, DiffLine> estructura = ejbDiff.doDiff(dosVersiones[0].getConfig(), dosVersiones[1].getConfig());
+			String unaVersion = dosVersiones[0].getConfig();
+			
+			Map<Integer, Delta> estructura = ejbDiff.doDiff(unaVersion, dosVersiones[1].getConfig());
 			log.info(estructura);
 			
-			String unaVersion = dosVersiones[1].getConfig();
-			
-			/* Der */
 			String listaLinea [] = unaVersion.split("\n");
 			StringBuffer pageDer = new StringBuffer();
-			Map<Integer, DiffLine> lineasNuevas = new HashMap<Integer, DiffLine>(500);
+			StringBuffer pageIzq = new StringBuffer();
 			
 			for (int i = 0; i < listaLinea.length; i++) {
-				int key = i + 1;
+				
 				String color = "";
-				if (estructura.containsKey(key)){
-					color = estructura.get(key).getValue();
+				if (estructura.containsKey(i)){
+					color = estructura.get(i).getType().getValue();
 					
-					if (estructura.get(key) == DiffLine.NEW){
-						lineasNuevas.put(i, DiffLine.NEW);
+					for (Iterator iterator = estructura.get(i).getRevised().getLines().iterator(); iterator
+							.hasNext();) {
+						String textoDelta = (String) iterator.next();
+						pageIzq.append("<tr><td td bgcolor=\"");
+						pageIzq.append(color);
+						pageIzq.append("\" class=\"table\"><span>");
+						pageIzq.append(i + " - " + textoDelta);
+						pageIzq.append("</span></td></tr>");						
 					}
+					
+				} else {
+					pageIzq.append("<tr><td td bgcolor=\"");
+					pageIzq.append(color);
+					pageIzq.append("\" class=\"table\"><span>");
+					pageIzq.append(i + " - " + listaLinea[i]);
+					pageIzq.append("</span></td></tr>");
+					
 				}
 				pageDer.append("<tr><td td bgcolor=\"");
 				pageDer.append(color);
 				pageDer.append("\" class=\"table\"><span>");
 				pageDer.append(i + " - " + listaLinea[i]);
 				pageDer.append("</span></td></tr>");
+				
+				
 			}
-			/* ************************ */
-			
-			/* izq */
-			unaVersion = dosVersiones[0].getConfig();
-			listaLinea = unaVersion.split("\n");
-			StringBuffer pageIzq = new StringBuffer();
-			int numero = 0;
-			for (int i = 0; i < listaLinea.length; i++) {
-				
-//				int key = i + 1;
-				
-				String color = "";
-				
-//				if (estructura.containsKey(key)){
-//					if (estructura.get(key) != DiffLine.NEW)
-//						color = estructura.get(key).getValue();
-//				}
-				
-				if (lineasNuevas.containsKey(i)){
-					pageIzq.append("<tr><td td bgcolor=\"");
-					pageIzq.append(lineasNuevas.get(i).getValue());
-					pageIzq.append("\" class=\"table\"><span>");
-					pageIzq.append(numero + " -" );
-					pageIzq.append("</span></td></tr>");
-					numero++;
-				}
-				
-				pageIzq.append("<tr><td td bgcolor=\"");
-				pageIzq.append(color);
-				pageIzq.append("\" class=\"table\"><span>");
-				pageIzq.append(numero + " - " + listaLinea[i]);
-				pageIzq.append("</span></td></tr>");
-				numero++;
-			}
-
-			
-			unaVersion = dosVersiones[1].getConfig();
-			
 			session.setAttribute("page1", pageIzq.toString());
 			session.setAttribute("page2", pageDer.toString());
 			
@@ -186,70 +171,50 @@ public class VersionBakingBean implements Serializable {
 			log.info("IDES idVersion2 ---> " + idVersion2);
 			
 			Version dosVersiones [] =  getDosVersion(idVersion1, idVersion2);
+			String unaVersion = dosVersiones[0].getConfig();
+			String segundVersion = dosVersiones[1].getConfig();
 			
-			Map<Integer, DiffLine> estructura = ejbDiff.doDiff(dosVersiones[0].getConfig(), dosVersiones[1].getConfig());
+			Map<Integer, Delta> estructura = ejbDiff.doDiff(unaVersion, segundVersion);
 			log.info(estructura);
 			
-			String unaVersion = dosVersiones[1].getConfig();
-			
-			/* Der */
 			String listaLinea [] = unaVersion.split("\n");
 			StringBuffer pageDer = new StringBuffer();
-			Map<Integer, DiffLine> lineasNuevas = new HashMap<Integer, DiffLine>(500);
-			
-			for (int i = 0; i < listaLinea.length; i++) {
-				int key = i + 1;
-				String color = "";
-				if (estructura.containsKey(key)){
-					color = estructura.get(key).getValue();
-					
-					if (estructura.get(key) == DiffLine.NEW){
-						lineasNuevas.put(i, DiffLine.NEW);
-					}
-				}
-				pageDer.append("<tr><td td bgcolor=\"");
-				pageDer.append(color);
-				pageDer.append("\" class=\"table\"><span>");
-				pageDer.append(i + " - " + listaLinea[i]);
-				pageDer.append("</span></td></tr>");
-			}
-			/* ************************ */
-			
-			/* izq */
-			unaVersion = dosVersiones[0].getConfig();
-			listaLinea = unaVersion.split("\n");
 			StringBuffer pageIzq = new StringBuffer();
-			int numero = 0;
+						
 			for (int i = 0; i < listaLinea.length; i++) {
-				
-//				int key = i + 1;
-				
+				boolean mostre = false;
 				String color = "";
-				
-//				if (estructura.containsKey(key)){
-//					if (estructura.get(key) != DiffLine.NEW)
-//						color = estructura.get(key).getValue();
-//				}
-				
-				if (lineasNuevas.containsKey(i)){
-					pageIzq.append("<tr><td td bgcolor=\"");
-					pageIzq.append(lineasNuevas.get(i).getValue());
-					pageIzq.append("\" class=\"table\"><span>");
-					pageIzq.append(numero + " -" );
-					pageIzq.append("</span></td></tr>");
-					numero++;
+				if (estructura.containsKey(i)){
+					color = estructura.get(i).getType().getValue();
+					
+					for (Iterator iterator = estructura.get(i).getRevised().getLines().iterator(); iterator.hasNext();) {
+						String textoDelta = (String) iterator.next();
+						pageDer.append("<tr><td td bgcolor=\"");
+						pageDer.append(color);
+						pageDer.append("\" class=\"table\"><span>");
+						pageDer.append((!mostre?i:"") + " - " + textoDelta);
+						pageDer.append("</span></td></tr>");
+						mostre = true;
+					}
+					
+				} else {
+					pageDer.append("<tr><td td bgcolor=\"");
+					pageDer.append(color);
+					pageDer.append("\" class=\"table\"><span>");
+					pageDer.append(i + " - " + listaLinea[i]);
+					pageDer.append("</span></td></tr>");
 				}
-				
 				pageIzq.append("<tr><td td bgcolor=\"");
 				pageIzq.append(color);
 				pageIzq.append("\" class=\"table\"><span>");
-				pageIzq.append(numero + " - " + listaLinea[i]);
+				pageIzq.append(i + " - " + listaLinea[i]);
 				pageIzq.append("</span></td></tr>");
-				numero++;
+				
+				
 			}
-			
-			unaVersion = dosVersiones[1].getConfig();
-			
+		
+			session.setAttribute("izqVersion", dosVersiones[0]);
+			session.setAttribute("derVersion", dosVersiones[1]);
 			session.setAttribute("page1", pageIzq.toString());
 			session.setAttribute("page2", pageDer.toString());
 			
@@ -300,19 +265,8 @@ public class VersionBakingBean implements Serializable {
 	 */
 	private Version[] getDosVersion(String idVersion1, String idVersion2) throws NumberFormatException, InSideException {
 		Version retorno [] = new Version[2];
-		List<Version> listaVersiones = ejbVersion.getAllVersionDevice(Integer.valueOf("1"));
-		int i = 0;
-		for (Version version : listaVersiones) {
-			if ((version.getId().equals(Integer.valueOf(idVersion1))) || 
-					(version.getId().equals(Integer.valueOf(idVersion2)))){
-				retorno[i] = version;
-				i++;
-			}
-		}
-		
-		if (idVersion1.equals(idVersion2)){
-			retorno[1] = retorno[0];
-		}
+		retorno[0] = ejbVersion.getVersion(Integer.valueOf(idVersion1));
+		retorno[1] = ejbVersion.getVersion(Integer.valueOf(idVersion2));
 		return retorno;
 	}
 
@@ -327,27 +281,33 @@ public class VersionBakingBean implements Serializable {
 		
 		try {
 			
-			if ((listaelect != null) && (listaelect.length == 2)){
-				
-				for (int i = 0; i < listaelect.length; i++) {
-					log.info(" ---> " + listaelect[i]);
+			if ((listaelect != null) && (listaelect.length == 1)){
+				String idUno = listaelect[0];
+				String idDos = "";
+				if (listaelect.length == 1){					
+					idDos = listaelect[0];
+				}else{
+					idDos = listaelect[1];					
 				}
+
+//				for (int i = 0; i < listaelect.length; i++) {
+//					log.info(" ---> " + listaelect[i]);
+//				}
 				
-				List<Version> listaVersiones1 = ejbVersion.getAllVersionDevice(Integer.valueOf(listaelect[0]));
+				List<Version> listaVersiones1 = ejbVersion.getAllVersionDevice(Integer.valueOf(idUno));
 				
-				List<Version> listaVersiones2 = ejbVersion.getAllVersionDevice(Integer.valueOf(listaelect[1]));
-				
+				List<Version> listaVersiones2 = ejbVersion.getAllVersionDevice(Integer.valueOf(idDos));
 				
 				session.setAttribute("paginaLista1", getPagina(listaVersiones1, "radio1"));
 				session.setAttribute("paginaLista2", getPagina(listaVersiones2, "radio2"));
 				
-				session.setAttribute("equipo1", listaelect[0]);
-				session.setAttribute("equipo2", listaelect[1]);
+				session.setAttribute("equipo1", ejbDevice.getDevice(Integer.valueOf(idUno)).getHostname());
+				session.setAttribute("equipo2", ejbDevice.getDevice(Integer.valueOf(idDos)).getHostname());
 				
 				retorno = "paso2reporte";
 			}else{
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage (FacesMessage.SEVERITY_ERROR, 
-						"Debe seleccionar dos equipos.","Debe seleccionar dos equipos."));
+						"Debe seleccionar un equipos.","Debe seleccionar un equipos."));
 			}
 			
 		} catch (NumberFormatException ex) {

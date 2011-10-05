@@ -80,7 +80,7 @@ public class Device implements Serializable {
 	private String password;
 	
 	
-	@OneToMany(cascade=CascadeType.DETACH,fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.DETACH,fetch=FetchType.LAZY)
 	@JoinColumn(name="deviceId")
 	private Set<InterfaceDevice> colInterfaceDevice;
 	
@@ -89,7 +89,7 @@ public class Device implements Serializable {
 //	@JoinColumn(name="deviceId")
 //	private Set<Version> colVersion;
 	
-	@OneToMany(cascade=CascadeType.MERGE, mappedBy="oneDevice" ,fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.MERGE, mappedBy="oneDevice" ,fetch=FetchType.LAZY)
 	private Set<Version> colVersion;
 	
 	

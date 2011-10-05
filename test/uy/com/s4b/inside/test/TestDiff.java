@@ -9,6 +9,7 @@ import javax.rmi.PortableRemoteObject;
 
 import uy.com.s4b.inside.core.common.DiffLine;
 import uy.com.s4b.inside.core.ejbs.report.EJBReportDiffRemote;
+import uy.com.s4b.inside.core.ejbs.report.impl.difflib.Delta;
 import uy.com.s4b.inside.core.exception.InSideException;
 
 
@@ -50,29 +51,8 @@ public class TestDiff {
 			EJBReportDiffRemote service =  (EJBReportDiffRemote)
 				PortableRemoteObject.narrow(ctx.lookup("inSide/EJBReportDiff/remote"), EJBReportDiffRemote.class);
 		
-			Map<Integer, DiffLine> resDiffLine = service.doDiff(multiLine1, multiLine2);
+			Map<Integer, Delta> resDiffLine = service.doDiff(multiLine1, multiLine2);
 
-			switch (resDiffLine.get(5)) {
-				case CHANGE:
-					System.out.println("CHANGE");
-					break;
-	
-				case DELETE:
-					System.out.println("DELETE");
-					break;
-	
-				case NEW:
-					System.out.println("NEW");
-					break;
-	
-				case MOVE:
-					System.out.println("MOVE");
-					break;
-	
-				default:
-					System.out.println("ERROR");
-					break;
-			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

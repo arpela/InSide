@@ -6,13 +6,21 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import difflib.*;
+import uy.com.s4b.inside.core.ejbs.report.impl.difflib.Delta;
+import uy.com.s4b.inside.core.ejbs.report.impl.difflib.DiffUtils;
+import uy.com.s4b.inside.core.ejbs.report.impl.difflib.Patch;
 
 
-
-
-
-
+/**
+ * 
+ * Title: PruebaDiff.java <br>
+ * Description: <br>
+ * Fecha creación: 01/10/2011 <br>
+ * Copyright: S4B <br>
+ * Company: S4B - http://www.s4b.com.uy <br>
+ * @author Pablo
+ *
+ */
 public class PruebaDiff {
 
 	private static List<String> fileToLines(String filename) {
