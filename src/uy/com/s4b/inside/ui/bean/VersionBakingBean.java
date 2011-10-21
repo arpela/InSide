@@ -95,7 +95,7 @@ public class VersionBakingBean implements Serializable {
 			
 			Map<Integer, Delta> estructura = ejbDiff.doDiff(unaVersion, dosVersiones[1].getConfig());
 			log.info(estructura);
-			
+						
 			String listaLinea [] = unaVersion.split("\n");
 			StringBuffer pageDer = new StringBuffer();
 			StringBuffer pageIzq = new StringBuffer();
@@ -106,16 +106,71 @@ public class VersionBakingBean implements Serializable {
 				if (estructura.containsKey(i)){
 					color = estructura.get(i).getType().getValue();
 					
-					for (Iterator iterator = estructura.get(i).getRevised().getLines().iterator(); iterator
-							.hasNext();) {
-						String textoDelta = (String) iterator.next();
-						pageIzq.append("<tr><td td bgcolor=\"");
-						pageIzq.append(color);
-						pageIzq.append("\" class=\"table\"><span>");
-						pageIzq.append(i + " - " + textoDelta);
-						pageIzq.append("</span></td></tr>");						
+					switch (estructura.get(i).getType()) {
+						case INSERT:
+							for (Iterator iterator = estructura.get(i).getRevised().getLines().iterator(); iterator.hasNext();) {
+								String textoDelta = (String) iterator.next();
+								
+								pageIzq.append("<tr><td td bgcolor=\"");
+								pageIzq.append(color);
+								pageIzq.append("\" class=\"table\"><span>");
+								pageIzq.append(i + "  ");
+								pageIzq.append("</span></td></tr>");
+								
+								pageDer.append("<tr><td td bgcolor=\"");
+								pageDer.append(color);
+								pageDer.append("\" class=\"table\"><span>");
+								pageDer.append(i + " - " + textoDelta);
+								pageDer.append("</span></td></tr>");
+								i++;
+							}
+							i--;
+							break;
+						case CHANGE:
+							int j = i;
+							for (Iterator iterator = estructura.get(i).getOriginal().getLines().iterator(); iterator.hasNext();) {
+								String textoDelta = (String) iterator.next();
+																
+								pageIzq.append("<tr><td td bgcolor=\"");
+								pageIzq.append(color);
+								pageIzq.append("\" class=\"table\"><span>");
+								pageIzq.append(j + " - " + textoDelta);
+								pageIzq.append("</span></td></tr>");
+								j++;
+							}
+							int k = i;
+							for (Iterator iterator = estructura.get(i).getRevised().getLines().iterator(); iterator.hasNext();) {
+								String textoDelta = (String) iterator.next();
+																
+								pageDer.append("<tr><td td bgcolor=\"");
+								pageDer.append(color);
+								pageDer.append("\" class=\"table\"><span>");
+								pageDer.append(k + " - " + textoDelta);
+								pageDer.append("</span></td></tr>");
+								k++;			
+							}
+							i = (j>k)?--j:--k;
+							break;
+						case DELETE:
+							for (Iterator iterator = estructura.get(i).getOriginal().getLines().iterator(); iterator.hasNext();) {
+								String textoDelta = (String) iterator.next();
+																
+								pageIzq.append("<tr><td td bgcolor=\"");
+								pageIzq.append(color);
+								pageIzq.append("\" class=\"table\"><span>");
+								pageIzq.append(i + " - " + textoDelta);
+								pageIzq.append("</span></td></tr>");
+								
+								pageDer.append("<tr><td td bgcolor=\"");
+								pageDer.append(color);
+								pageDer.append("\" class=\"table\"><span>");
+								pageDer.append(i + "  ");
+								pageDer.append("</span></td></tr>");
+								i++;
+							}
+							i--;
+							break;
 					}
-					
 				} else {
 					pageIzq.append("<tr><td td bgcolor=\"");
 					pageIzq.append(color);
@@ -123,14 +178,12 @@ public class VersionBakingBean implements Serializable {
 					pageIzq.append(i + " - " + listaLinea[i]);
 					pageIzq.append("</span></td></tr>");
 					
+					pageDer.append("<tr><td td bgcolor=\"");
+					pageDer.append(color);
+					pageDer.append("\" class=\"table\"><span>");
+					pageDer.append(i + " - " + listaLinea[i]);
+					pageDer.append("</span></td></tr>");
 				}
-				pageDer.append("<tr><td td bgcolor=\"");
-				pageDer.append(color);
-				pageDer.append("\" class=\"table\"><span>");
-				pageDer.append(i + " - " + listaLinea[i]);
-				pageDer.append("</span></td></tr>");
-				
-				
 			}
 			session.setAttribute("page1", pageIzq.toString());
 			session.setAttribute("page2", pageDer.toString());
@@ -182,35 +235,89 @@ public class VersionBakingBean implements Serializable {
 			StringBuffer pageIzq = new StringBuffer();
 						
 			for (int i = 0; i < listaLinea.length; i++) {
-				boolean mostre = false;
+				
 				String color = "";
 				if (estructura.containsKey(i)){
 					color = estructura.get(i).getType().getValue();
 					
-					for (Iterator iterator = estructura.get(i).getRevised().getLines().iterator(); iterator.hasNext();) {
-						String textoDelta = (String) iterator.next();
-						pageDer.append("<tr><td td bgcolor=\"");
-						pageDer.append(color);
-						pageDer.append("\" class=\"table\"><span>");
-						pageDer.append((!mostre?i:"") + " - " + textoDelta);
-						pageDer.append("</span></td></tr>");
-						mostre = true;
+					switch (estructura.get(i).getType()) {
+						case INSERT:
+							for (Iterator iterator = estructura.get(i).getRevised().getLines().iterator(); iterator.hasNext();) {
+								String textoDelta = (String) iterator.next();
+								
+								pageIzq.append("<tr><td td bgcolor=\"");
+								pageIzq.append(color);
+								pageIzq.append("\" class=\"table\"><span>");
+								pageIzq.append(i + "  ");
+								pageIzq.append("</span></td></tr>");
+								
+								pageDer.append("<tr><td td bgcolor=\"");
+								pageDer.append(color);
+								pageDer.append("\" class=\"table\"><span>");
+								pageDer.append(i + " - " + textoDelta);
+								pageDer.append("</span></td></tr>");
+								i++;
+							}
+							i--;
+							break;
+						case CHANGE:
+							int j = i;
+							for (Iterator iterator = estructura.get(i).getOriginal().getLines().iterator(); iterator.hasNext();) {
+								String textoDelta = (String) iterator.next();
+																
+								pageIzq.append("<tr><td td bgcolor=\"");
+								pageIzq.append(color);
+								pageIzq.append("\" class=\"table\"><span>");
+								pageIzq.append(j + " - " + textoDelta);
+								pageIzq.append("</span></td></tr>");
+								j++;
+							}
+							int k = i;
+							for (Iterator iterator = estructura.get(i).getRevised().getLines().iterator(); iterator.hasNext();) {
+								String textoDelta = (String) iterator.next();
+																
+								pageDer.append("<tr><td td bgcolor=\"");
+								pageDer.append(color);
+								pageDer.append("\" class=\"table\"><span>");
+								pageDer.append(k + " - " + textoDelta);
+								pageDer.append("</span></td></tr>");
+								k++;			
+							}
+							i = (j>k)?--j:--k;
+							break;
+						case DELETE:
+							for (Iterator iterator = estructura.get(i).getOriginal().getLines().iterator(); iterator.hasNext();) {
+								String textoDelta = (String) iterator.next();
+																
+								pageIzq.append("<tr><td td bgcolor=\"");
+								pageIzq.append(color);
+								pageIzq.append("\" class=\"table\"><span>");
+								pageIzq.append(i + " - " + textoDelta);
+								pageIzq.append("</span></td></tr>");
+								
+								pageDer.append("<tr><td td bgcolor=\"");
+								pageDer.append(color);
+								pageDer.append("\" class=\"table\"><span>");
+								pageDer.append(i + "  ");
+								pageDer.append("</span></td></tr>");
+								i++;
+							}
+							i--;
+							break;
 					}
-					
 				} else {
+					pageIzq.append("<tr><td td bgcolor=\"");
+					pageIzq.append(color);
+					pageIzq.append("\" class=\"table\"><span>");
+					pageIzq.append(i + " - " + listaLinea[i]);
+					pageIzq.append("</span></td></tr>");
+					
 					pageDer.append("<tr><td td bgcolor=\"");
 					pageDer.append(color);
 					pageDer.append("\" class=\"table\"><span>");
 					pageDer.append(i + " - " + listaLinea[i]);
 					pageDer.append("</span></td></tr>");
 				}
-				pageIzq.append("<tr><td td bgcolor=\"");
-				pageIzq.append(color);
-				pageIzq.append("\" class=\"table\"><span>");
-				pageIzq.append(i + " - " + listaLinea[i]);
-				pageIzq.append("</span></td></tr>");
-				
-				
 			}
 		
 			session.setAttribute("izqVersion", dosVersiones[0]);
@@ -248,7 +355,7 @@ public class VersionBakingBean implements Serializable {
 			} catch (InSideException ex) {
 				retorno = new StringBuffer();
 				retorno.append("<tr><td colspan=\"4\" class=\"networks\">");
-				retorno.append("Problemas al cargar el árbol de dispositivos");
+				retorno.append("Problemas al cargar el ï¿½rbol de dispositivos");
 				retorno.append("</td></tr>");
 			}
 			treeNetwork =  retorno.toString();
