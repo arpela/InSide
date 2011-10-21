@@ -16,10 +16,9 @@ public interface InfoRunServerUDP {
 	 * Ip del servidor donde levanta jboos, en la misma ip, dejamos escuchando el 
 	 * servidor de udp encargado de recibir los msg del los dispositivos.
 	 */
-	//String IP_SERVIDOR = System.getProperty("jboss.bind.address");
+	String IP_SERVIDOR = System.getProperty("jboss.bind.address");
 	
-	String IP_SERVIDOR = "localhost";
-	
+		
 	/*
 	 * Puerto en el cual nos quedamos escuchando los syslog
 	 */
