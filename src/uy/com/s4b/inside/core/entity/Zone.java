@@ -44,7 +44,7 @@ public class Zone implements Serializable {
 	private Integer id;
 	
 	
-	@Column(insertable=true, nullable=false, unique=true)
+	@Column(insertable=true, nullable=false)
 	private String name;
 	
 	

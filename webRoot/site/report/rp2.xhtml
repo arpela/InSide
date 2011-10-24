@@ -16,9 +16,7 @@
 	<ui:composition template="/layout/templateapp.xhtml">
 		
 		<ui:define name="body">
-		
 			<h:form id="formFilter" rendered="#{login.loginIn}">
-			
 			<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource" var="bundle" />
 			    <div id="content">
 			      <div class="state">
@@ -29,7 +27,7 @@
 			      <div class="leftContent fleft">
 			       
 			        <div>
-			          <p class="subtitle"><h:outputLabel value="#{equipo1}" /><br />
+			          <p class="subtitle"><h:outputLabel value="#{equipo1.hostname}" /><br />
 			            <br />
 			            <br />
 			          </p>         
@@ -38,64 +36,40 @@
 			        </div>
 			        
 			        <div class="splitColumns">
-			        	
+			        	 
 			        	<div class="leftSplitColumn fleft">
 			            	<div style="margin-bottom:10px;">Desde:</div>
 			                <div class="leftSplitContent">
-			                
-			                
-								<!--  rich:calendar datePattern="dd/MM/yyyy HH:mm:ss"></rich:calendar -->
-								
-								
-			                	<input type="text" name="date" value="30/12/2010" />
-			                    <img src="#{request.contextPath}/resources/img/calendar.png" height="31" width="31" alt="Calendar" style="margin:0 0 0px 10px; vertical-align:middle; cursor:pointer;" />
-			                	<label>
-			                      <select name="select" size="1" id="select" style="width:74px;">
-			                        <option>8:00</option>
-			                        <option>9:30</option>
-			                        <option>10:30</option>
-			                      </select>
-			                  </label>
-			                    <p>
-			                    <br />
-			                    <br />
-			                    <br />
-			                  Seleccione la configuración:</p>
+								<rich:calendar value="#{fileterReport.desdeDer}" id="desdDer" datePattern="dd/MM/yyyy HH:mm:ss" buttonIcon="/resources/img/calendar.png"></rich:calendar>
+			                    <p><br /><br /><br />Seleccione la configuración:</p>
 			                    <ul>
-			                        <h:outputLabel value="#{paginaLista1}" escape="false" />
+			                        <h:outputLabel value="#{paginaLista1}" escape="false" id="outDer"/>
 			                    </ul>
 			                </div>
 			                <div class="clear"></div>
 			            </div>
-			            
-			            <div class="rightSplitColumn fleft">
-			            	<div style="margin-bottom:10px;">Hasta:</div>
-			                <div class="rightSplitContent">
-			                  <div class="options">
-			                  <input type="text" name="date2" value="30/12/2010" />
-			                  <img src="#{request.contextPath}/resources/img/calendar.png" height="31" width="31" alt="Calendar" style="margin:0 0 0px 10px; vertical-align:middle; cursor:pointer;" /><br />
-			                    <label>
-			                      <select name="select" size="1" id="select" style="width:74px;">
-			                        <option>8:00</option>
-			                        <option>9:30</option>
-			                        <option>10:30</option>
-			                      </select>
-			                   </label>
-			              <div class="fright button">
-			                <a href="#">Filtrar</a>            
-			              </div>
-			                      <div class="clear"></div>
-			                    </div>
-			                </div>
-			                <div class="clear"></div>
-			            </div>            
-			        </div>
-			        
+			           
+				            <div class="rightSplitColumn fleft">
+				            	<div style="margin-bottom:10px;">Hasta:</div>
+				                <div class="rightSplitContent">
+				                  <div class="options">
+				                  	  <rich:calendar value="#{fileterReport.hastaDer}" id="hastaDer" datePattern="dd/MM/yyyy HH:mm:ss" buttonIcon="/resources/img/calendar.png"></rich:calendar>
+				                    
+						              <div class="fright button">
+						              	<a4j:commandLink value="#{bundle['reporteDiff.text.button.filter']}"  execute="@region"  render="outDer" action="#{fileterReport.filterDer}" />
+						              </div>
+					                  <div class="clear"></div>
+				                   </div>
+				                </div>
+				                <div class="clear"></div>
+				            </div>            
+						
+				    </div>   
 			      </div>
 			      <div class="rightContentReports fright">
 			     
 			        <div>
-			          <p class="subtitle"><h:outputLabel value="#{equipo2}" /><br />
+			          <p class="subtitle"><h:outputLabel value="#{equipo2.hostname}" /><br />
 			            <br />
 			            <br />
 			          </p>         
@@ -103,42 +77,20 @@
 			          <p>&nbsp;</p>
 			        </div>
 			        
+			       	
 			        <div class="splitColumns">        	
 			       	  <div class="leftSplitColumn fleft">
 			       	    <div class="leftSplitColumn fleft">
 			       	      <div style="margin-bottom:10px;">Desde:</div>
 			       	      <div class="leftSplitContent">
-			       	        <input type="text" name="date4" value="30/12/2010" />
-			                    <img src="#{request.contextPath}/resources/img/calendar.png" height="31" width="31" alt="Calendar" style="margin:0 0 0px 10px; vertical-align:middle; cursor:pointer;" />
-			       	        <label>
-			       	          <select name="select2" size="1" id="select2" style="width:74px;">
-			       	            <option>8:00</option>
-			       	            <option>9:30</option>
-			       	            <option>10:30</option>
-			   	              </select>
-			   	            </label>
+			       	      
+			       	        <rich:calendar  value="#{fileterReport.desdeIzq}" id="desdeIzq" datePattern="dd/MM/yyyy HH:mm:ss" buttonIcon="/resources/img/calendar.png"></rich:calendar>
 			       	        <p><br/>
 			       	          <br />
 			       	          <br />Seleccione la configuración:</p>
 			       	        <ul>
-			       	        	<h:outputLabel value="#{paginaLista2}" escape="false"/>
+			       	        	<h:outputLabel value="#{paginaLista2}" escape="false" id="outIzq"/>
 			       	        </ul>
-			       	        
-			       	        <!--  ul>
-			       	          <li style="background:url(#{request.contextPath}/resources/img/B.png) left no-repeat;">Lorem ipsum dolor&nbsp;&nbsp;
-			       	            <input id="radio2" type="radio" name="radio" checked="checked" />
-			   	              </li>
-			       	          <li style="background:url(#{request.contextPath}/resources/img/R.png) left no-repeat;">Lorem ipsum dolor&nbsp;&nbsp;
-			       	            <input type="radio" name="radio" />
-			   	              </li>
-			       	          <li style="background:url(#{request.contextPath}/resources/img/B.png) left no-repeat;">Lorem ipsum dolor&nbsp;&nbsp;
-			       	            <input type="radio" name="radio" />
-			   	              </li>
-			       	          <li style="background:url(#{request.contextPath}/resources/img/R.png) left no-repeat;">Lorem ipsum dolor&nbsp;&nbsp;
-			       	            <input type="radio" name="radio" />
-			   	              </li>
-			   	            </ul -->
-			   	            
 			   	          </div>
 			       	      <div class="clear"></div>
 			   	        </div>
@@ -148,16 +100,10 @@
 			       	    <div style="margin-bottom:10px;">Hasta:</div>
 			       	    <div class="rightSplitContent">
 			       	      <div class="options">
-			       	        <input type="text" name="date3" value="30/12/2010" />
-			       	        <img src="#{request.contextPath}/resources/img/calendar.png" height="31" width="31" alt="Calendar" style="margin:0 0 0px 10px; vertical-align:middle; cursor:pointer;" /><br />
-			       	        <label>
-			       	          <select name="select3" size="1" id="select3" style="width:74px;">
-			       	            <option>8:00</option>
-			       	            <option>9:30</option>
-			       	            <option>10:30</option>
-			   	              </select>
-			   	            </label>
-			       	        <div class="fright button"> <a href="#">Filtrar</a> </div>
+			       	      	
+			       	        <rich:calendar  value="#{fileterReport.hastaIzq}" id="hastaIzq" datePattern="dd/MM/yyyy HH:mm:ss" buttonIcon="/resources/img/calendar.png"></rich:calendar>
+			       	        
+			       	        <div class="fright button"><a4j:commandLink value="#{bundle['reporteDiff.text.button.filter']}"  execute="@region"  render="outIzq" action="#{fileterReport.filterIzq}" /></div>
 			       	        <div class="clear"></div>
 			   	          </div>
 			   	        </div>
@@ -174,12 +120,11 @@
 			            <h:commandLink value="Ver" action="#{versionBakingBean.verReporte}"/>    
 			          </div>
 			          <div class="fright button" style="margin-right: 5px">
-			            <a href="#">Volver</a>            
+			            <h:commandLink value="Volver" action="#{versionBakingBean.vovler}"/>            
 			          </div>
 			          <div class="clear"></div>
 			        </div>
 			    </div>
-			    
 			</h:form>
 		</ui:define>
 	</ui:composition>

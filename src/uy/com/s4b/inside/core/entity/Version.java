@@ -6,6 +6,8 @@ import java.util.Calendar;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +27,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import uy.com.s4b.inside.core.common.TypeConfig;
+
 /**
  * Title: Version.java <br>
  * Description: <br>
@@ -37,7 +41,8 @@ import org.apache.commons.lang.builder.ToStringStyle;
 @Table(name="version")
 @Entity
 @NamedQueries({
-	@NamedQuery(name="findVersionDevice", query="from Version v where v.oneDevice.id = :pid order by v.date desc")
+	@NamedQuery(name="findVersionDevice", query="from Version v where v.oneDevice.id = :pid order by v.date desc"),
+	@NamedQuery(name="find.Version.Device.withDate", query="from Version v where v.oneDevice.id = :pid and v.date >= :fDesde and  v.date <= :fHasta order by v.date desc")
 })
 public class Version implements Serializable {
 
@@ -56,14 +61,21 @@ public class Version implements Serializable {
 	private Calendar date;
 	
 	
+	@Column(insertable=true, nullable=false, unique=false)
+	@Enumerated(EnumType.STRING)
+	private TypeConfig type;
+	
+	
 	@Column(insertable=true, nullable=true, unique=false)
 	@Lob
 	private String config;
 	
 	
+	
 	@ManyToOne (fetch=FetchType.LAZY,cascade=CascadeType.DETACH)
     @JoinColumn(name="deviceId", nullable=false)
     private Device oneDevice;
+	
 	
 	
 	/**
@@ -156,6 +168,22 @@ public class Version implements Serializable {
 	 */
 	public void setOneDevice(Device oneDevice) {
 		this.oneDevice = oneDevice;
+	}
+
+
+	/**
+	 * @return the type
+	 */
+	public TypeConfig getType() {
+		return type;
+	}
+
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(TypeConfig type) {
+		this.type = type;
 	}
 
 }

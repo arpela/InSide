@@ -1,5 +1,6 @@
 package uy.com.s4b.inside.core.ejbs.version;
 
+
 /**
  * 
  * Title: EJBNetworkLocal.java <br>
@@ -12,6 +13,7 @@ package uy.com.s4b.inside.core.ejbs.version;
  */
 public interface EJBVersionLocal extends VersionService {
 
+	
 
 
 

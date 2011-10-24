@@ -1,12 +1,17 @@
 package uy.com.s4b.inside.ui.bean.filter;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Set;
 
 import javax.faces.context.FacesContext;
+
+import bsh.commands.dir;
 
 import uy.com.s4b.inside.core.entity.Device;
 import uy.com.s4b.inside.core.entity.Network;
 import uy.com.s4b.inside.core.entity.Site;
+import uy.com.s4b.inside.core.entity.Version;
 import uy.com.s4b.inside.core.entity.Zone;
 
 /**
@@ -65,5 +70,59 @@ public class UtilCreatePage {
 			retorno.append("</ul>");				
 			retorno.append("</ul></td></tr>");
 		}
+	}
+	
+	
+	public void createTreeHome(StringBuffer retorno, List<Network> listNetwork) {
+		String nameAPP = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+		
+		//network
+		for (Network network : listNetwork) {
+			retorno.append("<tr><td colspan=\"4\" class=\"networks\">");
+			retorno.append("<ul class=\"network expand\"><li class=\"more\"><span>" + network.getName() + "</span></li>");
+
+			//site
+			retorno.append("<ul class=\"site expand\" style=\"display: none\">");
+			for (Site site : network.getColSite()) {
+				retorno.append("<li class=\"more\"><span>"+ site.getName() +"</span></li>");
+			
+				//zona
+				retorno.append("<ul class=\"zone expand\" style=\"display: none\">");
+				for (Zone zone : site.getColZone()) {
+					retorno.append("<li class=\"more\"><span>" + zone.getName() + "</span></li>");	
+					// equipo
+					retorno.append("<ul class=\"node expand\" style=\"display: none\">");
+					for (Device device : zone.getColDevice()) {
+						retorno.append("<li style=\"background-image: url('"+ nameAPP +"/resources/img/icono2.jpg')\">"); 
+						retorno.append("<span>"+ device.getHostname() + "</span></li>");
+						putConfiguration(retorno, device, nameAPP);
+					}
+					retorno.append("</ul>&nbsp;");
+				}
+				retorno.append("</ul>");
+			}
+			retorno.append("</ul>");				
+			retorno.append("</ul></td></tr>");
+		}
+	}
+
+
+	/**
+	 * @param device
+	 */
+	private void putConfiguration(StringBuffer p, Device device, String nameAPP) {
+		Set<Version> listVersino = device.getColVersion();
+		int i = 0;
+		p.append("<ul class=\"subnode expand\" style=\"display:none\">");
+		for (Version version : listVersino) {
+			if (i > 1)
+				break;
+			p.append("<li style=\"background-image: url('#{request.contextPath}/resources/img/R.png')\">");
+			p.append("<span><a id=\"VERTODO" + version.getId() + "\" href=\"verReporte.jsf?id="+ version.getId() +"\">");
+			p.append(new SimpleDateFormat("dd/MM/yyyy").format(version.getDate().getTime()));
+			p.append("</a></span></li>");
+			i++;
+		}
+		p.append("</ul>");		
 	}
 }

@@ -37,7 +37,6 @@
 						
 						<div id="contenido_1">
 							<table>
-								
 								<tr style="height: 26px;">
 									<th width="201" style="border-bottom: 1px #bababa solid;">Network / Site / Zone / Node</th>
 									<th width="83" style="border-bottom: 1px #bababa solid;">&nbsp;</th>
@@ -45,33 +44,7 @@
 									<th width="106" style="border-bottom: 1px #bababa solid;">&nbsp;</th>
 								</tr>
 								
-								
-								<td colspan="4" class="networks">
-						             <ul class="network expand">
-						                <li class="more"><span>Network-1</span></li>
-						                <ul class="site expand" style="display:none">
-						                  <li class="more"><span>Site-1</span></li>
-						                  <ul class="zone expand" style="display:none">
-						                    <li class="more"><span>Zone-1</span></li>
-						                    <ul class="node expand" style="display:none">
-						                     <li style="background-image: url('#{request.contextPath}/resources/img/icono2.jpg')">
-													<span>sw-dist-suc-cen</span>
-												</li>
-												<li style="background-image: url('#{request.contextPath}/resources/img/icono3.jpg')">
-												<span>asa-clientes</span>
-												</li>
-												<li style="background-image: url('#{request.contextPath}/resources/img/icono1.jpg')">
-													<span>router-core-1</span>
-												</li>
-												
-						                    </ul>
-						                  </ul>
-						                </ul>                
-						              </ul>              
-            					</td>   
-								
-								
-								
+								<h:outputText value="#{versionBakingBean.treeNetworkHome}" escape="false"/>
 							</table>
 						</div>
 
@@ -89,6 +62,26 @@
 				                $(this).removeClass('more');
 				              }
 				            })
+				            
+				            $("a[id^='VERTODO']").each(function() {
+								var id = parseInt(this.id.replace("VERTODO", ""));
+								$('#VERTODO'+id).openDOMWindow({
+									height:600,
+									width:990,
+									positionType:'absolute',
+									positionTop:50,
+									eventType:'click',
+									positionLeft:50,
+									windowSource:'iframe',
+									windowPadding:0,
+									loader:1,
+									loaderHeight:16,
+									loaderWidth:17
+								});
+							});
+				            
+				            
+				            
            				</script>
            				
 						<div class="options">
@@ -159,35 +152,40 @@
 						<div class="subtitle">Panel de alarmas:</div>
 						
 						<rich:dataTable border="0" styleClass="events"  value="#{events.listaEventos}" var="even"
-				            id="listaEventos" rows="6" style="width: 420;" rowClasses="event" columns="4">
+				            id="listaEventos" rows="6" style="width: 420;"  rowClasses="changes" columns="4">
 				            
-				            <rich:column accept="#{carsFiteringBean.acceptVendor}" >
+				            <rich:column  style="border-right: 0px solid #C4C0C9; padding: 0;">
 				                <f:facet name="header">
 				                    <h:outputText value="Evento"/>
 				                </f:facet>
-				                <h:commandLink onclick="" styleClass="links_modal" hreflang="p#" value="#{even.value}" />
+				                <h:commandLink styleClass="links_modal" hreflang="#" value="#{even.value}" />
 				            </rich:column>
 				            
-				            <!--   <rich:column  colspan="4" style="display:none; color:#999; text-align:left; padding:5px 5px 5px 32px; border:0" id="bloque#{even.value}">
+				            <!--   
+				            <rich:column colspan="4">
+            					<h:outputText value="#{even.description}" />
+        					</rich:column>
+        					
+				            <rich:column  colspan="4" style="display:none; color:#999; text-align:left; padding:5px 5px 5px 32px; border:0" id="bloque#{even.value}">
 				            	<h:outputText value="#{even.description}" />
 				            </rich:column> 
 				            -->
 				            
-				            <rich:column>
+				            <rich:column style="border-right: 0px solid #C4C0C9; padding: 0;">
 				                <f:facet name="header">
 				                    <h:outputText value="Info" />
 				           		</f:facet>
 								<h:graphicImage value="/resources/img/green_event.png"  rendered="#{even.type == 'INFO'}" />
 				            </rich:column>
 				            
-				            <rich:column>
+				            <rich:column style="border-right: 0px solid #C4C0C9; padding: 0;">
 				                <f:facet name="header">
 				                    <h:outputText value="Cuidado" />
 				            	</f:facet>
 								<h:graphicImage value="/resources/img/yellow_event.png"  rendered="#{even.type == 'WARN'}" />
 				            </rich:column>
 				            
-				            <rich:column>
+				            <rich:column style="border-right: 0px solid #C4C0C9; padding: 0;">
 				                <f:facet name="header">
 				                    <h:outputText value="Crítico" />
 				            	</f:facet>    

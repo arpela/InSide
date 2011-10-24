@@ -2,7 +2,6 @@ package uy.com.s4b.inside.ui.bean;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -13,16 +12,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.StyledEditorKit.BoldAction;
 
 import org.apache.log4j.Logger;
 
-import uy.com.s4b.inside.core.common.DiffLine;
 import uy.com.s4b.inside.core.ejbs.device.EJBDeviceLocal;
 import uy.com.s4b.inside.core.ejbs.netwwork.EJBNetworkLocal;
 import uy.com.s4b.inside.core.ejbs.report.EJBReportDiffLocal;
 import uy.com.s4b.inside.core.ejbs.report.impl.difflib.Delta;
-import uy.com.s4b.inside.core.ejbs.report.impl.difflib.Patch;
 import uy.com.s4b.inside.core.ejbs.version.EJBVersionLocal;
 import uy.com.s4b.inside.core.entity.Network;
 import uy.com.s4b.inside.core.entity.Version;
@@ -61,9 +57,7 @@ public class VersionBakingBean implements Serializable {
 	@EJB
 	EJBReportDiffLocal ejbDiff;
 	
-	
-	
-	
+
 	/**
 	 * 
 	 */
@@ -237,8 +231,35 @@ public class VersionBakingBean implements Serializable {
 	}
 	
 	
+	public String vovler(){
+		this.setRerenderTree(false);
+		return "paso1reporte";
+	}
 	
 	
+	/**
+	 * Dibuja el arbol de la home
+	 * @return
+	 */
+	public String getTreeNetworkHome(){
+		StringBuffer retorno = new StringBuffer();
+		try {
+			List<Network> listNetwork = ejbNetwork.listNetwork();
+			new UtilCreatePage().createTreeHome(retorno, listNetwork);
+		} catch (InSideException ex) {
+			retorno = new StringBuffer();
+			retorno.append("<tr><td colspan=\"4\" class=\"networks\">");
+			retorno.append("Problemas al cargar el árbol de dispositivos");
+			retorno.append("</td></tr>");
+		}
+		treeNetwork =  retorno.toString();
+		return treeNetwork;
+	}
+	
+	/**
+	 * Dibuja el arbol del filtro de reporte
+	 * @return
+	 */
 	public String getTreeNetwork(){
 		StringBuffer retorno = new StringBuffer();
 		if (!rerenderTree){
@@ -298,11 +319,11 @@ public class VersionBakingBean implements Serializable {
 				
 				List<Version> listaVersiones2 = ejbVersion.getAllVersionDevice(Integer.valueOf(idDos));
 				
-				session.setAttribute("paginaLista1", getPagina(listaVersiones1, "radio1"));
-				session.setAttribute("paginaLista2", getPagina(listaVersiones2, "radio2"));
+				session.setAttribute("paginaLista1", getPaginaRadioVersiones(listaVersiones1, "radio1"));
+				session.setAttribute("paginaLista2", getPaginaRadioVersiones(listaVersiones2, "radio2"));
 				
-				session.setAttribute("equipo1", ejbDevice.getDevice(Integer.valueOf(idUno)).getHostname());
-				session.setAttribute("equipo2", ejbDevice.getDevice(Integer.valueOf(idDos)).getHostname());
+				session.setAttribute("equipo1", ejbDevice.getDevice(Integer.valueOf(idUno)));
+				session.setAttribute("equipo2", ejbDevice.getDevice(Integer.valueOf(idDos)));
 				
 				retorno = "paso2reporte";
 			}else{
@@ -328,7 +349,7 @@ public class VersionBakingBean implements Serializable {
 	 * @param listaVersiones
 	 * @return
 	 */
-	private String getPagina(List<Version> listaVersiones, String name) {
+	public static String getPaginaRadioVersiones(List<Version> listaVersiones, String name) {
 		StringBuffer retorno = new StringBuffer();
 		
 		for (Version version : listaVersiones) {			

@@ -39,18 +39,18 @@ import org.apache.commons.lang.builder.ToStringStyle;
 @NamedQueries({
 	@NamedQuery(name="findAll", query="from Network"),
 	
-	@NamedQuery(name="findByNameNetwork", query="from Network n where n.name = :pName"),
+	@NamedQuery(name="findByNameNetwork", query="from Network n where n.name like :pName"),
 })
 
 @NamedNativeQueries({
 	@NamedNativeQuery(name="findNetworkByNameDevide", query="select n.* from network n, device d, site s, zone z where " +
-			"n.id = s.networkid and s.id = z.siteid and z.id = d.zoneid and d.hostname = :pName", resultClass=Network.class),
+			"n.id = s.networkid and s.id = z.siteid and z.id = d.zoneid and d.hostname like :pName", resultClass=Network.class),
 			
 	@NamedNativeQuery(name="findByNameSite", query="select n.* from network n, site s where n.id = s.networkid " +
-			"and s.name = :pName", resultClass=Network.class),
+			"and s.name like :pName", resultClass=Network.class),
 			
 	@NamedNativeQuery(name="findByNameZone", query="select n.* from network n, site s, zone z where n.id = s.networkid " +
-			"and s.id = z.siteid and z.name = :pName", resultClass=Network.class)
+			"and s.id = z.siteid and z.name like :pName", resultClass=Network.class)
 })
 
 public class Network implements Serializable{
@@ -131,13 +131,12 @@ public class Network implements Serializable{
 		this.colSite = colSite;
 	}
 	
-	
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
 	
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null)

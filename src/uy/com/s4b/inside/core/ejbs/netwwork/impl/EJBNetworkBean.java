@@ -48,8 +48,9 @@ public class EJBNetworkBean implements NetworkService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Network> listNetworkByNetwork(String nameNetwokr) {
+		
 		Query query = em.createNamedQuery("findByNameNetwork");
-		query.setParameter("pName", nameNetwokr);
+		query.setParameter("pName", nameNetwokr.concat("%"));
 		
 		List<Network> resultado = query.getResultList();
 		if ((resultado != null) && (resultado.size() > 0)){
@@ -86,10 +87,10 @@ public class EJBNetworkBean implements NetworkService {
 	@Override
 	public List<Network> listNetworkByNameDevice(String nameDivice) {
 		
-		Query query = em.createNativeQuery("select n.* from network n, device d, site s, zone z where " +
-			"n.id = s.networkid and s.id = z.siteid and z.id = d.zoneid and d.hostname = :pName", Network.class);
+		Query query = em.createNativeQuery("select distinct n.* from network n, device d, site s, zone z where " +
+			"n.id = s.networkid and s.id = z.siteid and z.id = d.zoneid and d.hostname like :pName", Network.class);
 		
-		query.setParameter("pName", nameDivice);
+		query.setParameter("pName", nameDivice.concat("%"));
 		
 		List<Network> resultado = query.getResultList();
 		if ((resultado != null) && (resultado.size() > 0)){
@@ -105,9 +106,9 @@ public class EJBNetworkBean implements NetworkService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Network> listNetworkBySite(String nameSite) {
-		Query query = em.createNativeQuery("select n.* from network n, site s where n.id = s.networkid " +
-			"and s.name = :pName", Network.class);
-		query.setParameter("pName", nameSite);
+		Query query = em.createNativeQuery("select distinct n.* from network n, site s where n.id = s.networkid " +
+			"and s.name like :pName", Network.class);
+		query.setParameter("pName", nameSite.concat("%"));
 		
 		List<Network> resultado = query.getResultList();
 		if ((resultado != null) && (resultado.size() > 0)){
@@ -126,9 +127,9 @@ public class EJBNetworkBean implements NetworkService {
 	@Override
 	public List<Network> listNetworkByZone(String nameZone)
 			throws InSideException {
-		Query query = em.createNativeQuery("select n.* from network n, site s, zone z where n.id = s.networkid " +
-			"and s.id = z.siteid and z.name = :pName", Network.class);
-		query.setParameter("pName", nameZone);
+		Query query = em.createNativeQuery("select distinct n.* from network n, site s, zone z where n.id = s.networkid " +
+			"and s.id = z.siteid and z.name like :pName", Network.class);
+		query.setParameter("pName", nameZone.concat("%"));
 		
 		List<Network> resultado = query.getResultList();
 		if ((resultado != null) && (resultado.size() > 0)){

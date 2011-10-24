@@ -43,22 +43,18 @@
 			          <table width="470" cellpadding="0" cellspacing="0" style="border:none;">
 			            <tr>
 			              <td width="23%" height="20" style="border-bottom:#999 1px solid;" class="table_info table_strong">Coding type</td>
-			              <td width="77%" height="20" style="border-bottom:#999 1px solid;" class="table_info">running</td>
+			              <td width="77%" height="20" style="border-bottom:#999 1px solid;" class="table_info"><h:outputLabel value="#{izqVersion.type}" /></td>
 			            </tr>
 			            <tr>
 			              <td height="20" style="border-bottom:#999 1px solid;" class="table_info table_strong">Downloaded</td>
 			              <td height="20" style="border-bottom:#999 1px solid;" class="table_info">
 			              <h:outputText value="#{izqVersion.date.time}">
-			              	<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" type="date" />
+			              	<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" type="date" timeZone="America/Montevideo" />
 			              </h:outputText></td>
 			            </tr>
 			            <tr>
-			              <td height="20" style="border-bottom:#999 1px solid;" class="table_info table_strong">Modified</td>
-			              <td height="20" style="border-bottom:#999 1px solid;" class="table_info">never modified</td>
-			            </tr>
-			            <tr>
-			              <td height="20" class="table_info table_strong">Comments</td>
-			              <td height="20">&nbsp;</td>
+			              <td height="20" style="border-bottom:#999 1px solid;" class="table_info table_strong">&nbps;</td>
+			              <td height="20" style="border-bottom:#999 1px solid; font-weight: normal;" class="table_info">&nbps;</td>
 			            </tr>
 			          </table>
 			        </div>
@@ -68,51 +64,6 @@
 			          <table width="470" border="0" cellpadding="0" cellspacing="0">
 			          	<h:outputText value="#{page1}" escape="false"/>
 			          	
-			            <!-- tr>
-			              <td class="table" bgcolor="#CCCCCC"><span>01:&nbsp;two weeks ago 14/5/20011 - 2:00 am</span></td>
-			            </tr>
-			            <tr>
-			              <td class="table">02:&nbsp;no changes</td>
-			            </tr>
-			            <tr>
-			              <td class="table" bgcolor="#CCCCCC"><span>03:&nbsp;two weeks ago 14/5/20011 - 2:00 am</span></td>
-			            </tr>
-			            <tr>
-			              <td class="table">04:&nbsp;no changes</td>
-			            </tr>
-			            <tr>
-			              <td class="table" bgcolor="#CCCCCC"><span>05:&nbsp;two weeks ago 14/5/20011 - 2:00 am</span></td>
-			            </tr>
-			            <tr>
-			              <td class="table">06:&nbsp;no changes</td>
-			            </tr>
-			            <tr>
-			              <td class="table">07:&nbsp;!</td>
-			            </tr>
-			            <tr>
-			              <td class="table">08:&nbsp;!</td>
-			            </tr>
-			            <tr>
-			              <td class="table">09:&nbsp;!</td>
-			            </tr>
-			            <tr>
-			              <td bgcolor="#88b119" class="table">10:&nbsp;ip flow export</td>
-			            </tr>
-			            <tr>
-			              <td class="table">11:&nbsp;ip flow export</td>
-			            </tr>
-			            <tr>
-			              <td bgcolor="#c81f24" class="table">12:&nbsp;ip flow export</td>
-			            </tr>
-			            <tr>
-			              <td class="table">13:&nbsp;ip flow export</td>
-			            </tr>
-			            <tr>
-			              <td bgcolor="#ffc81f" class="table">14:&nbsp;ip flow export</td>
-			            </tr>
-			            <tr>
-			              <td class="table">15:&nbsp;ip flow export</td>
-			            </tr -->
 			          </table>
 			        </div>
 			        
@@ -124,74 +75,26 @@
 			          <table width="420" cellpadding="0" cellspacing="0" style="border:none;">
 			            <tr>
 			              <td width="23%" height="20" style="border-bottom:#999 1px solid;" class="table_info table_strong">Coding type</td>
-			              <td width="77%" height="20" style="border-bottom:#999 1px solid; font-weight: normal;" class="table_info">running</td>
+			              <td width="77%" height="20" style="border-bottom:#999 1px solid; font-weight: normal;" class="table_info"><h:outputLabel value="#{derVersion.type}" /></td>
 			            </tr>
 			            <tr>
 			              <td height="20" style="border-bottom:#999 1px solid;" class="table_info table_strong">Downloaded</td>
 			              <td height="20" style="border-bottom:#999 1px solid; font-weight: normal;" class="table_info">
 			              <h:outputText value="#{derVersion.date.time}">
-			              	<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" type="date" />
+			              	<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" type="date"  timeZone="America/Montevideo" />
 			              </h:outputText></td>
 			            </tr>
 			            <tr>
-			              <td height="20" style="border-bottom:#999 1px solid;" class="table_info table_strong">Modified</td>
-			              <td height="20" style="border-bottom:#999 1px solid; font-weight: normal;" class="table_info">never modified</td>
+			              <td height="20" style="border-bottom:#999 1px solid;" class="table_info table_strong">&nbps;</td>
+			              <td height="20" style="border-bottom:#999 1px solid; font-weight: normal;" class="table_info">&nbps;</td>
 			            </tr>
-			            <tr>
-			              <td height="20" class="table_info table_strong">Comments</td>
-			              <td height="20">&nbsp;</td>
-			            </tr>
+			            
 			          </table>
 			        </div>
 			        
 			        <table width="420" border="0" cellpadding="0" cellspacing="0">
 			        	<h:outputText value="#{page2}" escape="false"/>
 			        	
-			          <!--  tr>
-			            <td class="table" bgcolor="#CCCCCC"><span>01:&nbsp;two weeks ago 14/5/20011 - 2:00 am</span></td>
-			          </tr>
-			          <tr>
-			            <td class="table">02:&nbsp;no changes</td>
-			          </tr>
-			          <tr>
-			            <td class="table" bgcolor="#CCCCCC"><span>03:&nbsp;two weeks ago 14/5/20011 - 2:00 am</span></td>
-			          </tr>
-			          <tr>
-			            <td class="table">04:&nbsp;no changes</td>
-			          </tr>
-			          <tr>
-			            <td class="table" bgcolor="#CCCCCC"><span>05:&nbsp;two weeks ago 14/5/20011 - 2:00 am</span></td>
-			          </tr>
-			          <tr>
-			            <td class="table">06:&nbsp;no changes</td>
-			          </tr>
-			          <tr>
-			            <td class="table">07:&nbsp;!</td>
-			          </tr>
-			          <tr>
-			            <td class="table">08:&nbsp;!</td>
-			          </tr>
-			          <tr>
-			            <td class="table">09:&nbsp;!</td>
-			          </tr>
-			          <tr>
-			            <td bgcolor="#88b119" class="table">10:&nbsp;ip flow export</td>
-			          </tr>
-			          <tr>
-			            <td class="table">11:&nbsp;ip flow export</td>
-			          </tr>
-			          <tr>
-			            <td bgcolor="#c81f24" class="table">12:&nbsp;ip flow export</td>
-			          </tr>
-			          <tr>
-			            <td class="table">13:&nbsp;ip flow export</td>
-			          </tr>
-			          <tr>
-			            <td bgcolor="#ffc81f" class="table">14:&nbsp;ip flow export</td>
-			          </tr>
-			          <tr>
-			            <td class="table">15:&nbsp;ip flow export</td>
-			          </tr -->
 			        </table>
 			      </div>
 			      <div class="clear"></div>

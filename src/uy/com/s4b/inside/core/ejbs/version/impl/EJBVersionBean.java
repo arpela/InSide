@@ -1,5 +1,7 @@
 package uy.com.s4b.inside.core.ejbs.version.impl;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -8,9 +10,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Hibernate;
 import org.jboss.ejb3.annotation.LocalBinding;
 import org.jboss.ejb3.annotation.RemoteBinding;
 
@@ -100,6 +102,21 @@ public class EJBVersionBean implements VersionService {
 	public List<Version> getAllVersionDevice(Integer idDevices) throws InSideException {
 		Query q = em.createNamedQuery("findVersionDevice");
 		List<Version> lista = q.setParameter("pid", idDevices).getResultList();		
+		return lista;
+	}
+
+	/* (non-Javadoc)
+	 * @see uy.com.s4b.inside.core.ejbs.version.VersionService#getVersionDeviceWithDate(java.lang.Integer, java.util.Date, java.util.Date)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Version> getVersionDeviceWithDate(Integer id, Calendar desdeDer,
+			Calendar hastaDer) throws InSideException {
+		Query q = em.createNamedQuery("find.Version.Device.withDate");
+		q.setParameter("pid", id);
+		q.setParameter("fDesde", desdeDer, TemporalType.DATE);
+		q.setParameter("fHasta", hastaDer, TemporalType.DATE);
+		List<Version> lista = q.getResultList();
 		return lista;
 	}
 
