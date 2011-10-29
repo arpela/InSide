@@ -1,6 +1,3 @@
-/**
- * 
- */
 package uy.com.s4b.inside.test;
 
 import java.io.BufferedReader;
@@ -41,8 +38,8 @@ public class TestVersion {
 		
 //		
 		try {
-			Properties retorno = System.getProperties();
-			String serverip = "192.168.1.10:1099"; 
+			Properties retorno = System.getProperties(); 
+			String serverip = "localhost:1099"; 
 			retorno.setProperty(Context.PROVIDER_URL, "jnp://" + serverip);
 			retorno.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 			retorno.setProperty(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");
@@ -83,7 +80,7 @@ public class TestVersion {
 	private static String getFile() {
 		StringBuffer retorno = new StringBuffer();
 		try {
-			BufferedReader r = new BufferedReader(new FileReader(new File("D:/DevelopNews/ICOS-S4B/configuracionesEjemplo/fw-contingencia-261009-preppp")));
+			BufferedReader r = new BufferedReader(new FileReader(new File("/home/pablo/Documentos/InSide/archivos config/running-router-01172011.cfg")));
 			String linea = r.readLine();
 			while (linea != null){
 				retorno.append(linea);
@@ -97,5 +94,4 @@ public class TestVersion {
 		
 		return retorno.toString();
 	}
-
 }

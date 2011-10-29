@@ -100,10 +100,10 @@ table {	border-collapse: collapse;	border-spacing: 0;}
 
 #content table td.networks{border-bottom: 1px solid #bababa; height:20px; padding-bottom:3px; #padding-bottom:1px;}
 #content ul{ color: #404040 }
-#content ul li{margin-top: 3px; background: url('') scroll no-repeat 0 0 transparent; height: 16px; cursor: pointer;}
+#content ul li{ background: url("") no-repeat scroll 0 0 transparent;cursor: pointer;height: 16px;margin-top: 3px;width: 300px;}
 #content ul li.less{background-image: url('img/less.png');}
 #content ul li.more{background-image: url('img/more.png');}
-#content ul li span{display: block; padding-top: 2px; font-size: 11px; padding-left: 16px; text-align: center;}
+#content ul li span{display: block;font-size: 11px;padding-left: 21px;padding-top: 2px;text-align: left;}
 #content ul.network li span{font-size: 12px;}
 #content ul.network{ width: 80px; padding-left: 5px;}
 #content ul.site{ width: 58px; padding-left: 20px;}
