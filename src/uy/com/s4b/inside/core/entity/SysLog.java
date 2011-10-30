@@ -1,7 +1,7 @@
 package uy.com.s4b.inside.core.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -46,11 +48,14 @@ public class SysLog implements Serializable {
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
-	private String dateMessage;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar dateMessage;
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
-	private Timestamp dateReceive;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar dateReceive;
+	
 	
 	
 	/**
@@ -91,38 +96,6 @@ public class SysLog implements Serializable {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
-
-	/**
-	 * @return the dateMessage
-	 */
-	public String getDateMessage() {
-		return dateMessage;
-	}
-
-
-	/**
-	 * @param dateMessage the dateMessage to set
-	 */
-	public void setDateMessage(String dateMessage) {
-		this.dateMessage = dateMessage;
-	}
-
-
-	/**
-	 * @return the dateReceive
-	 */
-	public Timestamp getDateReceive() {
-		return dateReceive;
-	}
-
-
-	/**
-	 * @param dateReceive the dateReceive to set
-	 */
-	public void setDateReceive(Timestamp dateReceive) {
-		this.dateReceive = dateReceive;
-	}
 	
 	
 	@Override
@@ -143,6 +116,38 @@ public class SysLog implements Serializable {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
+
+
+	/**
+	 * @return the dateReceive
+	 */
+	public Calendar getDateReceive() {
+		return dateReceive;
+	}
+
+
+	/**
+	 * @param dateReceive the dateReceive to set
+	 */
+	public void setDateReceive(Calendar dateReceive) {
+		this.dateReceive = dateReceive;
+	}
+
+
+	/**
+	 * @param dateMessage the dateMessage to set
+	 */
+	public void setDateMessage(Calendar dateMessage) {
+		this.dateMessage = dateMessage;
+	}
+
+
+	/**
+	 * @return the dateMessage
+	 */
+	public Calendar getDateMessage() {
+		return dateMessage;
 	}
 
 }

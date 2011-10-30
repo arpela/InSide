@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -39,6 +41,9 @@ import org.apache.commons.lang.builder.ToStringStyle;
 
 @Table(name="device")
 @Entity
+@NamedQueries({
+	@NamedQuery(name ="find.Device.ip", query="from Device d where d.ip = :ipEquipo")
+})
 public class Device implements Serializable {
 
 	@Transient
@@ -89,7 +94,7 @@ public class Device implements Serializable {
 //	@JoinColumn(name="deviceId")
 //	private Set<Version> colVersion;
 	
-	@OneToMany(cascade=CascadeType.MERGE, mappedBy="oneDevice" ,fetch=FetchType.LAZY)
+	@OneToMany(cascade=CascadeType.MERGE, mappedBy="oneDevice" ,fetch=FetchType.EAGER)
 	private Set<Version> colVersion;
 	
 	

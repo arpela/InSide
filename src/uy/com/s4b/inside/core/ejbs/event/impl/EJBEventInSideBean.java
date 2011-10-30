@@ -4,16 +4,21 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.jboss.ejb3.annotation.LocalBinding;
+import org.jboss.ejb3.annotation.RemoteBinding;
 
 import uy.com.s4b.inside.core.ejbs.event.EJBEventInSideLocal;
+import uy.com.s4b.inside.core.ejbs.event.EJBEventInSideRemote;
 import uy.com.s4b.inside.core.ejbs.event.EventInSideService;
+import uy.com.s4b.inside.core.entity.Action;
 import uy.com.s4b.inside.core.entity.EventInSide;
+import uy.com.s4b.inside.core.entity.MsgSysLog;
 import uy.com.s4b.inside.core.exception.InSideException;
 
 /**
@@ -26,8 +31,10 @@ import uy.com.s4b.inside.core.exception.InSideException;
  *
  */
 @Stateless
+@Remote(EJBEventInSideRemote.class)
 @Local(EJBEventInSideLocal.class)
 @LocalBinding(jndiBinding="inSide/EJBEventInSide/local")
+@RemoteBinding(jndiBinding="inSide/EJBEventInSide/remote")
 public class EJBEventInSideBean implements EventInSideService {
 
 	@PersistenceContext
@@ -59,6 +66,17 @@ public class EJBEventInSideBean implements EventInSideService {
 	public void saveEvent(EventInSide event) throws InSideException {
 		em.persist(event);
 	}
-	
 
+
+	/* (non-Javadoc)
+	 * @see uy.com.s4b.inside.core.ejbs.event.EventInSideService#saveMsgSysLog(uy.com.s4b.inside.core.entity.MsgSysLog)
+	 */
+	@Override
+	public void saveMsgSysLog(MsgSysLog msgSysLog) throws InSideException {
+		if (!em.contains(msgSysLog.getAction())){
+			msgSysLog.setAction(em.find(Action.class, msgSysLog.getAction().getId()));
+		}
+		em.merge(msgSysLog);
+	}
+	
 }

@@ -30,5 +30,11 @@ public interface DeviceService {
 	 * @throws InSideException
 	 */
 	void save(Device d) throws InSideException;
+	
+	/**
+	 * @param ipHost
+	 * @return 
+	 */
+	Device getDeviceByIP(String ipHost)throws InSideException;
 
 }

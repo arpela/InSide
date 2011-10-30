@@ -4,7 +4,9 @@ import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 import org.jboss.ejb3.annotation.LocalBinding;
@@ -31,7 +33,6 @@ import uy.com.s4b.inside.core.exception.InSideException;
 @Remote(EJBDeviceRemote.class)
 @LocalBinding(jndiBinding="inSide/EJBDevice/local")
 @RemoteBinding(jndiBinding="inSide/EJBDevice/remote")
-
 public class EJBDeviceBean implements DeviceService {
 
 	
@@ -39,6 +40,7 @@ public class EJBDeviceBean implements DeviceService {
 	
 	@PersistenceContext
 	EntityManager em;
+	
 	/**
 	 * 
 	 */
@@ -62,6 +64,20 @@ public class EJBDeviceBean implements DeviceService {
 		log.info("Se ingresa a recuperar el dispocitivo: " + id);
 		return (Device)em.find(Device.class, id);
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see uy.com.s4b.inside.core.ejbs.device.
+	 * DeviceService#getDeviceByIP(java.lang.String)
+	 */
+	@Override
+	public Device getDeviceByIP(String ipHost) throws InSideException {
+		try {
+			Query q = em.createNamedQuery("find.Device.ip").setParameter("ipEquipo", ipHost);
+			//TODO se debe buscar por alguna otra de interfaz ahora no lo vamos hacer.
+			return (Device)q.getSingleResult();
+		}catch (NoResultException ex) {
+			return null;
+		}
+	}
 	
 }

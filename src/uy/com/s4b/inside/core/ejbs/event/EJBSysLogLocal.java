@@ -1,4 +1,4 @@
-package uy.com.s4b.inside.core.ejbs.device;
+package uy.com.s4b.inside.core.ejbs.event;
 
 /**
  * 
@@ -10,9 +10,7 @@ package uy.com.s4b.inside.core.ejbs.device;
  * @author Alfredo
  *
  */
-public interface EJBDeviceLocal extends DeviceService {
-
-
+public interface EJBSysLogLocal extends SysLogService {
 
 
 }
