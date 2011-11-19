@@ -4,18 +4,20 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+
+import uy.com.s4b.inside.core.common.TypeAction;
 
 /**
  * Title: Action.java <br>
@@ -41,7 +43,8 @@ public class Action implements Serializable {
 	
 	
 	@Column(insertable=true, nullable=false, unique=true)
-	private String name;
+	@Enumerated(EnumType.STRING)
+	private TypeAction name;
 	
 	
 	/**
@@ -50,17 +53,6 @@ public class Action implements Serializable {
 	public Action() {
 		
 	}
-	
-	
-	/**
-	 * Funcion encargada de correjir imperfecciones 
-	 * en los datos del entity
-	 */
-	@PrePersist()
-	public void initEntity(){
-		this.name = WordUtils.capitalizeFully(this.name);
-	}
-
 
 	/**
 	 * @return the id
@@ -77,22 +69,6 @@ public class Action implements Serializable {
 		this.id = id;
 	}
 
-
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-	
 	
 	@Override
 	public int hashCode() {
@@ -112,5 +88,19 @@ public class Action implements Serializable {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
+
+	/**
+	 * @return the name
+	 */
+	public TypeAction getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(TypeAction name) {
+		this.name = name;
 	}
 }

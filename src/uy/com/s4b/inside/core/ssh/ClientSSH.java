@@ -99,7 +99,7 @@ public class ClientSSH {
 								
 				session.getOutputStream().write((command+"\n").getBytes());
 				
-				Thread.sleep(1000*2);
+				Thread.sleep(1000*5);
 				aux = sor.getOutput();   
 				answer = aux.substring(outputPos);
 				outputPos = aux.length();
@@ -116,7 +116,6 @@ public class ClientSSH {
 				}
 				res = prompt;
 			}
-				
 			return res;
 		} catch (IOException eio) {
 			log.error(eio.getMessage(), eio);

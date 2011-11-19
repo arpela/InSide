@@ -13,4 +13,6 @@ package uy.com.s4b.inside.core.ejbs.device;
 public interface EJBDeviceLocal extends DeviceService {
 
 
+
+
 }

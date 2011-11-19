@@ -1,10 +1,16 @@
 package uy.com.s4b.inside.core.ejbs.device.impl;
 
+import java.util.List;
+
 import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 import org.jboss.ejb3.annotation.LocalBinding;
@@ -31,7 +37,6 @@ import uy.com.s4b.inside.core.exception.InSideException;
 @Remote(EJBDeviceRemote.class)
 @LocalBinding(jndiBinding="inSide/EJBDevice/local")
 @RemoteBinding(jndiBinding="inSide/EJBDevice/remote")
-
 public class EJBDeviceBean implements DeviceService {
 
 	
@@ -39,11 +44,12 @@ public class EJBDeviceBean implements DeviceService {
 	
 	@PersistenceContext
 	EntityManager em;
+	
 	/**
 	 * 
 	 */
 	public EJBDeviceBean() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/* (non-Javadoc)
@@ -57,10 +63,36 @@ public class EJBDeviceBean implements DeviceService {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Device> getAllDevice() throws InSideException {
+		log.info("Se ingresa a recuperar todos los dipositivos");
+		Query q = em.createNamedQuery("findAll.Device");
+		return q.getResultList();
+	}
+	
+	
 	@Override
 	public Device getDevice(Integer id) throws InSideException {
 		log.info("Se ingresa a recuperar el dispocitivo: " + id);
 		return (Device)em.find(Device.class, id);
+	}
+
+	/* (non-Javadoc)
+	 * @see uy.com.s4b.inside.core.ejbs.device.
+	 * DeviceService#getDeviceByIP(java.lang.String)
+	 */
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
+	public Device getDeviceByIP(String ipHost) throws InSideException {
+		try {
+			Query q = em.createNamedQuery("find.Device.ip").setParameter("ipEquipo", ipHost);
+			//TODO se debe buscar por alguna otra de interfaz ahora no lo vamos hacer.
+			Device d = (Device)q.getSingleResult();
+			return d; 
+		}catch (NoResultException ex) {
+			return null;
+		}
 	}
 	
 	

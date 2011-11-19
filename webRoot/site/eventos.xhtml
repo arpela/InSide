@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+   	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:rich="http://richfaces.org/rich">
+
+<h:body>
+	
+	<ui:composition template="/layout/templateapp.xhtml">
+		
+		<ui:define name="body">
+			<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource" var="bundle" />
+			
+			<h:form id="formHome">
+
+				<div id="content">
+					<div class="state">
+						<div class="page fleft">Alarmas</div>
+						<div class="date fright"><span id="reloj"></span></div>
+						<div class="clear"></div>
+					</div>
+					
+					<rich:dataTable border="0" styleClass="changes" value="#{events.listaEventos}" 
+								var="event" id="listaEventos" rows="20" rowClasses="dark" columns="3" align="center" style="width: 950;">
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Asunto"/>
+							</f:facet>
+							<h:outputText value="#{event.value}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Descripcion"/>
+							</f:facet>
+							<h:outputText value="#{event.description}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="#"/>
+							</f:facet>
+							<h:graphicImage value="/resources/img/green_event.png" rendered="#{event.type == 'INFO'}" />
+							<h:graphicImage value="/resources/img/yellow_event.png" rendered="#{event.type == 'WARN'}" />
+							<h:graphicImage value="/resources/img/red_event.png" rendered="#{event.type == 'ERROR'}" />
+						</rich:column>
+						<f:facet name="footer">
+							<h:panelGroup style="display:block; text-align:center">
+                				<rich:dataScroller for="listaEventos" maxPages="5" />
+                			</h:panelGroup>
+           				 </f:facet>
+					</rich:dataTable>
+					
+				</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>
+

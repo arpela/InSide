@@ -12,6 +12,11 @@
 		<listener-class>uy.com.s4b.inside.ui.listener.Listener</listener-class>
 	</listener>
 
+	<filter>
+		<filter-name>filtroLogin</filter-name>
+		<filter-class>uy.com.s4b.inside.ui.listener.LoginFilter</filter-class>
+	</filter>
+	
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -32,7 +37,11 @@
 	    <param-name>org.richfaces.skin</param-name>
 	    <param-value>plain</param-value>
 	</context-param -->
-
+	
+	<filter-mapping>
+		<filter-name>filtroLogin</filter-name>
+		<url-pattern>/site/*</url-pattern>
+	</filter-mapping>
 
 	<error-page>
 		<exception-type>javax.faces.application.ViewExpiredException</exception-type>

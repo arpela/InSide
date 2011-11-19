@@ -7,7 +7,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.rmi.PortableRemoteObject;
 
-import uy.com.s4b.inside.core.common.DiffLine;
 import uy.com.s4b.inside.core.ejbs.report.EJBReportDiffRemote;
 import uy.com.s4b.inside.core.ejbs.report.impl.difflib.Delta;
 import uy.com.s4b.inside.core.exception.InSideException;
@@ -42,6 +41,7 @@ public class TestDiff {
 		String multiLine2 = "L1\nL2\nL3\nL4";
 		
 		try {
+			
 			Properties retorno = System.getProperties();
 			retorno.setProperty(Context.PROVIDER_URL, "jnp://" + serverip);
 			retorno.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
@@ -52,8 +52,9 @@ public class TestDiff {
 				PortableRemoteObject.narrow(ctx.lookup("inSide/EJBReportDiff/remote"), EJBReportDiffRemote.class);
 		
 			Map<Integer, Delta> resDiffLine = service.doDiff(multiLine1, multiLine2);
-
-
+			System.out.println(resDiffLine == null);
+			System.out.println(resDiffLine.size());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

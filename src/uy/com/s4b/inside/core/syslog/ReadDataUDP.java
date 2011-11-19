@@ -2,7 +2,14 @@ package uy.com.s4b.inside.core.syslog;
 
 import java.net.DatagramPacket;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
 import org.apache.log4j.Logger;
+
+import uy.com.s4b.inside.core.ejbs.event.EJBSysLogLocal;
+import uy.com.s4b.inside.core.exception.InSideException;
 
 
 /**
@@ -40,13 +47,30 @@ class ReadDataUDP extends Thread {
 
 	
 	public void run() {
-		log.debug("Lanzado el hilo de lectura de UDP...");
+		log.info("Lanzado el hilo de lectura de UDP, llega msg de Syslog !!! ");
 		String msgRecibido = new String(paquete.getData());
-		if (InfoRunServerUDP.MSG_BAJA_SERVER.equalsIgnoreCase(msgRecibido)){
+		
+		log.debug("1 ------------------>  " + msgRecibido);
+		log.debug("2 ------------------>  " + InfoRunServerUDP.MSG_BAJA_SERVER);
+		
+		if (msgRecibido.trim().equals(InfoRunServerUDP.MSG_BAJA_SERVER)){
 			log.warn("MSG de bajada de servidor!!!!");
 			log.warn("----> " + msgRecibido);
 		}else{
-			log.info("Msg recibido --> " + msgRecibido);
+			
+			try {
+				String hostAddress = paquete.getAddress().getHostAddress();
+				log.debug("Info del equipo ---> " + hostAddress);
+				Context ctx = new InitialContext();
+				EJBSysLogLocal localSYS = (EJBSysLogLocal)ctx.lookup("inSide/EJBSysLog/local");
+				localSYS.parserAndSaveSysLog(msgRecibido.trim(), hostAddress);
+			} catch (NamingException ex) {
+				log.error("No se procesa msg de sys log: " + msgRecibido);
+				log.error(ex.getMessage(), ex);
+			} catch (InSideException ex) {
+				log.error("Errores al procesar el msg de syslog");
+				log.error(ex.getMessage(), ex);
+			}
 		}
 	}
 	

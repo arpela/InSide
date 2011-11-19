@@ -2,7 +2,13 @@ package uy.com.s4b.inside.core.common;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 import uy.com.s4b.inside.core.exception.InSideException;
 
 /**
@@ -15,7 +21,34 @@ import uy.com.s4b.inside.core.exception.InSideException;
  *
  */
 public class CriptPassword {
+	
+	private final static String keyBuffer = "26006379";
+	private final static String algoritmo = "DES/ECB/PKCS5Padding";
+	
 
+	private SecretKeySpec getKey() {
+		SecretKeySpec key = new SecretKeySpec(keyBuffer.getBytes(), "DES");
+		return key;
+	}
+
+	
+	public String desencripta(String s) throws Exception {
+		Cipher cipher = Cipher.getInstance(algoritmo);
+		cipher.init(2, getKey());
+		byte retorno[] = cipher.doFinal(new BASE64Decoder().decodeBuffer(s));
+		return new String(retorno);
+	}
+
+	
+	public String encripta(String s) throws Exception {
+		SecureRandom securerandom = new SecureRandom();
+		securerandom.nextBytes(keyBuffer.getBytes());
+		Cipher cipher = Cipher.getInstance(algoritmo);
+		cipher.init(1, getKey());
+		return new BASE64Encoder().encode(cipher.doFinal(s.getBytes()));
+	}
+	
+	
 	/**
 	 * Retona la password encriptada para ser guarda en la base de datos.
 	 * @param key

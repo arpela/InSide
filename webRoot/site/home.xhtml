@@ -22,8 +22,8 @@
 
 				<div id="content">
 					<div class="state">
-						<div class="page fleft">InSide</div>
-						<div class="date fright">Wednesday, August 10, 2011 12:35:02 PM</div>
+						<div class="page fleft">Home</div>
+						<div class="date fright"><span id="reloj"></span></div>
 						<div class="clear"></div>
 					</div>
 
@@ -68,6 +68,7 @@
 								$('#VERTODO'+id).openDOMWindow({
 									height:600,
 									width:990,
+									anchoredClassName:'cerrar', 
 									positionType:'absolute',
 									positionTop:50,
 									eventType:'click',
@@ -88,57 +89,35 @@
 							<div class="fright button">
 								<a href="#">Ayuda</a>
 							</div>
-							<div class="fright button" style="margin-right: 5px">
-								<a href="#">Editar</a>
-							</div>
 							<div class="clear"></div>
 						</div>
 						
-						
-						
 						<div class="subtitle">Ultimos cambios:</div>
-						<table class="changes">
-						
-							
-							<tr>
-								<th width="140">Equipos</th>
-								<th width="145">Fecha / Hora</th>
-								<th width="101">Equipos</th>
-							</tr>
-							<tr>
-								<td class='dark'>'sw-dist-suc-cord'</td>
-								<td>25/9/2011 18:01</td>
-								<td><h:commandLink action="#{versionBakingBean.selectVersionHome}" value="Ver reporte" styleClass="links_modal" >
-										<f:param name="id" value="1"/>
+							<rich:dataTable border="0" styleClass="changes" value="#{versionBakingBean.listaUltimasVersiones}" 
+								var="version" id="listaVersiones" rows="5" rowClasses="dark" columns="3" style="width: 460;">
+								<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Equipos"/>
+									</f:facet>
+									<h:outputText value="#{version.oneDevice.hostname}" />
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Fecha / Hora"/>
+									</f:facet>
+									<h:outputText value="#{version.date.time}" >
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" type="date" timeZone="America/Montevideo" />
+									</h:outputText>
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Equipos"/>
+									</f:facet>
+									<h:commandLink action="#{versionBakingBean.selectVersionHome}" value="Ver reporte" styleClass="links_modal" >
+											<f:param name="id" value="#{version.id}"/>
 									</h:commandLink>
-								</td>
-							</tr>
-							<tr>
-								<td class='dark'>'sw-dist-suc-cord'</td>
-								<td>25/9/2011 17:37</td>
-								<td><h:commandLink  action="#{versionBakingBean.selectVersionHome}" immediate="true"  value="Ver reporte" styleClass="links_modal" >
-										<f:param name="id" value="1"/>
-									</h:commandLink>
-								</td>
-							</tr>
-							<tr>
-								<td class='dark'>'asa-clientes'</td>
-								<td>23/9/2011 19:40</td>
-								<td><h:commandLink action="#{versionBakingBean.selectVersionHome}" value="Ver reporte" styleClass="links_modal" >
-										<f:param name="id" value="1"/>
-									</h:commandLink>
-								</td>
-							</tr>
-							<tr>
-								<td class='dark'>'sw-dist-suc-cord'</td>
-								<td>23/9/2011 18:00</td>
-								<td>
-									<h:commandLink action="#{versionBakingBean.selectVersionHome}" value="Ver reporte" styleClass="links_modal">
-										<f:param name="id" value="1"/>
-									</h:commandLink>
-								</td>
-							</tr>
-						</table>
+								</rich:column>
+							</rich:dataTable>
 						<div class="options">
 							<div class="fright button">
 								<a href="#">Ayuda</a>
@@ -150,50 +129,7 @@
 					
 					<div class="rightContent fright" >
 						<div class="subtitle">Panel de alarmas:</div>
-						
-						<rich:dataTable border="0" styleClass="events"  value="#{events.listaEventos}" var="even"
-				            id="listaEventos" rows="6" style="width: 420;"  rowClasses="changes" columns="4">
-				            
-				            <rich:column  style="border-right: 0px solid #C4C0C9; padding: 0;">
-				                <f:facet name="header">
-				                    <h:outputText value="Evento"/>
-				                </f:facet>
-				                <h:commandLink styleClass="links_modal" hreflang="#" value="#{even.value}" />
-				            </rich:column>
-				            
-				            <!--   
-				            <rich:column colspan="4">
-            					<h:outputText value="#{even.description}" />
-        					</rich:column>
-        					
-				            <rich:column  colspan="4" style="display:none; color:#999; text-align:left; padding:5px 5px 5px 32px; border:0" id="bloque#{even.value}">
-				            	<h:outputText value="#{even.description}" />
-				            </rich:column> 
-				            -->
-				            
-				            <rich:column style="border-right: 0px solid #C4C0C9; padding: 0;">
-				                <f:facet name="header">
-				                    <h:outputText value="Info" />
-				           		</f:facet>
-								<h:graphicImage value="/resources/img/green_event.png"  rendered="#{even.type == 'INFO'}" />
-				            </rich:column>
-				            
-				            <rich:column style="border-right: 0px solid #C4C0C9; padding: 0;">
-				                <f:facet name="header">
-				                    <h:outputText value="Cuidado" />
-				            	</f:facet>
-								<h:graphicImage value="/resources/img/yellow_event.png"  rendered="#{even.type == 'WARN'}" />
-				            </rich:column>
-				            
-				            <rich:column style="border-right: 0px solid #C4C0C9; padding: 0;">
-				                <f:facet name="header">
-				                    <h:outputText value="Crítico" />
-				            	</f:facet>    
-								<h:graphicImage value="/resources/img/red_event.png"  rendered="#{even.type == 'ERROR'}" />
-							</rich:column>
-				            
-				        </rich:dataTable>
-				        
+						<h:outputText value="#{events.homeListaEvento}" escape="false"/>
 					</div>
 					<div class="clear"></div>
 				</div>

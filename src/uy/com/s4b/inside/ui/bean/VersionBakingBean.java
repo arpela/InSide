@@ -2,6 +2,7 @@ package uy.com.s4b.inside.ui.bean;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -72,18 +73,39 @@ public class VersionBakingBean implements Serializable {
 	private static final long serialVersionUID = -1648325814768374866L;
 
 	
+	public List<Version> getListaUltimasVersiones(){
+		List<Version>  retorno = null;
+		try {
+			List<Version>  lista = ejbVersion.getAllVersion();
+			if (lista.size() > 6){	
+				retorno = lista.subList(0, 6);
+			}else{				
+				retorno = lista;
+			}
+		} catch (InSideException ex) {
+			retorno = new ArrayList<Version>();
+		}
+		return retorno;
+	}
+	
+	
+	
 	public String selectVersionHome(){
 		String retorno = null;
 		log.info("se ingresa a recuperar la version");
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, String> map = context.getExternalContext().getRequestParameterMap();
-		String idDevice = (String) map.get("id");
+//		String idDevice = (String) map.get("id");
+		String idVersion = (String) map.get("id");
 		log.info("Codigo de divece");
 		
 		try {
+			// TODO esto esta malaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 			
 			HttpSession session = (HttpSession)context.getExternalContext().getSession(false);
-			Version dosVersiones [] =  ejbVersion.getVersionDosDevice(Integer.valueOf(idDevice));
+//			Version dosVersiones [] =  ejbVersion.getVersionDosDevice(Integer.valueOf(idDevice));
+			
+			Version dosVersiones [] =  ejbVersion.getDosUltimasVersiones(Integer.valueOf(idVersion));
 			
 			String unaVersion = dosVersiones[0].getConfig();
 			
@@ -363,6 +385,8 @@ public class VersionBakingBean implements Serializable {
 		return treeNetwork;
 	}
 	
+	
+	
 	/**
 	 * Dibuja el arbol del filtro de reporte
 	 * @return
@@ -417,27 +441,18 @@ public class VersionBakingBean implements Serializable {
 				}else{
 					idDos = listaelect[1];					
 				}
-
-//				for (int i = 0; i < listaelect.length; i++) {
-//					log.info(" ---> " + listaelect[i]);
-//				}
 				
 				List<Version> listaVersiones1 = ejbVersion.getAllVersionDevice(Integer.valueOf(idUno));
-				
 				List<Version> listaVersiones2 = ejbVersion.getAllVersionDevice(Integer.valueOf(idDos));
-				
 				session.setAttribute("paginaLista1", getPaginaRadioVersiones(listaVersiones1, "radio1"));
 				session.setAttribute("paginaLista2", getPaginaRadioVersiones(listaVersiones2, "radio2"));
-				
 				session.setAttribute("equipo1", ejbDevice.getDevice(Integer.valueOf(idUno)));
 				session.setAttribute("equipo2", ejbDevice.getDevice(Integer.valueOf(idDos)));
-				
 				retorno = "paso2reporte";
 			}else{
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage (FacesMessage.SEVERITY_ERROR, 
 						"Debe seleccionar un equipos.","Debe seleccionar un equipos."));
 			}
-			
 		} catch (NumberFormatException ex) {
 			log.error(ex.getMessage(), ex);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage (FacesMessage.SEVERITY_ERROR, 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE server>
+<!-- $Id: properties-service.xml 16662 2003-08-27 04:38:22Z patriot1burke $ -->
+
+<server>
+
+  <mbean code="org.jboss.varia.property.SystemPropertiesService" 
+	 name="jboss:type=Service,name=SystemPropertiesInSide">
+
+    <!-- 
+       | Set raw properties file style properties.
+	-->
+    <attribute name="Properties">
+    	uy.com.s4b.incos.inside.pathtftpfiles=d:/temp/tftp/
+    </attribute>
+     
+    
+
+  </mbean>
+
+</server>
