@@ -1,5 +1,6 @@
 package uy.com.s4b.inside.core.ejbs.event.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.persistence.Query;
 import org.jboss.ejb3.annotation.LocalBinding;
 import org.jboss.ejb3.annotation.RemoteBinding;
 
+import uy.com.s4b.inside.core.common.TypeEvent;
 import uy.com.s4b.inside.core.ejbs.event.EJBEventInSideLocal;
 import uy.com.s4b.inside.core.ejbs.event.EJBEventInSideRemote;
 import uy.com.s4b.inside.core.ejbs.event.EventInSideService;
@@ -77,6 +79,23 @@ public class EJBEventInSideBean implements EventInSideService {
 			msgSysLog.setAction(em.find(Action.class, msgSysLog.getAction().getId()));
 		}
 		em.merge(msgSysLog);
+	}
+
+
+	/* (non-Javadoc)
+	 * @see uy.com.s4b.inside.core.ejbs.event.EventInSideService#listEventEnable(int, uy.com.s4b.inside.core.common.TypeEvent)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EventInSide> listEventEnable(int cantidad, TypeEvent tipo) {
+		try {
+			Query q = em.createNamedQuery("findAllEventActivForTipe");
+			q.setParameter("pFechaFin", Calendar.getInstance()).
+			setParameter("tipo", tipo).setMaxResults(cantidad);
+			return q.getResultList();
+		}catch (RuntimeException ex) {
+			return new ArrayList<EventInSide>();
+		}
 	}
 	
 }

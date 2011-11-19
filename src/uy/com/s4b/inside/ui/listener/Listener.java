@@ -6,13 +6,24 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.text.ParseException;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.quartz.CronTrigger;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.UnableToInterruptJobException;
+import org.quartz.impl.StdScheduler;
 
+import uy.com.s4b.inside.core.common.NamesJobsQuartz;
+import uy.com.s4b.inside.core.quartz.GetConfigForDayJob;
 import uy.com.s4b.inside.core.syslog.InfoRunServerUDP;
 import uy.com.s4b.inside.core.syslog.ServerUDP;
 
@@ -38,10 +49,33 @@ public class Listener implements ServletContextListener {
 		log.info("Arranco la app!!!");
 		ServerUDP udp = new ServerUDP(nombreThread, InfoRunServerUDP.PUERTO_SERVIDOR_UDP, Thread.currentThread().getThreadGroup());
 		udp.start();
+		starQuarzReadConfig();
 		log.info("##################################");
 	}
 	
-
+	
+	private void starQuarzReadConfig(){
+		log.info("Se agenda Job configuracion Diaria....");
+		try {
+			InitialContext ctx = new InitialContext();
+			StdScheduler scheduler = (StdScheduler) ctx.lookup("Quartz");
+			JobDetail jd =new JobDetail(NamesJobsQuartz.READ_CONFI_DAY.name(),Scheduler.DEFAULT_GROUP, GetConfigForDayJob.class);
+			jd.setDurability(false);
+			jd.setVolatility(true);
+			CronTrigger ct = new CronTrigger("configday","group1","0 0 23 * * ?");
+//			CronTrigger ct = new CronTrigger("configday","group1","0 0/1 * * * ?");
+			scheduler.scheduleJob(jd,ct);
+		} catch (NamingException ex) {
+			log.error(ex.getMessage(), ex);
+		} catch (SchedulerException ex) {
+			log.error(ex.getMessage(), ex);
+		} catch (ParseException ex) {
+			log.error(ex.getMessage(), ex);
+		}
+		
+	}
+	
+	
 	public void contextDestroyed(ServletContextEvent e) {
 		ThreadGroup currentGroup = Thread.currentThread().getThreadGroup();
 		int numThreads = currentGroup.activeCount();
@@ -61,8 +95,8 @@ public class Listener implements ServletContextListener {
 					soket.close();
 				}
 			}
-			
-		} catch (NullPointerException ex) {			
+			stopQuarz();
+		} catch (NullPointerException ex) {
 			log.error("Problemas en la bajada: " + ex.getMessage());
 		} catch (UnknownHostException ex) {
 			log.error("Problemas en la bajada: " + ex.getMessage());
@@ -73,4 +107,21 @@ public class Listener implements ServletContextListener {
 		}
 	}
 
+	
+	private void stopQuarz(){
+		log.info("Se ingresa bajar Job configuracion Diaria...");
+		try {
+			InitialContext ctx = new InitialContext();
+			StdScheduler scheduler = (StdScheduler) ctx.lookup("Quartz");
+			scheduler.interrupt(NamesJobsQuartz.READ_CONFI_DAY.name(),Scheduler.DEFAULT_GROUP);
+			scheduler.deleteJob(NamesJobsQuartz.READ_CONFI_DAY.name(),Scheduler.DEFAULT_GROUP);
+		} catch (NamingException ex) {
+			ex.printStackTrace();
+		} catch (UnableToInterruptJobException ex) {
+			ex.printStackTrace();
+		} catch (SchedulerException ex) {
+			ex.printStackTrace();
+		}
+	}
+	
 }

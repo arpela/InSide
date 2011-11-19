@@ -15,6 +15,7 @@
  */
 package uy.com.s4b.inside.core.ejbs.report.impl.difflib;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -24,8 +25,13 @@ import java.util.*;
  */
 
 
-public abstract class Delta {
-    private Chunk original;
+public abstract class Delta implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2408577237410759201L;
+	
+	private Chunk original;
     private Chunk revised;
     
     public enum TYPE {

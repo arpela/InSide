@@ -2,6 +2,7 @@ package uy.com.s4b.inside.core.ejbs.event;
 
 import java.util.List;
 
+import uy.com.s4b.inside.core.common.TypeEvent;
 import uy.com.s4b.inside.core.entity.EventInSide;
 import uy.com.s4b.inside.core.entity.MsgSysLog;
 import uy.com.s4b.inside.core.exception.InSideException;
@@ -25,6 +26,14 @@ public interface EventInSideService {
 	 * @throws InSideException
 	 */
 	public List<EventInSide> listEventEnable() throws InSideException;
+
+	
+	/**
+	 * @param i
+	 * @param error
+	 * @return
+	 */
+	public List<EventInSide> listEventEnable(int cantidad, TypeEvent error);
 
 	
 	/**

@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,13 +17,12 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.hibernate.annotations.Cascade;
+
+import uy.com.s4b.inside.core.common.TypeEvent;
 
 /**
  * Title: MsgSysLog.java <br>
@@ -50,12 +51,23 @@ public class MsgSysLog implements Serializable {
 
 	@Column(name = "msgSysLog", insertable = true, nullable = true, unique = true)
 	private String idSysLog;
-
+	
+	@Column(name = "msgEvent", insertable = true, nullable = true, unique = false)
+	private String valueSubjetEvent;
+	
+	@Column(name = "msgDescriptionEvent", insertable = true, nullable = true, unique = false)
+	private String descriptionEvent;
+	
+	@Column(name = "typeEvent", insertable = true, nullable = true, unique = false)
+	@Enumerated(EnumType.STRING)
+	private TypeEvent typeEvent;
+	
 	@ManyToOne(cascade = { CascadeType.DETACH }, optional = true)
 	@JoinColumn(name = "actionId", insertable = true, updatable = true, nullable = false, unique = false)
-	@Cascade(value={org.hibernate.annotations.CascadeType.REFRESH})
 	private Action action;
-
+	
+	
+	
 	/**
 	 * 
 	 */
@@ -125,6 +137,48 @@ public class MsgSysLog implements Serializable {
 	 */
 	public void setIdSysLog(String idSysLog) {
 		this.idSysLog = idSysLog;
+	}
+
+	/**
+	 * @return the valueSubjetEvent
+	 */
+	public String getValueSubjetEvent() {
+		return valueSubjetEvent;
+	}
+
+	/**
+	 * @return the descriptionEvent
+	 */
+	public String getDescriptionEvent() {
+		return descriptionEvent;
+	}
+
+	/**
+	 * @param valueSubjetEvent the valueSubjetEvent to set
+	 */
+	public void setValueSubjetEvent(String valueSubjetEvent) {
+		this.valueSubjetEvent = valueSubjetEvent;
+	}
+
+	/**
+	 * @param descriptionEvent the descriptionEvent to set
+	 */
+	public void setDescriptionEvent(String descriptionEvent) {
+		this.descriptionEvent = descriptionEvent;
+	}
+
+	/**
+	 * @return the typeEvent
+	 */
+	public TypeEvent getTypeEvent() {
+		return typeEvent;
+	}
+
+	/**
+	 * @param typeEvent the typeEvent to set
+	 */
+	public void setTypeEvent(TypeEvent typeEvent) {
+		this.typeEvent = typeEvent;
 	}
 
 }

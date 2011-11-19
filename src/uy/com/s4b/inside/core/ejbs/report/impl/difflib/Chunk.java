@@ -15,6 +15,7 @@
  */
 package uy.com.s4b.inside.core.ejbs.report.impl.difflib;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,7 +32,7 @@ import java.util.List;
  * 
  * @author <a href="dm.naumenko@gmail.com>Dmitry Naumenko</a>
  */
-public class Chunk {
+public class Chunk implements Serializable {
 
     private final int position;
     private List<?> lines;

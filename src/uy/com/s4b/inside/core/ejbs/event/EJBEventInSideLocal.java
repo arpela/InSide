@@ -1,5 +1,6 @@
 package uy.com.s4b.inside.core.ejbs.event;
 
+
 /**
  * 
  * Title: EJBNetworkLocal.java <br>
@@ -12,5 +13,6 @@ package uy.com.s4b.inside.core.ejbs.event;
  */
 public interface EJBEventInSideLocal extends EventInSideService {
 
+	
 
 }

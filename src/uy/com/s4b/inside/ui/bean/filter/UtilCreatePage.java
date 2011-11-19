@@ -6,13 +6,14 @@ import java.util.Set;
 
 import javax.faces.context.FacesContext;
 
-import bsh.commands.dir;
-
+import uy.com.s4b.inside.core.common.TypeEvent;
 import uy.com.s4b.inside.core.entity.Device;
+import uy.com.s4b.inside.core.entity.EventInSide;
 import uy.com.s4b.inside.core.entity.Network;
 import uy.com.s4b.inside.core.entity.Site;
 import uy.com.s4b.inside.core.entity.Version;
 import uy.com.s4b.inside.core.entity.Zone;
+import uy.com.s4b.inside.core.exception.InSideException;
 
 /**
  * Title: UtilCreatePage.java <br>
@@ -80,12 +81,10 @@ public class UtilCreatePage {
 		for (Network network : listNetwork) {
 			retorno.append("<tr><td colspan=\"4\" class=\"networks\">");
 			retorno.append("<ul class=\"network expand\"><li class=\"more\"><span>" + network.getName() + "</span></li>");
-
 			//site
 			retorno.append("<ul class=\"site expand\" style=\"display: none\">");
 			for (Site site : network.getColSite()) {
 				retorno.append("<li class=\"more\"><span>"+ site.getName() +"</span></li>");
-			
 				//zona
 				retorno.append("<ul class=\"zone expand\" style=\"display: none\">");
 				for (Zone zone : site.getColZone()) {
@@ -93,8 +92,10 @@ public class UtilCreatePage {
 					// equipo
 					retorno.append("<ul class=\"node expand\" style=\"display: none\">");
 					for (Device device : zone.getColDevice()) {
+						// TODO debemos cabiar por temas del icono
 						retorno.append("<li style=\"background-image: url('"+ nameAPP +"/resources/img/icono2.jpg')\">"); 
 						retorno.append("<span>"+ device.getHostname() + "</span></li>");
+						
 						putConfiguration(retorno, device, nameAPP);
 					}
 					retorno.append("</ul>&nbsp;");
@@ -118,11 +119,62 @@ public class UtilCreatePage {
 			if (i > 1)
 				break;
 			p.append("<li style=\"background-image: url('#{request.contextPath}/resources/img/R.png')\">");
-			p.append("<span><a id=\"VERTODO" + version.getId() + "\" href=\"verReporte.jsf?id="+ version.getId() +"\">");
+			p.append("<span><a id=\"VERTODO" + version.getId() + "\" href=\"" + nameAPP + "/site/verReporte.jsf?id="+ version.getId() +"\">");
 			p.append(new SimpleDateFormat("dd/MM/yyyy").format(version.getDate().getTime()));
 			p.append("</a></span></li>");
 			i++;
 		}
 		p.append("</ul>");		
+	}
+
+
+	/**
+	 * @param retorno
+	 * @param listaEventos
+	 */
+	public void createHomeListaEvento(StringBuffer retorno,
+			List<EventInSide> listaEventos) throws InSideException {
+		String nameAPP = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+		retorno.append("<table width=\"420\" class=\"events\" style=\"border-collapse: inherit\">");
+		retorno.append("<tr>");
+		retorno.append("<th class=\"event\">Evento</th>");
+		retorno.append("<th>Info</th>");
+		retorno.append("<th>Cuidado</th>");
+		retorno.append("<th>Crítico</th>");
+		retorno.append("</tr>");
+		int i = 0;
+		for (EventInSide eventInSide : listaEventos) {
+			String bloque = "bloque"+i;
+			retorno.append("<tr>");
+			retorno.append("<td class=\"event links_modal\"><a href=\"#q\" onclick=\"$('#"+ bloque+", #bloque').toggle(); return false;\">"+ eventInSide.getValue() +"</a></td>");
+			
+			if (eventInSide.getType() == TypeEvent.INFO){
+				retorno.append("<td><img src=\""+ nameAPP +"/resources/img/green_event.png\" alt=\"verde\" /></td>");
+				retorno.append("<td>&nbsp;</td>");
+				retorno.append("<td>&nbsp;</td>");
+				
+			}else if (eventInSide.getType() == TypeEvent.WARN){				
+				retorno.append("<td>&nbsp;</td>");
+				retorno.append("<td><img src=\""+ nameAPP +"/resources/img/yellow_event.png\" alt=\"verde\" /></td>");
+				retorno.append("<td>&nbsp;</td>");
+				
+			}else if (eventInSide.getType() == TypeEvent.ERROR){
+				retorno.append("<td>&nbsp;</td>");
+				retorno.append("<td>&nbsp;</td>");
+				retorno.append("<td><img src=\""+ nameAPP +"/resources/img/red_event.png\" alt=\"verde\" /></td>");
+			}
+			
+			retorno.append("</tr>");
+			retorno.append("");
+			retorno.append("<tr>");
+			retorno.append("<td colspan=\"4\" id=\""+bloque+"\" style=\"display:none; color:#999; text-align:left; padding:5px 5px 5px 32px; border:0\"> ");
+			retorno.append(eventInSide.getDescription());
+			retorno.append("<br />");
+			retorno.append("</td>");
+			retorno.append("</tr>");
+			i++;
+		}
+		
+		retorno.append("</table>");
 	}
 }

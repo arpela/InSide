@@ -4,7 +4,8 @@
 	<property name="home" location="." />
 	<property name="bin" location="${home}/bin" />
 	<property name="jboss_home" location="D:/Servers/JBoss/jboss-6.1.0.Final" />
-	<property name="jboss_domain" location="${jboss_home}/server/default/deploy/apps" />
+	<property name="jboss_servername" location="${jboss_home}/server/default/" />
+	<property name="jboss_domain" location="${jboss_servername}/deploy/apps" />
 
 	<tstamp>
 		<format property="versionado" pattern="yyyyMMddHHmmss" locale="en" />
@@ -72,6 +73,14 @@
 
 	<target name="undeploy">
 		<delete file="${jboss_domain}/appinSide.ear" />
+	</target>
+	
+
+	<target name="clearTempServer">
+		<delete dir="${jboss_servername}/data/"/>
+		<delete dir="${jboss_servername}/log/"/>
+		<delete dir="${jboss_servername}/tmp"/>
+		<delete dir="${jboss_servername}/work"/>
 	</target>
 	
 </project>

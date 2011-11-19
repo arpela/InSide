@@ -1,6 +1,4 @@
-package uy.com.s4b.inside.core.ejbs.version;
-
-
+package uy.com.s4b.inside.core.ejbs.command;
 
 /**
  * 
@@ -12,10 +10,8 @@ package uy.com.s4b.inside.core.ejbs.version;
  * @author Alfredo
  *
  */
-public interface EJBVersionLocal extends VersionService {
+public interface EJBCommandLocal extends CommandService {
 
-
-	
 
 
 

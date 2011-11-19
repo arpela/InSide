@@ -1,8 +1,12 @@
 package uy.com.s4b.inside.core.ejbs.device.impl;
 
+import java.util.List;
+
 import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -45,7 +49,7 @@ public class EJBDeviceBean implements DeviceService {
 	 * 
 	 */
 	public EJBDeviceBean() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/* (non-Javadoc)
@@ -56,6 +60,15 @@ public class EJBDeviceBean implements DeviceService {
 	public void save(Device d) throws InSideException {
 		log.info("Ingresa salvar device: " + d.toString());
 		em.persist(d);
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Device> getAllDevice() throws InSideException {
+		log.info("Se ingresa a recuperar todos los dipositivos");
+		Query q = em.createNamedQuery("findAll.Device");
+		return q.getResultList();
 	}
 	
 	
@@ -70,14 +83,17 @@ public class EJBDeviceBean implements DeviceService {
 	 * DeviceService#getDeviceByIP(java.lang.String)
 	 */
 	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public Device getDeviceByIP(String ipHost) throws InSideException {
 		try {
 			Query q = em.createNamedQuery("find.Device.ip").setParameter("ipEquipo", ipHost);
 			//TODO se debe buscar por alguna otra de interfaz ahora no lo vamos hacer.
-			return (Device)q.getSingleResult();
+			Device d = (Device)q.getSingleResult();
+			return d; 
 		}catch (NoResultException ex) {
 			return null;
 		}
 	}
+	
 	
 }

@@ -41,6 +41,7 @@ import uy.com.s4b.inside.core.common.TypeConfig;
 @Table(name="version")
 @Entity
 @NamedQueries({
+	@NamedQuery(name="findVersionAll", query="from Version v inner join FETCH v.oneDevice order by v.date desc"),
 	@NamedQuery(name="findVersionDevice", query="from Version v where v.oneDevice.id = :pid order by v.date desc"),
 	@NamedQuery(name="find.Version.Device.withDate", query="from Version v where v.oneDevice.id = :pid and v.date >= :fDesde and  v.date <= :fHasta order by v.date desc")
 })
@@ -69,7 +70,6 @@ public class Version implements Serializable {
 	@Column(insertable=true, nullable=true, unique=false)
 	@Lob
 	private String config;
-	
 	
 	
 	@ManyToOne (fetch=FetchType.LAZY,cascade=CascadeType.DETACH)

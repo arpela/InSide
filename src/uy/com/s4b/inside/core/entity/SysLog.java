@@ -3,12 +3,16 @@ package uy.com.s4b.inside.core.entity;
 import java.io.Serializable;
 import java.util.Calendar;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,14 +52,17 @@ public class SysLog implements Serializable {
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar dateMessage;
+	private String dateMessage;
 	
 	
 	@Column(insertable=true, nullable=true, unique=false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dateReceive;
 	
+	
+	@ManyToOne (fetch=FetchType.LAZY, cascade={CascadeType.DETACH})
+    @JoinColumn(name="deviceId", nullable=false)
+    private Device oneDevice;
 	
 	
 	/**
@@ -136,18 +143,34 @@ public class SysLog implements Serializable {
 
 
 	/**
+	 * @return the dateMessage
+	 */
+	public String getDateMessage() {
+		return dateMessage;
+	}
+
+
+	/**
 	 * @param dateMessage the dateMessage to set
 	 */
-	public void setDateMessage(Calendar dateMessage) {
+	public void setDateMessage(String dateMessage) {
 		this.dateMessage = dateMessage;
 	}
 
 
 	/**
-	 * @return the dateMessage
+	 * @return the oneDevice
 	 */
-	public Calendar getDateMessage() {
-		return dateMessage;
+	public Device getOneDevice() {
+		return oneDevice;
 	}
 
+
+	/**
+	 * @param oneDevice the oneDevice to set
+	 */
+	public void setOneDevice(Device oneDevice) {
+		this.oneDevice = oneDevice;
+	}
+	
 }

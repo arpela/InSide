@@ -1,7 +1,7 @@
 package uy.com.s4b.inside.core.ejbs.version.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.jboss.ejb3.annotation.LocalBinding;
 import org.jboss.ejb3.annotation.RemoteBinding;
 
+import uy.com.s4b.inside.core.common.TypeConfig;
 import uy.com.s4b.inside.core.ejbs.version.EJBVersionLocal;
 import uy.com.s4b.inside.core.ejbs.version.EJBVersionRemote;
 import uy.com.s4b.inside.core.ejbs.version.VersionService;
@@ -77,21 +78,26 @@ public class EJBVersionBean implements VersionService {
 		em.persist(ver);
 	}
 
-	/* (non-Javadoc)
-	 * @see uy.com.s4b.inside.core.ejbs.version.VersionService#getVersionDevice(java.lang.Integer)
+	/* 
+	 * (non-Javadoc)
+	 * @see uy.com.s4b.inside.core.ejbs.version.VersionService#
+	 * getVersionDevice(java.lang.Integer)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public Version[] getVersionDosDevice(Integer idDevices) throws InSideException {
 		Version retorno [] = new Version[2];
 		Query q = em.createNamedQuery("findVersionDevice");
-		List<Version> lista = q.setParameter("pid", idDevices).getResultList();
-		if (lista.size() >= 2){
-			retorno[0] = lista.get(0);
-			retorno[1] = lista.get(1);
-			
+		try {
+			List<Version> lista = q.setParameter("pid", idDevices).getResultList();
+			if (lista.size() >= 2){
+				retorno[0] = lista.get(0);
+				retorno[1] = lista.get(1);
+			}			
+			return retorno;
+		}catch (javax.persistence.EntityNotFoundException  ex) {
+			return null;
 		}
-		return retorno;
 	}
 
 	/* (non-Javadoc)
@@ -100,8 +106,21 @@ public class EJBVersionBean implements VersionService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Version> getAllVersionDevice(Integer idDevices) throws InSideException {
-		Query q = em.createNamedQuery("findVersionDevice");
-		List<Version> lista = q.setParameter("pid", idDevices).getResultList();		
+		try {
+			Query q = em.createNamedQuery("findVersionDevice");
+			List<Version> lista = q.setParameter("pid", idDevices).getResultList();	
+			return lista;
+		}catch (javax.persistence.EntityNotFoundException ex) {
+			log.error(ex.getMessage());
+			return new ArrayList<Version>();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Version> getAllVersion() throws InSideException {
+		Query q = em.createNamedQuery("findVersionAll");
+		List<Version> lista = q.getResultList();		
 		return lista;
 	}
 
@@ -118,6 +137,27 @@ public class EJBVersionBean implements VersionService {
 		q.setParameter("fHasta", hastaDer, TemporalType.DATE);
 		List<Version> lista = q.getResultList();
 		return lista;
+	}
+
+	/* (non-Javadoc)
+	 * @see uy.com.s4b.inside.core.ejbs.version.VersionService#getDosVersiones(java.lang.Integer)
+	 */
+	@Override
+	public Version[] getDosUltimasVersiones(Integer idVersion) throws InSideException {
+		Version version1  = this.getVersion(idVersion);
+		List<Version> lista = getAllVersionDevice(version1.getOneDevice().getId());
+		Version version2 = null;
+		if (!lista.isEmpty()){
+			version2 = lista.get(0);
+		}else{
+			version2 = new Version();
+			version2.setConfig("");
+			version2.setOneDevice(version1.getOneDevice());
+			version2.setType(TypeConfig.Running);
+		}
+		
+		Version retorno [] = {version1, version2};
+		return retorno;
 	}
 
 

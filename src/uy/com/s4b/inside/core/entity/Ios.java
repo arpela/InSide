@@ -4,17 +4,20 @@
 package uy.com.s4b.inside.core.entity;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -26,11 +29,20 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
+ * Title: Ios.java <br>
+ * Description: <br>
+ * Fecha creación: 01/10/2011 <br>
+ * Copyright: S4B <br>
+ * Company: S4B - http://www.s4b.com.uy <br>
  * @author pablo
  *
  */
 @Table(name="ios")
 @Entity
+@NamedQueries({
+	@NamedQuery(name="findCommandsWhitTypeCommand", 
+			query="select i from Ios i inner join FETCH i.colCommand c where i.id = :id and c.commandGeneric.typeCommand = :typeCommand order by c.orden asc")
+})
 public class Ios implements Serializable {
 
 	@Transient
@@ -42,15 +54,13 @@ public class Ios implements Serializable {
 	@Column
 	private Integer id;
 	
-	
 	@Column(insertable=true, nullable=false, unique=true)
 	private String name;
 	
-	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch= FetchType.LAZY)
 	@JoinTable(name="ios_command", 
 		joinColumns={@JoinColumn(name="id_ios")}, inverseJoinColumns={@JoinColumn(name="id_command")})
-	private Set<Command> colCommand;
+	private List<Command> colCommand;
 	
 	
 	/**
@@ -106,7 +116,7 @@ public class Ios implements Serializable {
 	/**
 	 * @return the colCommand
 	 */
-	public Set<Command> getColCommand() {
+	public List<Command> getColCommand() {
 		return colCommand;
 	}
 
@@ -114,7 +124,7 @@ public class Ios implements Serializable {
 	/**
 	 * @param colCommand the colCommand to set
 	 */
-	public void setColCommand(Set<Command> colCommand) {
+	public void setColCommand(List<Command> colCommand) {
 		this.colCommand = colCommand;
 	}
 	

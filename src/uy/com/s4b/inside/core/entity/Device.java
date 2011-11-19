@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -42,7 +43,8 @@ import org.apache.commons.lang.builder.ToStringStyle;
 @Table(name="device")
 @Entity
 @NamedQueries({
-	@NamedQuery(name ="find.Device.ip", query="from Device d where d.ip = :ipEquipo")
+	@NamedQuery(name ="find.Device.ip", query="from Device d where d.ip = :ipEquipo"),
+	@NamedQuery(name ="findAll.Device", query="from Device d")
 })
 public class Device implements Serializable {
 
@@ -61,21 +63,19 @@ public class Device implements Serializable {
 	
 	@Column(insertable=true, nullable=false, unique=false)
 	private String ip;
-	
-	
-//	@ManyToOne(optional=false)
-//	@JoinColumn(name="modelId") 
-//	private Model model;
-	
-	
+
 	@Column(insertable=true, nullable=true, unique=false)
 	private String serialNumber;
 	
 
 //	@ManyToOne(optional=false)
-//	@JoinColumn(name="iosId") 
-//	private Ios ios;
-//	
+//	@JoinColumn(name="modelId") 
+//	private Model model;
+	
+	@ManyToOne(optional=false, cascade={CascadeType.DETACH}, fetch=FetchType.EAGER)
+	@JoinColumn(name="iosId") 
+	private Ios ios;
+
 	
 	@Column(insertable=true, nullable=true, unique=false)
 	private String user;
@@ -84,17 +84,16 @@ public class Device implements Serializable {
 	@Column(insertable=true, nullable=true, unique=false)
 	private String password;
 	
-	
-	@OneToMany(cascade=CascadeType.DETACH,fetch=FetchType.LAZY)
-	@JoinColumn(name="deviceId")
-	private Set<InterfaceDevice> colInterfaceDevice;
-	
+//	@OneToMany(cascade=CascadeType.DETACH,fetch=FetchType.LAZY)
+//	@JoinColumn(name="deviceId")
+//	private List<InterfaceDevice> colInterfaceDevice;
 	
 //	@OneToMany(cascade=CascadeType.DETACH)
 //	@JoinColumn(name="deviceId")
-//	private Set<Version> colVersion;
+//	private List<DeviceModule> colDeviceModule;
 	
-	@OneToMany(cascade=CascadeType.MERGE, mappedBy="oneDevice" ,fetch=FetchType.EAGER)
+	
+	@OneToMany(cascade=CascadeType.MERGE, mappedBy="oneDevice" ,fetch=FetchType.LAZY)
 	private Set<Version> colVersion;
 	
 	
@@ -128,11 +127,6 @@ public class Device implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dateModified;
 
-		
-//	@OneToMany(cascade=CascadeType.DETACH)
-//	@JoinColumn(name="deviceId")
-//	private Set<DeviceModule> colDeviceModule;
-	
 	
 	/**
 	 * 
@@ -218,16 +212,6 @@ public class Device implements Serializable {
 	public String getPassword() {
 		return password;
 	}
-
-
-
-	/**
-	 * @return the colInterfaceDevice
-	 */
-	public Set<InterfaceDevice> getColInterfaceDevice() {
-		return colInterfaceDevice;
-	}
-
 
 
 	/**
@@ -359,17 +343,6 @@ public class Device implements Serializable {
 		this.password = password;
 	}
 
-
-
-	/**
-	 * @param colInterfaceDevice the colInterfaceDevice to set
-	 */
-	public void setColInterfaceDevice(Set<InterfaceDevice> colInterfaceDevice) {
-		this.colInterfaceDevice = colInterfaceDevice;
-	}
-
-
-
 	/**
 	 * @param colVersion the colVersion to set
 	 */
@@ -429,5 +402,21 @@ public class Device implements Serializable {
 	 */
 	public void setDateModified(Calendar dateModified) {
 		this.dateModified = dateModified;
+	}
+
+
+	/**
+	 * @return the ios
+	 */
+	public Ios getIos() {
+		return ios;
+	}
+
+
+	/**
+	 * @param ios the ios to set
+	 */
+	public void setIos(Ios ios) {
+		this.ios = ios;
 	}
 }

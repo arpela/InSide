@@ -1,25 +1,23 @@
 package uy.com.s4b.inside.core.entity;
 
 import java.io.Serializable;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+
+import uy.com.s4b.inside.core.common.TypeCommand;
 
 /**
  * Title: GenericCommand.java <br>
@@ -34,11 +32,8 @@ import org.apache.commons.lang.builder.ToStringStyle;
 @Table(name="genericcommand")
 @Entity
 public class GenericCommand implements Serializable {
-
-	
 	@Transient
 	private static final long serialVersionUID = -4110089497129685546L;
-
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -47,12 +42,8 @@ public class GenericCommand implements Serializable {
 	
 	
 	@Column(insertable=true, nullable=false, unique=true)
-	private String description;
-	
-	
-	@OneToMany(cascade=CascadeType.DETACH)
-	@JoinColumn(name="genericCommandId")
-	private Set<Command> colCommand;
+	@Enumerated(EnumType.STRING)
+	private TypeCommand typeCommand;
 	
 	
 	/**
@@ -62,16 +53,6 @@ public class GenericCommand implements Serializable {
 		
 	}
 	
-	
-	/**
-	 * Funcion encargada de correjir imperfecciones 
-	 * en los datos del entity
-	 */
-	@PrePersist()
-	public void initEntity(){
-		this.description = WordUtils.capitalizeFully(this.description);
-	}
-
 
 	/**
 	 * @return the id
@@ -87,39 +68,6 @@ public class GenericCommand implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return description;
-	}
-
-
-	/**
-	 * @param description the description to set
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
-	
-	/**
-	 * @return the colCommand
-	 */
-	public Set<Command> getColCommand() {
-		return colCommand;
-	}
-
-
-	/**
-	 * @param colCommand the colCommand to set
-	 */
-	public void setColCommand(Set<Command> colCommand) {
-		this.colCommand = colCommand;
-	}
-	
 	
 	@Override
 	public int hashCode() {
@@ -139,6 +87,21 @@ public class GenericCommand implements Serializable {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
+	
+	/**
+	 * @return the typeCommand
+	 */
+	public TypeCommand getTypeCommand() {
+		return typeCommand;
+	}
+
+
+	/**
+	 * @param typeCommand the typeCommand to set
+	 */
+	public void setTypeCommand(TypeCommand typeCommand) {
+		this.typeCommand = typeCommand;
 	}
 
 }

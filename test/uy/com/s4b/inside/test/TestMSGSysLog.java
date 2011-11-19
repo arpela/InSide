@@ -64,10 +64,10 @@ public class TestMSGSysLog {
 	 */
 	private static MsgSysLog getMsgSysLog() {
 		Action a = new Action();
-		a.setId(1);
-		a.setName(TypeAction.GET_CONFIG);
+//		a.setId();
+		a.setName(TypeAction.SAVE_EVENT);
 		MsgSysLog retorno = new MsgSysLog ();
-		retorno.setIdSysLog("SYS-5-CONFIG_I");
+		retorno.setIdSysLog("SYS-6-CLOCKUPDATE");
 		retorno.setAction(a);
 		return retorno;
 	}

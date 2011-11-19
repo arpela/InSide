@@ -29,7 +29,6 @@ import org.apache.commons.lang.builder.ToStringStyle;
 @Table(name="model")
 @Entity
 public class Model implements Serializable {
-
 	
 	@Transient
 	private static final long serialVersionUID = -2092045630925129696L;

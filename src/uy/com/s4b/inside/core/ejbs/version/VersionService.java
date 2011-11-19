@@ -1,7 +1,6 @@
 package uy.com.s4b.inside.core.ejbs.version;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import uy.com.s4b.inside.core.entity.Version;
@@ -45,6 +44,13 @@ public interface VersionService {
 	
 	
 	/**
+	 * @return
+	 * @throws InSideException
+	 */
+	List<Version> getAllVersion() throws InSideException;
+	
+	
+	/**
 	 * 
 	 * @param d
 	 * @throws InSideException
@@ -59,5 +65,12 @@ public interface VersionService {
 	 * @return
 	 */
 	List<Version> getVersionDeviceWithDate(Integer id, Calendar desdeDer, Calendar desdeIzq) throws InSideException;
+
+	
+	/**
+	 * @param valueOf
+	 * @return
+	 */
+	public Version[] getDosUltimasVersiones(Integer idVersion) throws InSideException;
 
 }

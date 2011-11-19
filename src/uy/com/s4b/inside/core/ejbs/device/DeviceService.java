@@ -1,5 +1,7 @@
 package uy.com.s4b.inside.core.ejbs.device;
 
+import java.util.List;
+
 import uy.com.s4b.inside.core.entity.Device;
 import uy.com.s4b.inside.core.exception.InSideException;
 
@@ -37,4 +39,10 @@ public interface DeviceService {
 	 */
 	Device getDeviceByIP(String ipHost)throws InSideException;
 
+
+	/**
+	 * @return
+	 * @throws InSideException
+	 */
+	public List<Device> getAllDevice() throws InSideException;
 }
