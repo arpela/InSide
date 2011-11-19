@@ -15,7 +15,7 @@ import uy.com.s4b.inside.core.ejbs.report.impl.difflib.Patch;
  * 
  * Title: PruebaDiff.java <br>
  * Description: <br>
- * Fecha creación: 01/10/2011 <br>
+ * Fecha creaciï¿½n: 01/10/2011 <br>
  * Copyright: S4B <br>
  * Company: S4B - http://www.s4b.com.uy <br>
  * @author Pablo
@@ -44,11 +44,11 @@ public class PruebaDiff {
 	 */
 	public static void main(String[] args) {
 		
-		//List<String> original = fileToLines("/home/pablo/archivo1.txt");
-        //List<String> revised  = fileToLines("/home/pablo/archivo2.txt");
+		List<String> original = fileToLines("/home/pablo/archivo1.txt");
+        List<String> revised  = fileToLines("/home/pablo/archivo2.txt");
 		
-		List<String> original = Arrays.asList("L1", "L2", "L3", "L4");
-		List<String> revised = Arrays.asList("L1", "L2", "L3", "L4", "L5");	
+		//List<String> original = Arrays.asList("L1", "L2", "L3", "L4");
+		//List<String> revised = Arrays.asList("L1", "L2", "L3", "L4", "L5");	
 		
          
          // Se hace el diff entre los dos String. 

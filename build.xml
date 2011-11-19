@@ -3,7 +3,7 @@
 	<property name="src" location="src" />
 	<property name="home" location="." />
 	<property name="bin" location="${home}/bin" />
-	<property name="jboss_home" location="D:/Servers/JBoss/jboss-6.1.0.Final" />
+	<property name="jboss_home" location="/home/pablo/jboss-6.1.0.Final" />
 	<property name="jboss_domain" location="${jboss_home}/server/default/deploy/apps" />
 
 	<tstamp>
