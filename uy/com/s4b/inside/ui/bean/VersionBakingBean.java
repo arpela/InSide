@@ -16,7 +16,9 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import uy.com.s4b.inside.core.common.UtilsString;
 import uy.com.s4b.inside.core.ejbs.device.EJBDeviceLocal;
+import uy.com.s4b.inside.core.ejbs.ignoreline.EJBIgnoreLineLocal;
 import uy.com.s4b.inside.core.ejbs.netwwork.EJBNetworkLocal;
 import uy.com.s4b.inside.core.ejbs.report.EJBReportDiffLocal;
 import uy.com.s4b.inside.core.ejbs.report.impl.difflib.Delta;
@@ -58,7 +60,9 @@ public class VersionBakingBean implements Serializable {
 	@EJB
 	EJBReportDiffLocal ejbDiff;
 	
-
+	@EJB
+	EJBIgnoreLineLocal ejbIgnoreLine;
+	
 	/**
 	 * 
 	 */
@@ -111,15 +115,22 @@ public class VersionBakingBean implements Serializable {
 			
 			Map<Integer, Delta> estructura = ejbDiff.doDiff(unaVersion, dosVersiones[1].getConfig());
 			log.info(estructura);
-						
+			
+			//Se busca todos los comandos de lineas que se deben ignorar en la comparacion
+			List<String>  listIgnoreLine = ejbIgnoreLine.getAllIgnoreLineValue();
+									
 			String listaLinea [] = unaVersion.split("\n");
 			StringBuffer pageDer = new StringBuffer();
 			StringBuffer pageIzq = new StringBuffer();
+			boolean resIgnoreLine;
+			String color = "";
 			
 			for (int i = 0; i < listaLinea.length; i++) {
 				
-				String color = "";
-				if (estructura.containsKey(i)){
+				color = "";
+				//se busca si se tiene que ignorar el comando de la linea
+				resIgnoreLine = UtilsString.searchTextInList(listaLinea[i], listIgnoreLine);
+				if (estructura.containsKey(i) && !resIgnoreLine){
 					color = estructura.get(i).getType().getValue();
 					
 					switch (estructura.get(i).getType()) {
@@ -246,14 +257,21 @@ public class VersionBakingBean implements Serializable {
 			Map<Integer, Delta> estructura = ejbDiff.doDiff(unaVersion, segundVersion);
 			log.info(estructura);
 			
+			//Se busca todos los comandos de lineas que se deben ignorar en la comparacion
+			List<String>  listIgnoreLine = ejbIgnoreLine.getAllIgnoreLineValue();
+			
 			String listaLinea [] = unaVersion.split("\n");
 			StringBuffer pageDer = new StringBuffer();
 			StringBuffer pageIzq = new StringBuffer();
+			boolean resIgnoreLine;
+			String color = "";
 						
 			for (int i = 0; i < listaLinea.length; i++) {
 				
-				String color = "";
-				if (estructura.containsKey(i)){
+				color = "";
+				//se busca si se tiene que ignorar el comando de la linea
+				resIgnoreLine = UtilsString.searchTextInList(listaLinea[i], listIgnoreLine);
+				if (estructura.containsKey(i) && !resIgnoreLine){
 					color = estructura.get(i).getType().getValue();
 					
 					switch (estructura.get(i).getType()) {
