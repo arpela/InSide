@@ -29,7 +29,8 @@
 			        <div class="clear"></div>
 			      </div>
 			    	<div class="label">
-						<h:messages id="txtMSG" showDetail="false" showSummary="true" globalOnly="true" errorClass="error" infoClass="info" warnClass="warn" layout="vertical"/>
+			    		<rich:messages ajaxRendered="true" globalOnly="true" errorClass="error" infoClass="info" warnClass="warn" layout="vertical"/>
+						<!--  h:messages id="txtMSG" showDetail="false" showSummary="true" globalOnly="true" errorClass="error" infoClass="info" warnClass="warn" layout="vertical"/ -->
 					</div>
 					
 			        <div class="leftContentReports fleft">
@@ -54,6 +55,7 @@
 					       	
 				          </div>
 				          <div class="clear">
+				          		
 					          <a4j:status id="wait" startText="Process..">
 							     	<!--- f:facet name="start">                   
 							    		<  -h:graphicImage value="/resources/img/wait.gif" alt="wait"/>
@@ -95,6 +97,7 @@
 		              }
 		            })
 		         </script>
+		         
 			        <div class="options">
 			          <div class="fright button">
 			            <a4j:commandLink value="#{bundle['reporteDiff.text.button.clear']}" render="@form" action="#{fileterReport.clear}" />
