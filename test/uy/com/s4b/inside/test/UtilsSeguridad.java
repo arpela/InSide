@@ -1,8 +1,5 @@
 package uy.com.s4b.inside.test;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import uy.com.s4b.inside.core.common.CriptPassword;
 
 
@@ -20,7 +17,7 @@ public class UtilsSeguridad {
 
 	public static void main(String[] args) {
 		try {
-			String textoEncrip = new CriptPassword().encripta("opnet");
+			String textoEncrip = new CriptPassword().encripta("insite");
 			System.out.println(textoEncrip);
 			String des = new CriptPassword().desencripta(textoEncrip);
 			System.out.println(des);
@@ -30,3 +27,5 @@ public class UtilsSeguridad {
 	}
 
 }
+
+
