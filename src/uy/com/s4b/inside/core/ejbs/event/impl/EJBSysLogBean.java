@@ -21,7 +21,6 @@ import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.TriggerUtils;
 import org.quartz.impl.StdScheduler;
 
 import uy.com.s4b.inside.core.common.NamesJobsQuartz;
@@ -112,9 +111,8 @@ public class EJBSysLogBean implements SysLogService {
 					ejbEvent.saveEvent(event);
 					
 				}else if (TypeAction.GET_CONFIG == msgSYSLog.getAction().getName()){
-					
 					String subjet = msgSYSLog.getValueSubjetEvent().replaceAll("-", ipHost);
-					String descript = msgSYSLog.getDescriptionEvent().replaceAll("-", ipHost);
+					String descript = sysDevice.getMessage();
 					EventInSide event = getEvent(subjet, descript, msgSYSLog.getTypeEvent(), 1);
 					event.setType(msgSYSLog.getTypeEvent());
 					save(sysDevice);
@@ -147,7 +145,7 @@ public class EJBSysLogBean implements SysLogService {
 //			CronTrigger ct = new CronTrigger("cronTrigger","group1","0 0/10 * * * ?");
 			
 			// 30 minutos se ejecuta para recupera archivos
-			CronTrigger ct = new CronTrigger(timer + ipHost,"readConfigSysLog","0 0/15 * * * ?");
+			CronTrigger ct = new CronTrigger(timer + ipHost,"readConfigSysLog","0 0/2 * * * ?");
 			scheduler.scheduleJob(jd,ct);
 			
 		} catch (NamingException ex) {

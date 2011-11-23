@@ -16,16 +16,20 @@
 	<ui:composition template="/layout/templateapp.xhtml">
 		
 		<ui:define name="body">
+		
 			<h:form id="formFilter" rendered="#{login.loginIn}">
 			<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource" var="bundle" />
+			
 			    <div id="content">
 			      <div class="state">
 			        <div class="page fleft">Reportes / Paso 2 - Seleccionar configuraciones</div>
 			        <div class="date fright"><span id="reloj"></span></div>
-			        <div class="clear"></div>
+			        <div class="clear"><rich:messages ajaxRendered="true" globalOnly="true" errorClass="error" infoClass="info" warnClass="warn" layout="vertical"/></div>
 			      </div>
-			      <div class="leftContent fleft">
-			       
+				  <div class="label">
+			      	<rich:messages ajaxRendered="true" globalOnly="true" errorClass="error" infoClass="info" warnClass="warn" layout="vertical"/>
+			      </div>
+			      <div class="leftContent fleft"> 
 			        <div>
 			          <p class="subtitle"><h:outputLabel value="#{equipo1.hostname}" /><br />
 			            <br />

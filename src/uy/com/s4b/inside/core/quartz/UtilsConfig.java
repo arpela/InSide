@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 import javax.naming.Context;
@@ -15,14 +16,23 @@ import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
 
+import uy.com.s4b.inside.core.common.CriptPassword;
+import uy.com.s4b.inside.core.common.TypeCommand;
+import uy.com.s4b.inside.core.common.TypeConfig;
 import uy.com.s4b.inside.core.common.TypeEvent;
+import uy.com.s4b.inside.core.common.UtilsString;
+import uy.com.s4b.inside.core.ejbs.command.EJBCommandLocal;
 import uy.com.s4b.inside.core.ejbs.event.EJBEventInSideLocal;
 import uy.com.s4b.inside.core.ejbs.report.EJBReportDiffLocal;
 import uy.com.s4b.inside.core.ejbs.report.impl.difflib.Delta;
 import uy.com.s4b.inside.core.ejbs.version.EJBVersionLocal;
+import uy.com.s4b.inside.core.entity.Command;
+import uy.com.s4b.inside.core.entity.Device;
 import uy.com.s4b.inside.core.entity.EventInSide;
 import uy.com.s4b.inside.core.entity.Version;
 import uy.com.s4b.inside.core.exception.InSideException;
+import uy.com.s4b.inside.core.ssh.ClientSSH;
+import uy.com.s4b.inside.core.syslog.InfoRunServerUDP;
 
 /**
  * Title: UtilsConfig.java <br>
@@ -62,7 +72,7 @@ public class UtilsConfig {
 	 * Salva un evento del tipo error cuando no se pudo obtenr alguna configuracion.
 	 * @param ipEquipo
 	 */
-	public void salvarEventoERRORReadConfi(String ipEquipo){
+	public void saveEventErrorReadConfi(String ipEquipo){
 		try {
 			EJBEventInSideLocal ejbEvent = (EJBEventInSideLocal)getLocalsObject("inSide/EJBEventInSide/local");
 			SimpleDateFormat formatdate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -70,10 +80,28 @@ public class UtilsConfig {
 			cal.add(Calendar.DAY_OF_MONTH, +2);
 			EventInSide event = new EventInSide();
 			event.setDeadline(cal);
-			event.setDescription("["+ formatdate.format(Calendar.getInstance().getTime()) +"] La tarea Obtener configuracion para el dispositivo \""+ 
-					ipEquipo +"\" no se ejecutï¿½");
+			event.setDescription("["+ formatdate.format(Calendar.getInstance().getTime()) +"] La tarea Obtener configuración " +
+					"para el dispositivo \""+ ipEquipo +"\" no se ejecutó");
 			event.setType(TypeEvent.ERROR);
 			event.setValue("Tarea agendada no ejecutada");
+			ejbEvent.saveEvent(event);
+		} catch (InSideException ex) {
+			log.error(ex.getMessage(),ex);
+		}
+	}
+	
+	public void saveErrorDiffStartRunning(String ipEquipo){
+		try {
+			EJBEventInSideLocal ejbEvent = (EJBEventInSideLocal)getLocalsObject("inSide/EJBEventInSide/local");
+			SimpleDateFormat formatdate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DAY_OF_MONTH, +2);
+			EventInSide event = new EventInSide();
+			event.setDeadline(cal);
+			event.setDescription("["+ formatdate.format(Calendar.getInstance().getTime()) +"] " +
+					"Hay diferencias en la configuración Running y StartUP.");
+			event.setType(TypeEvent.ERROR);
+			event.setValue("Diferencia en Startup/Running");
 			ejbEvent.saveEvent(event);
 		} catch (InSideException ex) {
 			log.error(ex.getMessage(),ex);
@@ -91,27 +119,31 @@ public class UtilsConfig {
 	/**
 	 * @param oneFile
 	 * @param ejbVersion 
+	 * @param typoConf 
 	 * @param ejbDevices
 	 * @return
 	 */
-	public boolean tengoDiferencias(StringBuffer oneFile, EJBVersionLocal ejbVersion, Integer idDevice) {
+	public boolean tengoDiferencias(StringBuffer oneFile, EJBVersionLocal ejbVersion, Integer idDevice, TypeConfig typoConf) {
+		boolean resultado = false;
 		try {
-			Version dosUltimasVersiones [] = ejbVersion.getVersionDosDevice(idDevice);
-			if (dosUltimasVersiones == null)
-				return true;
-			
-			EJBReportDiffLocal ejbDiff =  (EJBReportDiffLocal)getLocalsObject("inSide/EJBReportDiff/local");
-			if (dosUltimasVersiones != null){
-				if (dosUltimasVersiones[0] == null)
-					return true;
-				
-				Map<Integer, Delta> estructura = ejbDiff.doDiff(dosUltimasVersiones[0].getConfig(), oneFile.toString());
-				return (estructura.size() > 0);
+			Version versionBD  = ejbVersion.getVersionDevice(idDevice, typoConf);
+			if (versionBD == null){
+				resultado = true;
+			} else {
+				try {
+					EJBReportDiffLocal ejbDiff = (EJBReportDiffLocal)new InitialContext().lookup("inSide/EJBReportDiff/local");
+					Map<Integer, Delta> estructura = ejbDiff.doDiff(versionBD.getConfig(), oneFile.toString());
+					if (tengoDiferencias(estructura, versionBD.getConfig().split("\n"),"!")){
+						resultado = true;
+					}
+				} catch (NamingException ex) {
+					log.error(ex.getMessage(), ex);
+				}
 			}
 		} catch (InSideException ex) {
 			log.info(ex.getMessage(), ex);
 		}
-		return true;
+		return resultado;
 	}
 	
 	/**
@@ -119,20 +151,28 @@ public class UtilsConfig {
 	 * @return
 	 * @throws InSideException 
 	 */
-	public File[] tieneDiferenciasRunninStarup(File[] files) throws InSideException {
-		
+	public boolean tieneDiferenciasRunninStarup(File[] files) throws InSideException {
+		boolean resultado = false;
 		if (files.length == 2){
 			if (files[0] == null){
-				// todo salvo informacion no pude obtern running
+				resultado = false;
 			} else if (files[1] == null){
-				// todo salvo informacion no pude obtern startup
+				resultado = false;
 			} else {
-//				StringBuffer running = getFile(files[0]);
-//				StringBuffer starup = getFile(files[1]);
-//				if ()
+				try {
+					EJBReportDiffLocal ejbDiff = (EJBReportDiffLocal)new InitialContext().lookup("inSide/EJBReportDiff/local");
+					StringBuffer running = getFile(files[0]);
+					StringBuffer starup = getFile(files[1]);
+					Map<Integer, Delta> estructura = ejbDiff.doDiff(running.toString(), starup.toString());
+					if (tengoDiferencias(estructura, running.toString().split("\n"),"!")){
+						resultado = true;
+					}
+				} catch (NamingException ex) {
+					log.error(ex.getMessage(), ex);
+				}
 			}
 		}
-		return files;
+		return resultado;
 	}
 	
 	
@@ -154,5 +194,82 @@ public class UtilsConfig {
 			throw new InSideException(e.getMessage(), e);
 		}
 	}
+	
+	
+	public boolean tengoDiferencias(Map<Integer, Delta> estructura, String[] listaLinea, String... listIgnoreLine){
+		boolean resIgnoreLine;
+		boolean resultado = false;
+		for (int i = 0; i < listaLinea.length; i++) {
+			//se busca si se tiene que ignorar el comando de la linea
+			resIgnoreLine = UtilsString.searchTextInList(listaLinea[i], listIgnoreLine);
+			if (estructura.containsKey(i) && !resIgnoreLine){
+				switch (estructura.get(i).getType()) {
+					case INSERT:
+						System.out.println("hay insert");
+						resultado =true;
+						break;
+					case CHANGE:
+						System.out.println("hay cambio");
+						resultado =true;
+						break;
+					case DELETE:
+						System.out.println("hay delete");
+						resultado =true;
+						break;
+				}
+			}
+		}
+		return resultado;
+	}
+	
+	public File ejecutarComando(Device device, TypeConfig tipCon, TypeCommand typeCommand) throws Exception{
+		log.info(" ########################################################### ");
+		log.info(" ################## Ejecucion de comando ################### ");
+		String pathFiles = System.getProperties().getProperty("uy.com.s4b.incos.inside.pathtftpfiles");
+		String ipTFTP = InfoRunServerUDP.IP_SERVIDOR;
+		
+		EJBCommandLocal service =  (EJBCommandLocal) getLocalsObject("inSide/EJBCommandBean/local");
+		String password = new CriptPassword().desencripta(device.getPassword());
+		String passwordEXEC = new CriptPassword().desencripta(device.getSnmpPassword());
+		ClientSSH cliSSH = new ClientSSH(device.getIp(), device.getUser(), password, passwordEXEC);
+		try {
+			cliSSH.connect();
+			String fileName = tipCon + "-" + device.getIp() + ".cfg";
+			List<Command> l = service.getListCommandForIosAndType(device.getIos(), typeCommand);
+			String s = null;
+			for (Command command : l) {
+				String valueCommand = "";
+				if (command.getValue().contains("copy")){
+					valueCommand = command.getValue() + " tftp://" + ipTFTP + "/" + fileName;
+				}else{
+					valueCommand = command.getValue();
+				}
+				log.info("comando en crudo ---> " + command.getValue() + " resultado ---> " + valueCommand);
+				s = cliSSH.execCommand(valueCommand);
+			}
+			log.info("Resultado de la ejecucion del comando: " + s);
+			return new File(pathFiles + "/" + fileName);
+		} finally {
+			cliSSH.disconnect();
+			log.info(" ########################################################### ");
+		}
+	}
+
+
+	/**
+	 * @param retorno
+	 * @throws InterruptedException 
+	 */
+	public void hacerWaitArchivo(File[] retorno) throws InterruptedException {
+		// Espero por el TFTP que tiene una demora.
+		for (int i = 0; i < retorno.length; i++) {
+			int j = 0;
+			while ((!retorno[i].exists()) && (j < 5)){
+				Thread.sleep(1000*6);
+				j++;
+			}
+		}
+	}
+	
 
 }

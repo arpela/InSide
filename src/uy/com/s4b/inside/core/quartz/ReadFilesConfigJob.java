@@ -55,8 +55,11 @@ public class ReadFilesConfigJob implements org.quartz.Job {
 				
 				File files [] = executeCommand(oneDevice, util);
 				
+				
 				// TODO esta deshabilitado
-	//			files = util.tieneDiferenciasRunninStarup(files);
+				if(util.tieneDiferenciasRunninStarup(files)){
+					util.saveErrorDiffStartRunning(oneDevice.getIp());
+				}
 				
 				for (int i = 0; i < files.length; i++) {
 					File oneFile = files[i];
@@ -65,22 +68,23 @@ public class ReadFilesConfigJob implements org.quartz.Job {
 					EJBVersionLocal ejbVersion = (EJBVersionLocal)util.getLocalsObject("inSide/EJBVersion/local");
 					if (oneFile.exists()){
 						StringBuffer file = util.getFile(oneFile);
-						if (util.tengoDiferencias (file, ejbVersion, oneDevice.getId())){
+						TypeConfig typoConf = (oneFile.getName().startsWith("Runn")?TypeConfig.Running:TypeConfig.StartUp);
+						if (util.tengoDiferencias (file, ejbVersion, oneDevice.getId(), typoConf)){
 							Version oneVersion = new Version();
 							oneVersion.setConfig(file.toString());
 							oneVersion.setDate(Calendar.getInstance());
 							oneVersion.setOneDevice(oneDevice);
-							oneVersion.setType((oneFile.getName().startsWith("Runn")?TypeConfig.Running:TypeConfig.StartUp));
+							oneVersion.setType(typoConf);
 							ejbVersion.save(oneVersion);
 						}
 						util.moveFile(oneFile);
 					}else{
-						util.salvarEventoERRORReadConfi(ipHost);
+						util.saveEventErrorReadConfi(ipHost);
 					}
 				}
 			}finally{
 				if (finalizoError){
-					util.salvarEventoERRORReadConfi(ipHost);
+					util.saveEventErrorReadConfi(ipHost);
 				}
 				/* Parada del job en ejecucion lo saco */
 				Scheduler scheduler = jobExecutionContext.getScheduler();
@@ -102,77 +106,14 @@ public class ReadFilesConfigJob implements org.quartz.Job {
 	 */
 	private File [] executeCommand(Device device, UtilsConfig util) {
 		File [] retorno = new File [2];
-		
-		String pathFiles = System.getProperties().getProperty("uy.com.s4b.incos.inside.pathtftpfiles");
-		String ipTFTP = InfoRunServerUDP.IP_SERVIDOR;
-		
 		try {
-			String password = new CriptPassword().desencripta(device.getPassword());
-			String passwordEXEC = new CriptPassword().desencripta(device.getSnmpPassword());
-			String s = null;
-			log.info(" ############################################# ");
-			ClientSSH cliSSH = new ClientSSH(device.getIp(), device.getUser(), password, passwordEXEC);
-			cliSSH.connect();
-			
-			EJBCommandLocal service =  (EJBCommandLocal) util.getLocalsObject("inSide/EJBCommandBean/local");
-			
-			// TODO todo esto puede y debe ser mejoradooooooooooooooooooo 
-			
-			// Running
-			String fileName = TypeConfig.Running + "-" + device.getIp() + ".cfg";
-			List<Command> l = service.getListCommandForIosAndType(device.getIos(), TypeCommand.GET_CONFIG_RUNNING);
-			for (Command command : l) {
-				String valueCommand = "";
-				if (command.getValue().contains("copy")){
-					valueCommand = command.getValue() + " tftp://" + ipTFTP + "/" + fileName;
-				}else{
-					valueCommand = command.getValue();
-				}
-				log.info("comando en crudo ---> " + command.getValue() + " resultado ---> " + valueCommand);
-				s = cliSSH.execCommand(valueCommand);
-			}
-			retorno[0] = new File(pathFiles + "/" + fileName);
-			
-			//Startup
-			fileName = TypeConfig.StartUp + "-" +  device.getIp() + ".cfg";
-			l = service.getListCommandForIosAndType(device.getIos(), TypeCommand.GET_CONFIG_STARTUP);
-			for (Command command : l) {
-				String valueCommand = "";
-				if (command.getValue().contains("copy")){						
-					valueCommand = command.getValue() + " tftp://" + ipTFTP + "/" + fileName;
-				}else{
-					valueCommand = command.getValue();
-				}
-				log.info("comando en crudo ---> " + command.getValue() + " resultado ---> " + valueCommand);
-				s = cliSSH.execCommand(valueCommand);
-			}
-			retorno[1] = new File(pathFiles + "/" + fileName);
-			
-			log.info("Resultado de la ejecucion del comando: " + s);
-			cliSSH.disconnect();
-			
-			hacerWaitArchivo(retorno);
-			
-			log.info(" ############################################# ");
+			retorno[0] = util.ejecutarComando(device, TypeConfig.Running , TypeCommand.GET_CONFIG_RUNNING);
+			retorno[1] = util.ejecutarComando(device, TypeConfig.StartUp , TypeCommand.GET_CONFIG_STARTUP);
+			util.hacerWaitArchivo(retorno);
 		} catch (Exception e) {
-			log.error(e.getMessage(), e);
+			log.error("Error al ejecutar comando....", e);
 		}
 		return retorno;
 	}
 
-
-	/**
-	 * @param retorno
-	 * @throws InterruptedException 
-	 */
-	private void hacerWaitArchivo(File[] retorno) throws InterruptedException {
-		// Espero por el TFTP que tiene una demora.
-		for (int i = 0; i < retorno.length; i++) {
-			int j = 0;
-			while ((!retorno[i].exists()) && (j < 5)){
-				Thread.sleep(1000*6);
-				j++;
-			}
-		}
-	}
 }

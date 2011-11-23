@@ -3,6 +3,7 @@ package uy.com.s4b.inside.core.ejbs.version;
 import java.util.Calendar;
 import java.util.List;
 
+import uy.com.s4b.inside.core.common.TypeConfig;
 import uy.com.s4b.inside.core.entity.Version;
 import uy.com.s4b.inside.core.exception.InSideException;
 
@@ -72,5 +73,13 @@ public interface VersionService {
 	 * @return
 	 */
 	public Version[] getDosUltimasVersiones(Integer idVersion) throws InSideException;
+	
+	/**
+	 * @param idDevices
+	 * @param typeConfig
+	 * @return
+	 * @throws InSideException
+	 */
+	public Version getVersionDevice(Integer idDevices, TypeConfig typeConfig) throws InSideException;
 
 }

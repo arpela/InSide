@@ -99,6 +99,22 @@ public class EJBVersionBean implements VersionService {
 			return null;
 		}
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public Version getVersionDevice(Integer idDevices, TypeConfig typeConfig) throws InSideException {
+		Query q = em.createNativeQuery("select * from version where deviceid = :idDevice and type = :type and date = " +
+				" (SELECT MAX(v.date) FROM version v where v.deviceid = :idDevice and type = :type)", Version.class);
+		Version retorno = null;
+		try {
+			List<Version> lista = q.setParameter("type", typeConfig.toString()).
+					setParameter("idDevice", idDevices).getResultList();
+			if (!lista.isEmpty())
+				retorno = lista.get(0);
+			
+		}catch (javax.persistence.EntityNotFoundException  ex) { }
+		return retorno;
+	}
 
 	/* (non-Javadoc)
 	 * @see uy.com.s4b.inside.core.ejbs.version.VersionService#getAllVersionDevice(java.lang.Integer)

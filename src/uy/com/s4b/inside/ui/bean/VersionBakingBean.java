@@ -241,11 +241,19 @@ public class VersionBakingBean implements Serializable {
 		String idVersion1 = (String) map.get("radio1");
 		String idVersion2 = (String) map.get("radio2");
 		
+		if ((idVersion1 == null) || (idVersion2 == null)){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage (FacesMessage.SEVERITY_ERROR, 
+					BundleUtil.getMessageResource("reporteDiff.error.listaversion.select"), 
+					BundleUtil.getMessageResource("reporteDiff.error.listaversion.select")));
+			return retorno;
+		}
+		
 		log.info("Codigo de divece");
 		
 		try {
 			
 			HttpSession session = (HttpSession)context.getExternalContext().getSession(false);
+			
 			log.info("IDES idVersion1 ---> " + idVersion1);
 			log.info("IDES idVersion2 ---> " + idVersion2);
 			
@@ -372,6 +380,7 @@ public class VersionBakingBean implements Serializable {
 						BundleUtil.getMessageResource(ex.getKeyMSGError())));
 		}
 		
+		
 		log.info("Resultado de la navegacion --->  " + retorno);
 		return retorno;
 	}
@@ -468,7 +477,8 @@ public class VersionBakingBean implements Serializable {
 				retorno = "paso2reporte";
 			}else{
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage (FacesMessage.SEVERITY_ERROR, 
-						"Debe seleccionar un o dos equipos.","Debe seleccionar un o dos equipos."));
+						"Debe seleccionar por lo menos uno, no superado dos equipos por consulta.",
+						"Debe seleccionar por lo menos uno, no superado dos equipos por consulta."));
 			}
 		} catch (NumberFormatException ex) {
 			log.error(ex.getMessage(), ex);
@@ -489,20 +499,23 @@ public class VersionBakingBean implements Serializable {
 	 * @return
 	 */
 	public static String getPaginaRadioVersiones(List<Version> listaVersiones, String name) {
+
+		String nameAPP = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
 		StringBuffer retorno = new StringBuffer();
 		if((listaVersiones != null) && (!listaVersiones.isEmpty())){
 			for (Version version : listaVersiones) {
+				
 				String ico = "R.png";
 				if (version.getType() == TypeConfig.StartUp){
 					ico = "B.png";
 				}
-				retorno.append("<li style=\"background:url(" + name + "/resources/img/" + ico + ") left no-repeat;\">");
+				retorno.append("<li style=\"background:url(" + nameAPP + "/resources/img/" + ico + ") left no-repeat;\">");
 				retorno.append("<input id=\"" + name + "\" type=\"radio\" name=\"" + name + "\" value=\"" + version.getId() + "\"/>");
 				retorno.append(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(version.getDate().getTime()));
 				retorno.append("</li>");
 			}
 		}else{
-			retorno.append("<li left no-repeat;\">");
+			retorno.append("<li style=\"left no-repeat; \">");
 			retorno.append("Sin configuraciones!!");
 			retorno.append("</li>");
 		}

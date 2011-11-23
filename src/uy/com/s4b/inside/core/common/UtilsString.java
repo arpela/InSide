@@ -1,7 +1,5 @@
 package uy.com.s4b.inside.core.common;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -36,6 +34,25 @@ public class UtilsString {
 		
 		while(i < list.size() && !found) {
 			if (text.startsWith(list.get(i))) {
+				found = true;
+			}
+			i++;	
+		}
+		return found;
+	}
+	
+	/**
+	 * 
+	 * @param text
+	 * @param list
+	 * @return
+	 */
+	public static boolean searchTextInList(String text, String... list) {
+		int i = 0;
+		boolean found = false;
+		
+		while(i < list.length && !found) {
+			if (text.startsWith(list[i])) {
 				found = true;
 			}
 			i++;	

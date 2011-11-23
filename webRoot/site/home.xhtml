@@ -17,9 +17,18 @@
 		
 		<ui:define name="body">
 			<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource" var="bundle" />
+			<a4j:region>
+		        <h:form>
+		          	<a4j:poll id="poll" interval="60000" reRender="listahommmmm" execute="@region"/>
+		        </h:form>
+    		</a4j:region>
+			
 			
 			<h:form id="formHome">
-
+			
+		        
+				
+				 
 				<div id="content">
 					<div class="state">
 						<div class="page fleft">Home</div>
@@ -122,12 +131,14 @@
 							<div class="clear"></div>
 						</div>
 					</div>
+
+					<a4j:outputPanel id="listahommmmm" >
+						<div class="rightContent fright" >
+							<div class="subtitle">Panel de alarmas:</div>
+							<h:outputText value="#{events.homeListaEvento}" escape="false"/>
+						</div>
+					</a4j:outputPanel>
 					
-					
-					<div class="rightContent fright" >
-						<div class="subtitle">Panel de alarmas:</div>
-						<h:outputText value="#{events.homeListaEvento}" escape="false"/>
-					</div>
 					<div class="clear"></div>
 				</div>
 			</h:form>
