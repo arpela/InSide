@@ -145,7 +145,7 @@ public class EJBSysLogBean implements SysLogService {
 //			CronTrigger ct = new CronTrigger("cronTrigger","group1","0 0/10 * * * ?");
 			
 			// 30 minutos se ejecuta para recupera archivos
-			CronTrigger ct = new CronTrigger(timer + ipHost,"readConfigSysLog","0 0/2 * * * ?");
+			CronTrigger ct = new CronTrigger(timer + ipHost,"readConfigSysLog","0 0/15 * * * ?");
 			scheduler.scheduleJob(jd,ct);
 			
 		} catch (NamingException ex) {
@@ -188,7 +188,7 @@ public class EJBSysLogBean implements SysLogService {
 		EventInSide event = new EventInSide();
 		event.setDeadline(cal);
 		//TODO Esto debe ir al property de msg.
-		event.setDescription("["+ formatdate.format(Calendar.getInstance().getTime()) +"] El equipo \""+ ipHost + "\" estï¿½ fuera del inventario del sistema");
+		event.setDescription("["+ formatdate.format(Calendar.getInstance().getTime()) +"] El equipo \""+ ipHost + "\" está fuera del inventario del sistema");
 		event.setType(TypeEvent.ERROR);
 		event.setValue("Equipo fuera de inventario");
 		return event;

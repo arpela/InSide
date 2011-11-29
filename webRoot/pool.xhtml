@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+   	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:rich="http://richfaces.org/rich">
+
+<h:body>
+	
+	<ui:composition template="/layout/templateapp.xhtml">
+		
+		<ui:define name="body">
+			<f:loadBundle basename="uy.com.s4b.inside.ui.bundle.MessagesResource" var="bundle" />
+			
+			
+			<a4j:region>
+		        <h:form>
+		        	<a4j:log popup="false" level="ALL" style="width: 800px; height: 300px;"></a4j:log>
+		          	<a4j:poll id="poll" interval="60000" reRender="listahommmmm" execute="@region"/>
+		        </h:form>
+    		</a4j:region>
+			
+			
+			<h:form id="formHome">
+				<a4j:outputPanel id="listahommmmm" >
+					<div class="rightContent fright" >
+						<div class="subtitle">Panel de alarmas:</div>
+						<h:outputText value="#{events.homeListaEvento}" escape="false"/>
+					</div>
+				</a4j:outputPanel>
+			</h:form>
+			
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>
+

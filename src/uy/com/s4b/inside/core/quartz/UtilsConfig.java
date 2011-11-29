@@ -90,7 +90,7 @@ public class UtilsConfig {
 		}
 	}
 	
-	public void saveErrorDiffStartRunning(String ipEquipo){
+	public void saveErrorDiffStartRunning(String nombre){
 		try {
 			EJBEventInSideLocal ejbEvent = (EJBEventInSideLocal)getLocalsObject("inSide/EJBEventInSide/local");
 			SimpleDateFormat formatdate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -101,7 +101,7 @@ public class UtilsConfig {
 			event.setDescription("["+ formatdate.format(Calendar.getInstance().getTime()) +"] " +
 					"Hay diferencias en la configuración Running y StartUP.");
 			event.setType(TypeEvent.ERROR);
-			event.setValue("Diferencia en Startup/Running");
+			event.setValue("["+ nombre +"] Diferencia en Startup/Running");
 			ejbEvent.saveEvent(event);
 		} catch (InSideException ex) {
 			log.error(ex.getMessage(),ex);

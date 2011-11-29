@@ -3,23 +3,17 @@ package uy.com.s4b.inside.core.quartz;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.quartz.Scheduler;
 
-import uy.com.s4b.inside.core.common.CriptPassword;
 import uy.com.s4b.inside.core.common.TypeCommand;
 import uy.com.s4b.inside.core.common.TypeConfig;
-import uy.com.s4b.inside.core.ejbs.command.EJBCommandLocal;
 import uy.com.s4b.inside.core.ejbs.device.EJBDeviceLocal;
 import uy.com.s4b.inside.core.ejbs.version.EJBVersionLocal;
-import uy.com.s4b.inside.core.entity.Command;
 import uy.com.s4b.inside.core.entity.Device;
 import uy.com.s4b.inside.core.entity.Version;
 import uy.com.s4b.inside.core.exception.InSideException;
-import uy.com.s4b.inside.core.ssh.ClientSSH;
-import uy.com.s4b.inside.core.syslog.InfoRunServerUDP;
 
 /**
  * Title: Test1.java <br>
@@ -58,7 +52,7 @@ public class ReadFilesConfigJob implements org.quartz.Job {
 				
 				// TODO esta deshabilitado
 				if(util.tieneDiferenciasRunninStarup(files)){
-					util.saveErrorDiffStartRunning(oneDevice.getIp());
+					util.saveErrorDiffStartRunning(oneDevice.getHostname());
 				}
 				
 				for (int i = 0; i < files.length; i++) {

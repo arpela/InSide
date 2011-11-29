@@ -100,7 +100,6 @@ public class VersionBakingBean implements Serializable {
 		log.info("se ingresa a recuperar la version");
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, String> map = context.getExternalContext().getRequestParameterMap();
-//		String idDevice = (String) map.get("id");
 		String idVersion = (String) map.get("id");
 		log.info("Codigo de divece");
 		
@@ -194,6 +193,7 @@ public class VersionBakingBean implements Serializable {
 							break;
 					}
 				} else {
+					
 					pageIzq.append("<tr><td td bgcolor=\"");
 					pageIzq.append(color);
 					pageIzq.append("\" class=\"table\"><span>");
@@ -205,6 +205,7 @@ public class VersionBakingBean implements Serializable {
 					pageDer.append("\" class=\"table\"><span>");
 					pageDer.append(i + " - " + listaLinea[i]);
 					pageDer.append("</span></td></tr>");
+					
 				}
 			}
 			
